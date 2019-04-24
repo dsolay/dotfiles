@@ -1,0 +1,84 @@
+#!/bin/bash
+
+    # This program is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation, either version 3 of the License, or
+    # (at your option) any later version.
+
+    # This program is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+
+    # You should have received a copy of the GNU General Public License
+    # along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Dotsmenu: a dmenu script to edit configuration files that are stored
+# in a "dotfiles" directory of arbitrary depth.  Opens a new terminal
+# running the EDITOR on the selected file.  This script is part of my
+# dotfiles: https://gitlab.com/protesilaos/dotfiles.
+#
+# Debian Buster dependencies:
+# 	apt install suckless-tools fd-find
+#
+# TODO improve documentation
+# TODO review code
+# TODO add feedback messages
+
+# NOTE this would not work with the Xresources, Xdefaults, etc., though
+# I do not use them…
+if [ -d "$HOME/dotfiles" ]; then
+	my_dots="$HOME/dotfiles"
+else
+	echo "ERROR"
+	echo "Your dotfiles are not available"
+	echo "Aborting"
+	exit 1
+fi
+
+my_configs() {
+	fdfind -H -t f '.*rc$|.*\.conf|config$' "$my_dots" | \
+	sed "s,$my_dots/,,g"
+}
+
+# Custom dmenu command.  Accepts the line height as an argument.
+my_dmenu() {
+	# Pass custom colours to dmenu command
+	source "$HOME/.local/share/my_colours/active-tempus-theme.sh"
+
+	# Get the system-wide custom font, for use in dmenu
+	source "$HOME/.local/share/my_custom_ui_font.sh"
+
+	if [ -n "$1" ]; then
+		local height="$1"
+	else
+		local height="8"
+	fi
+
+    dmenu -i -p 'Edit selected file' \
+	-nb "$background" -nf "$foreground" -sb "$color5" \
+	-sf "$background" -fn "$my_custom_ui_font" -l "$height"
+}
+
+# Capture the dmenu output
+dotsmenu_interaction="$(my_configs | my_dmenu)"
+dotsmenu_selection="$my_dots/$dotsmenu_interaction"
+
+# Open the selected file in the editor, else exit.
+# TODO add echo messages and notify-send actions.  The latter require an
+# extra dependency.  Add it to the description.
+if [ -n "$dotsmenu_interaction" ]; then
+	# TODO can these be turned into a case statement or something more
+	# elegant?
+	if [ -n "$EDITOR" ]; then
+		"$EDITOR" "$dotsmenu_selection"
+	elif [ -n "$VISUAL" ]; then
+		"$VISUAL" "$dotsmenu_selection"
+	elif [ "$(command -v gvim 2> /dev/null)" ]; then
+		gvim "$dotsmenu_selection"
+	else
+		xdg-open "$dotsmenu_selection"
+	fi
+else
+	exit
+fi
