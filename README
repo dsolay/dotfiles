@@ -1,0 +1,13 @@
+Code for PDFD
+=============
+
+Prot's Dots For Debian (PDFD) is the book that guides users the process
+of reproducing my custom BSPWM session on Debian 10 'buster'.
+
+This repo contains the latest "fixed release" of my dotfiles.  Actual
+development takes place there: https://gitlab.com/protesilaos/dotfiles
+
+The purpose of this repo is to provide the stable code base that is used
+in PDFD's tutorials.
+
+The book is freely available on my website: https://protesilaos.com/pdfd
