@@ -13,8 +13,8 @@
 	# You should have received a copy of the GNU General Public License
 	# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Description {{{
-# ---------------
+# Description
+# -----------
 #
 # Melonpanel: my `lemonbar` implementation, for use in my custom desktop
 # session (see my dotfiles https://gitlab.com/protesilaos/dotfiles).
@@ -23,22 +23,42 @@
 # we could accidentally kill the wrong process or whatnot.
 #
 # Debian Buster dependencies for melonpanel:
-#	apt install bspwm lemonbar xdo xfonts-terminus
+#	apt install bspwm lemonbar xdo
 #
-# Debian Buster dependencies for individual modules:
-# 	apt install amixer mpd mpc
+# Dependencies for individual modules:
+# 	apt install amixer
 #
-# Last full review 2019-04-04
+# Optional:
+# 	apt install xfonts-terminus
 #
-# }}}
+# Last full review 2019-05-13
 
-# General settings {{{
-# --------------------
+# General settings
+# ----------------
 
-# Check if any lemonbar is running and kill it
-if pgrep -xo lemonbar > /dev/null; then
-	pkill -xo lemonbar
-fi
+
+# Check for dependencies.  Fail if unmet.
+check_dep() {
+	[ "$(command -v "$1" 2> /dev/null)" ] || { echo "Missing $1 dependency."; exit 1; }
+}
+
+check_dep bspwm
+check_dep lemonbar
+check_dep xdo
+
+# Kill any running lemonbar
+pgrep -xo lemonbar > /dev/null && pkill -xo lemonbar
+
+# Add colours from current Tempus theme.  That file is used in other
+# places as well to offer a convenient way of styling multiple tools in
+# a manner that is centralised and straightforward.  Colour definitions
+# are "color{0-15}", using the standard terminal sequence, plus
+# "foreground{,alt}", "background{,alt,dim}".  For details, see the main
+# Tempus themes repo: https://gitlab.com/protesilaos/tempus-themes
+tempus_theme="$HOME/.local/share/my_colours/active-tempus-theme.sh"
+
+# Source the colour definitions if the file exists.  Else exit.
+[ -e "$tempus_theme" ] && source "$tempus_theme" || { echo "Missing Tempus theme"; exit 1; }
 
 # Melonpanel variables
 melonpanel_height=22
@@ -48,88 +68,15 @@ if [ -n "$(fc-list terminus)" ]; then
 	# NOTE the descriptions for the Terminus typeface are copied from
 	# /etc/X11/fonts/misc/xfonts-terminus.alias
 	# A wildcard `*` can replace each part of the definition.
-	melonpanel_font='-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1'
+	melonpanel_font='-xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1'
 else
 	# Could not find this exact definition in the Debian configs.  Got
 	# it from here: https://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
-	melonpanel_font='-misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1'
+	melonpanel_font='-misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1'
 fi
 
-# }}}
-
-# Colours for modules and bspwm indicators {{{
-# --------------------------------------------
-
-# Add colours from current Tempus theme.  That file is used in other
-# places as well to offer a convenient way of styling multiple tools in
-# a manner that is centralised and straightforward.  Colour definitions
-# are "color[0-15]", using the standard terminal sequence, plus
-# "foreground{alt}", "background{alt,dim}".  For details, see the main
-# Tempus themes repo: https://gitlab.com/protesilaos/tempus-themes
-source "$HOME/.local/share/my_colours/active-tempus-theme.sh"
-
-# Use this as the value for COLOR_DEFAULT_BG if you want transparency
-# for the entire panel.  The first two numbers are the alpha channel.
-# The notation ${VAR:1} strips the expanded value of its initial '#'.
-bgalpha="#b0${background:1}"
-
-# NOTE these colour definitions apply to the BSPWM module and the
-# `lemonbar` itself.  All other modules use the variables defined in
-# the afore-sourced file.
-COLOR_DEFAULT_FG="$foreground"
-COLOR_DEFAULT_BG="$background" # add "$bgalpha" to enable transparency
-COLOR_DEFAULT_FG_ALT="$foregroundalt"
-COLOR_DEFAULT_BG_ALT="$backgroundalt"
-COLOR_DEFAULT_ACCENT="$color6"
-COLOR_DEFAULT_ALERT="$color1"
-
-COLOR_MONITOR_FG="$COLOR_DEFAULT_FG_ALT"
-COLOR_MONITOR_BG="$COLOR_DEFAULT_BG_ALT"
-COLOR_MONITOR_U="$COLOR_DEFAULT_BG_ALT"
-
-COLOR_FOCUSED_MONITOR_FG="$COLOR_DEFAULT_ACCENT"
-COLOR_FOCUSED_MONITOR_BG="$COLOR_DEFAULT_BG"
-COLOR_FOCUSED_MONITOR_U="$COLOR_DEFAULT_ACCENT"
-
-COLOR_FREE_FG="$COLOR_DEFAULT_FG_ALT"
-COLOR_FREE_BG="$COLOR_DEFAULT_BG"
-
-COLOR_ACTIVE_FREE_FG="$COLOR_DEFAULT_FG_ALT"
-COLOR_ACTIVE_FREE_BG="$COLOR_DEFAULT_BG_ALT"
-COLOR_ACTIVE_FREE_U="$COLOR_DEFAULT_BG_ALT"
-
-COLOR_FOCUSED_FREE_FG="$COLOR_DEFAULT_BG"
-COLOR_FOCUSED_FREE_BG="$COLOR_DEFAULT_ACCENT"
-COLOR_FOCUSED_FREE_U="$COLOR_DEFAULT_ACCENT"
-
-COLOR_OCCUPIED_FG="$COLOR_DEFAULT_FG"
-COLOR_OCCUPIED_BG="$COLOR_DEFAULT_BG_ALT"
-COLOR_OCCUPIED_U="$COLOR_DEFAULT_FG"
-
-COLOR_ACTIVE_OCCUPIED_FG="$COLOR_OCCUPIED_FG"
-COLOR_ACTIVE_OCCUPIED_BG="$COLOR_OCCUPIED_BG"
-COLOR_ACTIVE_OCCUPIED_U="$COLOR_OCCUPIED_U"
-
-COLOR_FOCUSED_OCCUPIED_FG="$COLOR_DEFAULT_BG"
-COLOR_FOCUSED_OCCUPIED_BG="$COLOR_DEFAULT_ACCENT"
-COLOR_FOCUSED_OCCUPIED_U="$COLOR_DEFAULT_ACCENT"
-
-COLOR_URGENT_FG="$COLOR_DEFAULT_BG"
-COLOR_URGENT_BG="$COLOR_DEFAULT_ALERT"
-
-COLOR_FOCUSED_URGENT_FG="$COLOR_URGENT_FG"
-COLOR_FOCUSED_URGENT_BG="$COLOR_URGENT_BG"
-
-COLOR_MONOCLE_FG="$COLOR_DEFAULT_FG"
-COLOR_MONOCLE_BG="$COLOR_DEFAULT_BG"
-
-COLOR_FLAGS_FG="$COLOR_DEFAULT_FG"
-COLOR_FLAGS_BG="$COLOR_DEFAULT_BG"
-
-# }}}
-
-# Panel modules {{{
-# -----------------
+# Panel modules
+# -------------
 #
 # NOTE all functions that are meant to pipe their output to the panel
 # will echo a majuscule (letter A-Z).  This is done to easily retrieve
@@ -143,7 +90,7 @@ battery_status() {
 	local battery_path battery_status battery_label battery_output
 
 	battery_path='/sys/class/power_supply/BAT0'
-	battery_output=$(sed 1q $battery_path/capacity)
+	battery_output="$(sed 1q $battery_path/capacity)"
 	battery_status="$(sed 1q $battery_path/status)"
 	battery_label='Bat'
 
@@ -179,13 +126,10 @@ battery_status() {
 
 # Check if the volume is muted or not.  Output the appropriate
 # indicators.
-# TODO should this change if another output source is connected?  Test
-# and adapt.
 volume_status() {
 	if [ "$(command -v amixer 2> /dev/null)" ]; then
 		local volume_status volume_level volume_label
 
-		# FIXME the "Front R" range is not robust
 		amixer_get() {
 			amixer get Master | \
 			sed "/^\ *Front R/!d ; s,\(^.*\) \[\(.*%\)\] \[\(.*\)\],\\${1},"
@@ -209,49 +153,13 @@ volume_status() {
 	fi
 }
 
-# Get the status of the Music Player Daemon.
-mpd_status() {
-	local mpc_status current_song_length current_song maxlen
-
-	mpc_status="$(mpc status | grep -o '^\[[a-z]*\]')"
-	current_song_length="$(mpc current | wc -c)"
-	current_song="$(mpc current -f "[[%artist%: ]%title%]|[%file%]")"
-	maxlen=30
-
-	mpd_playing() {
-		case "$mpc_status" in
-			'[playing]')
-				echo "%{F$color5}>>%{F-}"
-				;;
-			'[paused]')
-				echo "%{F$color5}||%{F-}"
-				;;
-			*)
-				echo ''
-				;;
-		esac
-	}
-
-	# if playing or paused
-	if [ -n "$mpc_status" ]; then
-		# Check if current mpc status has a length that is equal or
-		# higher than "$maxlen".  If so trim the output and append
-		# marker to denote the modification.
-		if [ "$current_song_length" -gt "$maxlen" ]; then
-			echo "$(mpd_playing)" "${current_song:0:$maxlen}" "[..]"
-		else
-			echo "$(mpd_playing)" "$current_song"
-		fi
-	fi
-}
-
 # Modified version of the content of `own_script_current_layout`.  That
 # is a separate file just because I need the functionality decoupled
 # from the panel.  All we do here is print the language of the current
 # layout.
 keyboard_layout() {
 	if [ "$(setxkbmap -query | sed '/^layout/!d ; s,^.*:[\ ]*,,g')" == 'gr' ]; then
-		echo '%{+u}EL%{-u}' # Greek
+		echo "%{U$foregroundalt}%{+u}EL%{-u}%{U-}" # Greek
 	else
 		echo 'EN' # English (US QWERTY)
 	fi
@@ -265,29 +173,24 @@ keyboard_layout() {
 my_modules() {
 	while true; do
 		echo "B" "$(battery_status)"
-		echo "D" "$(date +'%a %d %b %H:%M')"
+		echo "D" "$(date +'%a %-d %b %H:%M')"
 		echo "K" "$(keyboard_layout)"
-		echo "M" "$(mpd_status)"
 		echo "V" "$(volume_status)"
 		sleep 1s
 	done
 }
 
-# }}}
-
-# Piping and reading the output of the modules {{{
-# ------------------------------------------------
+# Piping and reading the output of the modules
+# --------------------------------------------
 
 # The design of this section has been heavily inspired/adapted from the
 # examples provided by upstream bspwm.
 
 # set path to named pipe used to store process data for these operations
-melonpanel_fifo=/tmp/melonpanel_fifo
+melonpanel_fifo='/tmp/melonpanel.fifo'
 
 # make sure you delete any existing named pipe
-if [ -e "$melonpanel_fifo" ]; then
-	rm "$melonpanel_fifo"
-fi
+[ -e "$melonpanel_fifo" ] && rm "$melonpanel_fifo"
 
 # create a new named pipe
 mkfifo "$melonpanel_fifo"
@@ -301,9 +204,8 @@ bspc subscribe report > "$melonpanel_fifo" &
 # (see modules above).  Here we just add a shorter variable to each
 # module, which helps position it on the panel (the last printf).
 melonpanel() {
-	local num_mon laptop_external_monitor
+	local laptop_external_monitor
 
-	num_mon=$(bspc query -M | wc -l)
 	laptop_external_monitor="$(xrandr --query | grep 'VGA1 connected')"
 
 	while read -r line ; do
@@ -320,10 +222,6 @@ melonpanel() {
 				# keyboard layout (en or gr)
 				key="${line#?}"
 				;;
-			M*)
-				# MPD
-				mpd="${line#?}"
-				;;
 			V*)
 				# volume level
 				vol="${line#?}"
@@ -333,116 +231,58 @@ melonpanel() {
 				wm=
 				IFS=':'
 				set -- ${line#?}
-				while [ $# -gt 0 ] ; do
-					item=$1
-					name=${item#?}
-					case $item in
-						[mM]*)
-							case $item in
+				while [ "$#" -gt 0 ] ; do
+					item="$1"
+					name="${item#?}"
+					case "$item" in
+						[mMfFoOuULG]*)
+							case "$item" in
 								m*)
 									# monitor
-									FG=$COLOR_MONITOR_FG
-									BG=$COLOR_MONITOR_BG
-									U=$COLOR_MONITOR_U
+									FG="$foregroundalt" # needed to avoid invalid colour error
 									on_focused_monitor=
+									name=
 									;;
 								M*)
 									# focused monitor
-									FG=$COLOR_FOCUSED_MONITOR_FG
-									BG=$COLOR_FOCUSED_MONITOR_BG
-									U=$COLOR_FOCUSED_MONITOR_U
+									FG="$foregroundalt" # needed to avoid invalid colour error
 									on_focused_monitor=1
+									name=
 									;;
-							esac
-							[ $num_mon -lt 2 ] && shift && continue
-							wm="${wm}%{U$U}%{F$FG}%{B$BG} %{+u}${name}%{-u} %{B-}%{F-}%{U-}"
-							;;
-						[fFoOuU]*)
-							case $item in
-								f*)
-									# free desktop
-									FG=$COLOR_FREE_FG
-									BG=$COLOR_FREE_BG
-									U=$COLOR_FREE_BG
-									;;
-								F*)
-									if [ "$on_focused_monitor" ] ; then
-										# focused free desktop
-										FG=$COLOR_FOCUSED_FREE_FG
-										BG=$COLOR_FOCUSED_FREE_BG
-										U=$COLOR_FOCUSED_FREE_U
+								# {Free,Occupied,Urgent} focused
+								[FOU]*)
+									if [ -n "$on_focused_monitor" ]; then
+										name="${name/*/[$name]}"
+										FG="$foreground"
 									else
-										# active free desktop
-										FG=$COLOR_ACTIVE_FREE_FG
-										BG=$COLOR_ACTIVE_FREE_BG
-										U=$COLOR_ACTIVE_FREE_U
+										name="${name/*/ $name-}"
+										FG="$foregroundalt"
 									fi
+									;;
+								# {free,occupied,urgent} unfocused
+								f*)
+									FG="$foregroundalt"
+									name="${name/*/ $name }"
 									;;
 								o*)
-									# occupied desktop
-									FG=$COLOR_OCCUPIED_FG
-									BG=$COLOR_OCCUPIED_BG
-									U=$COLOR_OCCUPIED_U
-									;;
-								O*)
-									if [ "$on_focused_monitor" ] ; then
-										# focused occupied desktop
-										FG=$COLOR_FOCUSED_OCCUPIED_FG
-										BG=$COLOR_FOCUSED_OCCUPIED_BG
-										U=$COLOR_FOCUSED_OCCUPIED_U
-									else
-										# active occupied desktop
-										FG=$COLOR_ACTIVE_OCCUPIED_FG
-										BG=$COLOR_ACTIVE_OCCUPIED_BG
-										U=$COLOR_ACTIVE_OCCUPIED_U
-									fi
+									FG="$foregroundalt"
+									name="${name/*/ $name^}"
 									;;
 								u*)
-									# urgent desktop
-									FG=$COLOR_URGENT_FG
-									BG=$COLOR_URGENT_BG
-									U=$COLOR_URGENT_BG
+									FG="$color1"
+									name="${name/*/ $name\#}"
 									;;
-								U*)
-									if [ "$on_focused_monitor" ] ; then
-										# focused urgent desktop
-										FG=$COLOR_FOCUSED_URGENT_FG
-										BG=$COLOR_FOCUSED_URGENT_BG
-										U=$COLOR_FOCUSED_URGENT_BG
-									else
-										# active urgent desktop
-										FG=$COLOR_URGENT_FG
-										BG=$COLOR_URGENT_BG
-										U=$COLOR_URGENT_BG
-									fi
-									;;
-							esac
-							wm="${wm}%{U$U}%{F$FG}%{B$BG}%{+u} ${name} %{-u}%{B-}%{F-}%{U-}"
-							;;
-						[LG]*)
-							case $item in
-								LT)
-									# layout tiled
-									name='-'
-									FG=$COLOR_DEFAULT_FG
-									BG=$COLOR_DEFAULT_BG
-									;;
-								LM)
-									# layout monocle
-									FG=$COLOR_MONOCLE_FG
-									BG=$COLOR_MONOCLE_BG
-									;;
-								G*?)
-									# node flags
-									FG=$COLOR_FLAGS_FG
-									BG=$COLOR_FLAGS_BG
+								# desktop layout for monocle and node flags
+								LM|G*?)
+									FG="$foreground"
+									name="${name/*/ $name }"
 									;;
 								*)
-									name='-'
+									FG="$foregroundalt"
+									name="${name/*/ * }"
 									;;
 							esac
-							# layout and flags
-							wm="${wm}%{F$FG}%{B$BG} ${name} %{B-}%{F-}"
+							wm="${wm}%{F$FG}${name}%{F-}"
 							;;
 					esac
 					shift
@@ -450,7 +290,7 @@ melonpanel() {
 		esac
 
 		panel_layout() {
-			echo "%{l}$wm%{r}$mpd $bat $vol $key $date "
+			echo "%{l}$wm%{r}$bat $vol $key $date "
 		}
 
 		if [ -n "$laptop_external_monitor" ]; then
@@ -461,13 +301,14 @@ melonpanel() {
 	done
 }
 
-# }}}
+# Launch the panel with the given parameters
+# ------------------------------------------
 
-# Launch the panel with the given parameters {{{
-# ----------------------------------------------
-
+# NOTE the syntax for the background value.  If you want transparency,
+# just replace "ff" with a lower value: "00" means no opacity.  This is
+# hexadecimal notation.
 melonpanel < "$melonpanel_fifo" | lemonbar -u 1 -p -g "x${melonpanel_height}" \
--F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" -f "$melonpanel_font" -n "Melonpanel" &
+-F "$foreground" -B "#ff${background:1}" -f "$melonpanel_font" -n "Melonpanel" &
 
 # Hide panel when windows are in full screen mode.  This does not work
 # all the time, especially with lower `sleep` values, requiring a
@@ -481,7 +322,3 @@ until bar_id=$(xdo id -a 'Melonpanel'); do
 done
 
 xdo below -t $(xdo id -n root) $bar_id &
-
-# }}}
-
-# vi:foldmethod=marker

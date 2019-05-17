@@ -1,5 +1,7 @@
 #!/bin/bash
 
+	# Copyright (c) 2019 Protesilaos Stavrou
+
 	# This program is free software: you can redistribute it and/or modify
 	# it under the terms of the GNU General Public License as published by
 	# the Free Software Foundation, either version 3 of the License, or
@@ -13,30 +15,16 @@
 	# You should have received a copy of the GNU General Public License
 	# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Description
-# -----------
-#
-# This script defines conditions that alter the way `bspwm` treats
-# certain window types.
-#
-# Note that this is a very simplistic approach that may need to be
-# optimised and expanded upon.  For the time being, it "just works".
+# Toggle the display compositor.  Meant to be assigned to a key binding.
+# Part of my dots: https://gitlab.com/protesilaos/dotfiles.
 
-window_id="$1"
-window_class="$2"
+[ "$(command -v compton)" ] || { echo "Compton is not installed."; exit 1; }
 
-case "$window_class" in
-	my_float_window)
-		echo "state=floating"
-		;;
-	* )
-		case "$(xprop -id "$window_id" _NET_WM_WINDOW_TYPE)" in
-		*_NET_WM_WINDOW_TYPE_DIALOG*)
-			echo "state=floating"
-			;;
-		*_NET_WM_WINDOW_TYPE_NOTIFICATION*)
-			echo "layer=above"
-			;;
-		esac
-		;;
-esac
+if [ -n "$(pidof compton)" ]; then
+	killall compton
+else
+	compton --config "$HOME/.config/compton.conf" &
+	until pidof compton > /dev/null; do 
+		sleep 0.1s
+	done
+fi
