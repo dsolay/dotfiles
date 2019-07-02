@@ -13,7 +13,10 @@
 # work with `bspwm`.  This is part of my dotfiles, which are managed
 # with GNU Stow.  See https://gitlab.com/protesilaos/dotfiles
 #
-# Last full review on 2019-06-04
+# LARGE PORTIONS OF THIS FILE INVOKE MY SHELL SCRIPTS.  Do not blindly
+# copy-paste from here!
+#
+# Last full review on 2019-06-18
 
 
 
@@ -24,17 +27,53 @@ super + {_,shift + }q
 # Focus/swap nodes/desktops
 # -------------------------
 
-# Focus {or swap} the node in the given direction.
-super + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
+# Focus the node in the given direction.
+super + {h,j,k,l}
+	bspc node -f {west,south,north,east}
 
-# Focus {or send focused node to} the given desktop.
-super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+# Swap focused window with the one in the given direction.  If there is
+# no window in that direction, a receptacle will be created.  Inputting
+# any direction again will move the focused window to the position of
+# the receptacle.  This will effectively remove it from the current
+# layout, creating a more fluid workflow that does not constrain you to
+# the tree of the tiling scheme.
+#
+# IF you only ever want to move a window into an existing one and avoid
+# the added features of the scripted behaviour, use the following
+# command instead:
+#
+# 	bspc node -s {west,south,north,east}
+#
+# TIP after breaking free from the layout, you can use --balance to
+# spread out the nodes (see the key chord further down).  You may also
+# --rotate the tree.
+#
+# bspwm_smart_move is part of my dotfiles (link in the description).
+super + shift + {h,j,k,l}
+	bspwm_smart_move {west,south,north,east}
 
-# Send and follow focused node to given desktop.
-super + ctrl + shift + {1-9}
-	id=$(bspc query -N -n); bspc node -d ^{1-9}; bspc node -f ${id}
+# Dynamic desktop behaviour:  this invokes a script of mine that
+# implements dynamic desktops (see dotfiles).  If the given desktop
+# number is missing, it is created on the spot.  Empty desktops are then
+# removed automatically.
+#
+#
+# super + <number> = focus the given desktop
+# super + shift + <number> = send focused window to given desktop
+# super + ctrl + shift + <number> = as above, but send to next monitor
+# super + ctrl + <number> = switches the active (visible) desktop of the
+# unfocused monitor, without focusing it (focus stays on the current
+# desktop/monitor).  It also inserts a receptacle, meaning that the next
+# created window will go there without calling focus to itself (see my
+# bspwm_external_rules).
+#
+#
+# Commands for receptacles are defined in the "advanced operations"
+# section.
+#
+# NOTE the leading `;` runs this command asynchronously.
+super + {_,shift + ,ctrl + shift +,ctrl +}{0-9}
+	;bspwm_dynamic_desktops {--df,--ns,--nm,--da} {0-9}
 
 # With `alt` focus {next,previous} window in the current desktop.  With
 # `super` focus {next,previous} desktop in the current monitor.
@@ -42,6 +81,17 @@ super + ctrl + shift + {1-9}
 # down `shift`.
 {super,alt} + {_,shift +} Tab
 	bspc {desktop,node} -f {next,prev}.local
+
+# Switch to the {next,previous} monitor.  This brings focus to that
+# monitor's active desktop.
+super + {_,shift + }comma
+	bspc monitor -f {next,prev}
+
+# Switch to last active {desktop,node}.  With super move to the last
+# active desktop.  With alt move to the last active node. "grave" is
+# positioned above Tab in QWERTY layouts.
+{super,alt} + grave
+	bspc {desktop,node} -f last
 
 # Expand or contract node in the given direction.
 #
@@ -64,19 +114,14 @@ super + shift + b
 	bspc node -s biggest.local
 
 # Preselect the direction or insert again to cancel the preselection.
-# This enters the manual tiling mode.
+# This enters the manual tiling mode that splits the currently focused
+# window.
 super + alt + {h,j,k,l}
 	bspc node --presel-dir '~{west,south,north,east}'
 
 # Preselect the ratio.  The default value is 0.5, defined in `bspwmrc`.
 super + alt + {1-9}
 	bspc node -o 0.{1-9}
-
-# Send the newest marked node to the newest preselected node
-# (see node flags below).  The choice of key binding is meant to mimic
-# that of pasting from the clipboard to the terminal.
-super + shift + v
-	bspc node newest.marked -n newest.!automatic
 
 # Node layout state and flags
 # ---------------------------
@@ -141,6 +186,51 @@ super + shift + {y,u,i,o}
 super + shift + bracket{left,right}
 	bspc config -d focused window_gap "$(($(bspc config -d focused window_gap) {-,+} 5 ))"
 
+# Advanced operations (receptacles and scripted actions)
+# ------------------------------------------------------
+# NOTE The behaviour of preselections and receptacles is regulated by my
+# bspwm_external_rules command (which is called from within bspwmrc).
+
+# Insert receptacle following the tiling scheme or preselection.
+# Receptacles are empty frames that function as placeholders for
+# windows.
+#
+# Whereas bspwm_smart_move (defined above) will automatically insert
+# a receptacle in the given direction by splitting the entire viewport.
+super + n ; r
+	bspc node -i
+
+# Insert the marked window (or focused if no marks) in the first
+# matching receptacle (or preselection if no receptacles).
+super + n ; i
+	bspwm_smart_presel
+
+# Kill/remove the first matching receptacle from the current desktop.
+# With shift, kill them all at once.
+super + n ; super + {_, shift + }r
+	{ \
+	bspc node 'any.leaf.!window.local' -k, \
+	bspwm_multifaceted_operation --kill-all-receptacles \
+	}
+
+# Summon all marked windows across all desktops to the current desktop.
+super + n ; m
+	bspwm_multifaceted_operation --summon-all-marked
+
+# Bring the windows of the given desktop to the current one.  With
+# shift, send the current window to the given one.
+super + n ; super + {_, shift + }{0-9}
+	bspwm_multifaceted_operation {--bring-desktop-here,--send-desktop-there} {0-9}
+
+# Close {or kill} all windows in the present desktop except the focused
+# or any marked ones.
+super + n ; super + {_,shift + }q
+	bspwm_multifaceted_operation --{close,kill}-all-local-non-focused
+
+# Assign the locked flag to all windows in the current desktop.  With
+# shift, remove the locked flag from all.
+super + n ; {_, shift + }l
+	bspwm_multifaceted_operation {--lock-all-local,--unlock-all-local}
 
 
 # Continuous input mode
@@ -154,9 +244,9 @@ super + shift + bracket{left,right}
 # NOTE: All of the following are mirrors of their afore-mentioned
 # couterparts.
 
-# Focus {or swap with node} in the given direction.
-super + c : {_,shift + } {h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
+# Resize node in the given direction.
+super + c : {h,j,k,l}
+	own_script_bspwm_node_resize {west,south,north,east} 50
 
 # Gaps presets.
 super + c : {y,u,i,o}

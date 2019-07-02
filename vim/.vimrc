@@ -43,6 +43,7 @@ set showcmd                       " show command in last line of the screen
 set nostartofline                 " keep cursor in the same column when moving between lines
 set errorbells                    " ring the bell for errors
 set visualbell                    " then use a flash instead of a beep sound
+set belloff=esc                   " hitting escape in normal mode does not constitute an error
 set confirm                       " ask for confirmation when quitting a file that has changes
 set hidden                        " hide buffers
 set autoindent                    " indent automatically (useful for formatoptions)
@@ -82,8 +83,7 @@ iab medot https://gitlab.com/protesilaos/dotfiles
 " Theme settings
 " --------------
 
-syntax enable                 " enable syntax highlighting
-colorscheme tempus_classic    " use one of my Tempus themes
-
+syntax enable
 " DO NOT EDIT MANUALLY IF YOU USE MY DOTFILES.  Themes are updated
-" programatically via my `own_script_update_environment_theme`
+" programatically via my `tempus` script.
+colorscheme tempus_classic
