@@ -1,0 +1,18 @@
+[submodule "tmux/.tmux/plugins/tmux-copycat"]
+	path = tmux/.tmux/plugins/tmux-copycat
+	url = https://github.com/tmux-plugins/tmux-copycat.git
+[submodule "tmux/.tmux/plugins/tmux-open"]
+	path = tmux/.tmux/plugins/tmux-open
+	url = https://github.com/tmux-plugins/tmux-open.git
+[submodule "tmux/.tmux/plugins/tmux-prefix-highlight"]
+	path = tmux/.tmux/plugins/tmux-prefix-highlight
+	url = https://github.com/tmux-plugins/tmux-prefix-highlight.git
+[submodule "tmux/.tmux/plugins/tmux-yank"]
+	path = tmux/.tmux/plugins/tmux-yank
+	url = https://github.com/tmux-plugins/tmux-yank.git
+[submodule "tmux/.tmux/plugins/tmux-online-status"]
+	path = tmux/.tmux/plugins/tmux-online-status
+	url = https://github.com/tmux-plugins/tmux-online-status.git
+[submodule "tmux/.tmux/plugins/tpm"]
+	path = tmux/.tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm.git
