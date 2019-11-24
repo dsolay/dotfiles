@@ -98,14 +98,14 @@ ctrl + alt + {Home,End,Delete}
 # terminals, like a barbarian!  Watch my screen cast on the matter:
 # https://protesilaos.com/codelog/2019-01-13-tmux-demo-bspwm/
 super + {_, shift + } Return
-	{xterm -e tmux new-session -A -s 'Default', xterm}
+	{xterm -e tmux new-session -A -s 'Default', urxvt}
 
 # GUI programs.  Where these are alternatives to common CLI tools they
 # are mapped to the same number as their counterparts, but prepended
 # with a `g` (mnemonic for GUI).
 super + g ; {1,2,3}
 	{ \
-	notify-send -i firefox "Run GUI program" "Launching Web Browser" && firefox-esr, \
+	notify-send -i firefox "Run GUI program" "Launching Web Browser" && firefox, \
 	notify-send -i system-file-manager "Run GUI program" "Launching File Manager" && caja, \
 	notify-send -i thunderbird "Run GUI program" "Launching Email Client" && thunderbird \
 	}
@@ -154,8 +154,8 @@ super + x; {b,w,t}
 	{sbgmenu,nbm,stmmenu}
 
 # dmenu_run and passmenu using my custom colours.
-super + {d,p}
-	{own_script_run_dmenu_xcolors,own_script_run_passmenu_xcolors}
+super + {d,p,r}
+	{own_script_run_dmenu_xcolors,own_script_run_passmenu_xcolors,own_script_run_rofi -r}
 
 # dmenu specifically for flatpaks.  While it is possible to include
 # these in the $PATH, or to query by `.desktop` file, I prefer to keep

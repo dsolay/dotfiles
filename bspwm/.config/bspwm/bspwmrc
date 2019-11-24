@@ -45,10 +45,10 @@ _check() {
 # 4. pointer_modifier mod1 == enables mouse actions while holding down
 #    the Alt key (see below---bonus: the following two also work in the
 #    popular desktop environments).
-# 5. pointer_action1 move == Alt + Right Click allows you to drag
+# 5. pointer_action1 move == Alt + Left Click allows you to drag
 #    a floating window.  Also works for switching the position of tiled
 #    windows, if that is your thing.
-# 6. pointer_action2 resize_side == Alt + Left Click allows you to
+# 6. pointer_action2 resize_side == Alt + Right Click allows you to
 #    resize the nearest side of the focused window.  Works for both
 #    tiled and floating windows.
 # 7. external_rules_command bspwm_external_rules == References the
@@ -105,10 +105,15 @@ _check sxhkd && sxhkd -c "$HOME"/.config/sxhkd/sxhkdrc{,_bspc} &
 [ -f "$HOME"/.Xresources ] && xrdb -I "$HOME" -merge "$HOME"/.Xresources
 
 # Launch my custom Lemonbar implementation (the system panel).
-if _check melonpanel; then
-	# Make sure we have no running instances
-	pgrep -x melonpanel && pkill -x melonpanel
-	melonpanel
+# if _check melonpanel; then
+# 	# Make sure we have no running instances
+# 	pgrep -x melonpanel && pkill -x melonpanel
+# 	melonpanel
+# fi
+
+# Launch polybar.
+if _check polybar; then
+	~/.config/polybar/launch.sh
 fi
 
 # Display compositor for enabling shadow effects and transparency
@@ -150,6 +155,9 @@ _check mpd && mpd
 # See my `sxhkdrc` for the set of key bindings that handles media
 # controls in general and `mpd` in particular.
 _check mpDris2 && mpDris2 &
+
+# Unlock numpad
+_check numlockx && numlockx on
 
 # Per host configurations
 # =======================
