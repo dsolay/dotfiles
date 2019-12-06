@@ -16,3 +16,6 @@
 [submodule "tmux/.tmux/plugins/tpm"]
 	path = tmux/.tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm.git
+[submodule "tmux/.tmux/plugins/tmux-plugin-sysstat"]
+	path = tmux/.tmux/plugins/tmux-plugin-sysstat
+	url = https://github.com/samoshkin/tmux-plugin-sysstat.git
