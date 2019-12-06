@@ -20,10 +20,10 @@
 # dotfiles: https://gitlab.com/protesilaos/dotfiles.
 
 if [ "$(command -v setxkbmap 2> /dev/null)" ]; then
-	if [ "$(setxkbmap -query | sed '/^layout/!d ; s,^.*:[\ ]*,,g')" == 'gr' ]; then
+	if [ "$(setxkbmap -query | sed '/^layout/!d ; s,^.*:[\ ]*,,g')" == 'es' ]; then
 		setxkbmap -layout us # US QWERTY
 	else
-		setxkbmap -layout gr # Greek
+		setxkbmap -layout es -variant deadtilde # Spanish
 	fi
 else
 	echo "ERROR: setxkbmap not found"

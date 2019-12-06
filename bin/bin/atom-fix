@@ -1,0 +1,6 @@
+#! /bin/bash
+
+export XDG_CONFIG_DIRS=""
+export GTK2_RC_FILES=""
+
+atom "$@"

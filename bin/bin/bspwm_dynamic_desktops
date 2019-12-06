@@ -108,19 +108,19 @@ _desk_or_node() {
 # TODO to be implemented in bspwm_multifaceted_operations and sxhkd
 case "$option" in
 	--na|--send-all-to-desktop)
-		_desk_or_node node 'any.local' -d "${target_desktop}"
+		_desk_or_node node 'any.local' -d "$target_desktop"
 		;;
 	--ns|--send-focused-to-desktop)
-		_desk_or_node node focused -d "${target_desktop}"
+		_desk_or_node node focused -d "$target_desktop"
 		;;
 	--nm|--send-focused-to-next-monitor)
-		_desk_or_node monitor node focused -d "${target_desktop}"
+		_desk_or_node monitor node focused -d "$target_desktop"
 		;;
 	--da|--activate-desktop-and-place-receptacle)
-		_desk_or_node monitor node @"$target_desktop":/ -i && bspc desktop -a "${target_desktop}"
+		_desk_or_node monitor node @"$target_desktop":/ -i && bspc desktop -a "$target_desktop"
 		;;
 	--df|--focus-desktop)
-		_desk_or_node desktop -f "${target_desktop}"
+		_desk_or_node desktop -f "$target_desktop"
 		;;
 	*)
 		echo "< $option > is not a valid option."

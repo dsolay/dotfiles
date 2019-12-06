@@ -98,7 +98,7 @@ ctrl + alt + {Home,End,Delete}
 # terminals, like a barbarian!  Watch my screen cast on the matter:
 # https://protesilaos.com/codelog/2019-01-13-tmux-demo-bspwm/
 super + {_, shift + } Return
-	{xterm -e tmux new-session -A -s 'Default', urxvt}
+	{xterm -e tmux new-session -A -s 'Solay', xterm}
 
 # GUI programs.  Where these are alternatives to common CLI tools they
 # are mapped to the same number as their counterparts, but prepended

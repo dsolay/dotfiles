@@ -75,6 +75,19 @@ bspwm_laptop_dual_monitor() {
 	fi
 }
 
+bspwm_fix_hdmi_overscan() {
+	local MATCH_SCREEN=$1
+	local UNDERSCAN_VB=$2
+	local UNDERSCAN_HB=$3
+
+	if [ "$(command -v xrandr 2> /dev/null)" ]; then
+		if [ "$(xrandr --query | grep "${MATCH_SCREEN} connected")" ]; then
+			echo "Fix underscan..."
+			xrandr --output ${MATCH_SCREEN} --set underscan on --set "underscan vborder" ${UNDERSCAN_VB} --set "underscan hborder" ${UNDERSCAN_HB} 
+		fi
+	fi
+}
+
 # Run commands depending on the host computer.
 case "$(hostname)" in
 	"$my_laptop_hostname")
@@ -95,8 +108,11 @@ case "$(hostname)" in
 		fi
 		;;
 	*)
-		echo "You are not on $my_laptop_hostname"
+		echo "You are on $my_desktop_hostname"
 		echo "Defaulting to generic workspace configurations"
 		bspwm_generic_workspaces
+
+		# Run this command for each screen that has overscan issue
+		bspwm_fix_hdmi_overscan "HDMI-A-0" "42" "70"
 		;;
 esac

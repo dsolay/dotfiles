@@ -41,7 +41,7 @@ my_dmenu() {
 
 # Possible actions (see case statement at the end for the actual
 # commands)
-actions=('Quit session' 'Lock screen' 'Switch users' 'Reboot' 'Shutdown')
+actions=('Logout' 'Lock screen' 'Switch users' 'Reboot' 'Shutdown')
 
 # List actions to choose from
 list_actions() {
@@ -56,6 +56,9 @@ case "$choice" in
 	Q*)
 		bspc quit
 		;;
+	Logout)
+		pkill -KILL -U $USER
+		;;	
 	L*)
 		slock
 		;;

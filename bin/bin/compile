@@ -1,0 +1,99 @@
+#! /bin/bash
+
+URL="https://aur.archlinux.org"
+ARCH="x86_64"
+LOG="${HOME}/.log/compile.log"
+BUIDLDEST="${HOME}/Build"
+KEY=""
+
+Name=$(basename "$0")
+Version="1.0"
+
+OPTS=$(getopt -o vhk: --long version,help,key: -n 'compile' -- "$@")
+
+if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
+
+eval set -- "$OPTS"
+
+_usage() {
+    cat <<- EOF
+Usage:   $Name [options]
+
+Options:
+     -h, --help        Display this message
+     -v, --version     Display script version
+     -k, --key         Persistant calculator dialog
+
+EOF
+}
+
+#  Handle command line arguments
+while true; do
+    case $1 in
+        -h | --help )
+            _usage
+            exit 0
+            ;;
+        -v | --version )
+            echo -e "$Name -- Version $Version"
+            exit 0
+            ;;
+        -k | --key )
+            case "$2" in
+                "")
+                    echo -e "you must specify a value for key"
+                    shift 2
+                    exit 1
+                ;;
+                *) KEY=$2 ; shift 2 ;;
+            esac
+            ;;
+        -- ) shift; break
+            ;;
+        * )
+            echo -e "Option does not exist"
+            _usage
+            exit 1
+            ;;
+    esac
+done
+
+function init_log() {
+    exec > >(tee -a $LOG)
+    exec 2> >(tee -a $LOG >&2)
+    set -o xtrace
+}
+
+function compile_package() {
+	mkdir -p $BUIDLDEST
+
+	for PACKAGE in $@; do
+
+		if [[ ! -d $BUIDLDEST/$PACKAGE/ ]]; then
+			git clone $URL/$PACKAGE.git $BUIDLDEST/$PACKAGE/
+		fi
+
+		# Dependencias
+		# DEPS=$(cat $BUIDLDEST/$PACKAGE/PKGBUILD | grep '^depends=' | sed "s/[)'(\"]//g" | sed 's/depends=//g' | sed 's/>=\?[0-9.]*//g')
+		# MAKEDEPS=$(cat $BUIDLDEST/$PACKAGE/PKGBUILD | grep '^makedepends=' | sed "s/[)'(\"]//g" | sed 's/makedepends=//g' | sed 's/>=\?[0-9.]*//g')
+		# DEPS64=$(cat $BUIDLDEST/$PACKAGE/PKGBUILD | grep "^depends_${ARCH}=" | sed "s/[)'(\"]//g" | sed "s/depends_${ARCH}=//g" | sed 's/>=\?[0-9.]*//g')
+
+		# if [[ $DEPS || $MAKEDEPS || $DEPS64 ]]; then
+		# 	yaourt --noconfirm --needed -S $DEPS $MAKEDEPS $DEPS64
+		# fi
+
+        cd $BUIDLDEST/$PACKAGE/
+        if [[ $KEY ]]; then
+            makepkg --noconfirm --rmdeps --force --sign --key $KEY -sc
+        else
+            makepkg --noconfirm --rmdeps --force --sign -sc
+        fi
+
+		# if [[ $DEPS || $MAKEDEPS || $DEPS64 ]]; then
+		# 	sudo pacman --noconfirm -Rsnu $DEPS $MAKEDEPS $DEPS64
+		# fi
+	done
+}
+
+init_log
+compile_package $@

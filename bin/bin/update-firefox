@@ -1,0 +1,43 @@
+#! /bin/bash
+
+TEMPDIR=$(mktemp -d "${TMPDIR:-/tmp/}$(basename $0).XXXXXXXXXXXX")
+OUTDIR=/opt/firefox-beta
+
+cleanup() {
+  rm -rf $TEMPDIR
+}
+
+download_firefox() {
+  sudo wget \
+    https://download.mozilla.org/\?product\=firefox-beta-latest-ssl\&os\=linux64\&lang\=en-US \
+    -O $TEMPDIR/firefox-beta-latest.tar.bz2
+}
+
+on_exit() {
+  echo 'Cleaning up...(remove tmp files, etc)'
+  cleanup
+}
+
+on_preExit() {
+  echo
+  echo 'Exiting...' # Runs just before actual exit,
+                    # shell will execute EXIT(0) after finishing this function
+                    # that we hook also in on_exit function
+  exit 2
+}
+
+
+trap on_exit EXIT                           # EXIT = 0
+trap on_preExit HUP INT QUIT TERM STOP PWR  # 1 2 3 15 30
+
+if [[ -d $OUTDIR ]]; then
+  sudo rm -rf $OUTDIR && sudo mkdir $OUTDIR
+
+  download_firefox
+  sudo tar \
+    --extract \
+    --file $TEMPDIR/firefox-beta-latest.tar.bz2 \
+    --directory $OUTDIR \
+    --bzip2 \
+    --strip-components 1
+fi
