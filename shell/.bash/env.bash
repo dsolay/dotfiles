@@ -17,9 +17,10 @@ _checkexec() {
 # `own_script_` to my files.  There are some exceptions though, where I
 # am confident that no conflicts will arrise.  See the 'bin' directory
 # of my dotfiles.
-if [ -d "$HOME/bin" ] ; then
-    appendpath "$HOME/bin"
-fi
+[ -d "$HOME/bin" ] && appendpath "$HOME/bin"
+
+# Include npm package globally to path
+[ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
 
 # Default editor.  On Debian the Vim GUI is provided by a separate
 # package.
@@ -35,7 +36,7 @@ fi
 export BROWSER=/usr/bin/xdg-open
 
 # Directory of pass store
-export PASSWORD_STORE_DIR="/media/Data/Documents/workspace/sypass"
+export PASSWORD_STORE_DIR="/home/ernest/workspace/sypass"
 
 # XDG Paths
 export XDG_CONFIG_HOME="$HOME/.config"

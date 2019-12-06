@@ -36,7 +36,7 @@ xset dpms 3600 3700 4000
 # keyboard repeat rate
 xset r rate 400 50
 kbdrate -d 400 -r 50
-setxkbmap -model pc105 -layout us,es -variant ,deadtilde -option grp:alt_shift_toggle
+# setxkbmap -model pc105 -layout us,es -variant ,deadtilde -option grp:alt_shift_toggle
 
 # simulate Alt+F1 with just pressing Super
 if hash ksuperkey &>/dev/null; then

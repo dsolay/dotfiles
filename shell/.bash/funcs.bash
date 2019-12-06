@@ -539,7 +539,7 @@ terminate() {
 }
 
 dlna() {
-    rm ~/.config/minidlna/minidlna.log
+    [ -f ~/.config/minidlna/minidlna.log ] && rm ~/.config/minidlna/minidlna.log
     minidlnad -R -f /home/$USER/.config/minidlna/minidlna.conf -P /home/$USER/.config/minidlna/minidlna.pid
 }
 
