@@ -32,7 +32,7 @@ xterm*dynamicColors: true
 xterm*toolBar: false
 xterm*scrollBar: false
 xterm*geometry: 80x24
-xterm*internalBorder: 0
+xterm*internalBorder: 10
 
 ! Cursor
 ! Allowing the cursor to use the reverse colour of the background or
@@ -68,7 +68,9 @@ xterm*highlightTextColor: XtDefaultBackground
 ! font will be used if the one before is not available.  "Monospace" is
 ! a fontconfig alias that ultimately points to "DejaVu Sans Mono" (see
 ! my dotfiles fontconfig).
-xterm*faceName: Fira Code:size=10,Hack,Monospace
+!!xterm*faceName: Fira Code:size=10,Hack,Monospace
+xterm*faceName: Inconsolata Nerd Font Mono:size=12:minspace=False
+!!xterm*faceName: Wuncon Siji:size=12:minspace=False
 xterm*faceSize: 9.5
 xterm*renderFont: true
 xterm*boldColors: false
@@ -194,8 +196,8 @@ URxvt*color15:                    	#fdf6e3
 ! |- Definimos el tipo de fuente a usar (para obtener una lista completa de fuentes disponibles en su sistema use “fc-list” en su consola).
 !!URxvt*font:                       	xft:FuraCode Nerd Font:style=Medium,Regular:pixelsize=7:antialias=true:hinting:true
 !!URxvt*font-size.zoomfont: 			xft:FuraCode Nerd Font:pixelsize=7
-URxvt*font:                 		xft:Inconsolata Nerd Font Mono:pixelsize=16:minspace=False, xft:DejaVu Sans:pixelsize=10
-URxvt*boldFont:             		xft:Inconsolata Nerd Font Mono:pixelsize=16:minspace=False, xft:DejaVu Sans:pixelsize=10
+URxvt*font:                 		xft:Inconsolata Nerd Font Mono:pixelsize=16:minspace=False, xft:DejaVu Sans:pixelsize=10, xft:Wuncon Siji:pixelsize=10
+URxvt*boldFont:             		xft:Inconsolata Nerd Font Mono:pixelsize=16:minspace=False, xft:DejaVu Sans:pixelsize=10, xft:Wuncon Siji:pixelsize=10
 URxvt*font-size.step: 				1
 ! URxvt*boldFont:                   fontname
 ! URxvt*italicFont:                 fontname
@@ -260,6 +262,8 @@ URxvt*letterSpace:                	0
 ! URxvt*url-launcher:               string
 URxvt*cursorBlink: 					true
 URxvt*saveline: 					2048
+URxvt.xftAntialias:     			true
+URxvt.xftHinting:					true
 
 ! The Terminus font uses the following X-names:
 ! -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
