@@ -18,6 +18,8 @@
 **/.config/newsboat/urls
 **/.vim/.netrwhist
 **/.vim/swap
+**/.config/minidlna/cache
+**/.config/minidlna/minidlna.log
 **/.wallpaper.jpg
 *.directory
 *.log

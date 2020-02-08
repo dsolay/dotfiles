@@ -529,8 +529,11 @@ booting() {
 #     && sudo mkfs."${2}" -F 32 "${1}1" \
 # }
 
-ssl-cert(){
-    openssl req -newkey rsa:4096 -x509 -sha256 -days 3650 -nodes -out $1.crt -keyout $1.key
+genssl(){
+    # openssl req -newkey rsa:4096 -x509 -sha256 -days 3650 -nodes -out $1.crt -keyout $1.key
+    openssl genrsa -out "$1.key" 2048 \
+    && openssl req -new -key "$1.key" -out "$1.csr" \
+    && openssl x509 -req -days 365 -in "$1.csr" -signkey "$1.key" -out "$1.crt"
 }
 
 
@@ -565,7 +568,7 @@ encrypt() {
 }
 
 decrypt() {
-    gpg --decrypt-files $2
+    gpg --decrypt-files $1
 }
 
 ekey() {

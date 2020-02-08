@@ -88,5 +88,8 @@ _checkexec lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 # Load functions
 [ -f ~/.bash/funcs.bash ] && . ~/.bash/funcs.bash
 
+# Load virtualenvwrapper
+[ -f /usr/bin/virtualenvwrapper.sh ] && source /usr/bin/virtualenvwrapper.sh
+
 # Use prompt startship
 _checkexec starship && eval "$(starship init bash)"

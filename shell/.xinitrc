@@ -60,29 +60,13 @@ xsetroot -cursor_name left_ptr
 # nvidia-settings -a InitialPixmapPlacement=2
 
 # Do NOT put commands below the exec lines
-get_session(){
-	local dbus_args=(--sh-syntax --exit-with-session)
+exec_session(){
 	case $SESSION in
-		awesome) dbus_args+=(awesome) ;;
-		bspwm) dbus_args+=(bspwm) ;;
-		budgie) dbus_args+=(budgie-desktop) ;;
-		cinnamon) dbus_args+=(cinnamon-session) ;;
-		deepin) dbus_args+=(startdde) ;;
-		enlightenment) dbus_args+=(enlightenment_start) ;;
-		fluxbox) dbus_args+=(startfluxbox) ;;
-		gnome) dbus_args+=(gnome-session) ;;
-		i3|i3wm) dbus_args+=(i3 --shmlog-size 0) ;;
-		jwm) dbus_args+=(jwm) ;;
-		kde) dbus_args+=(startkde) ;;
-		lxde) dbus_args+=(startlxde) ;;
-		lxqt) dbus_args+=(lxqt-session) ;;
-		mate) dbus_args+=(mate-session) ;;
-		xfce) dbus_args+=(xfce4-session) ;;
-		openbox) dbus_args+=(openbox-session) ;;
-		*) dbus_args+=($SESSION) ;;
+		bspwm) exec bspwm ;;
+		i3|i3wm) exec i3 --shmlog-size 0 ;;
+		mate) exec mate-session ;;
+		*) exec bspwm ;;
 	esac
-
-	echo "dbus-launch ${dbus_args[*]}"
 }
 
-exec $(get_session)
+exec_session

@@ -61,7 +61,8 @@ window_instance="$3"
 window_title="$(xwininfo -id "$window_id" | sed ' /^xwininfo/!d ; s,.*"\(.*\)".*,\1,')"
 
 case "$window_class" in
-	[Mm]pv|[Pp]avucontrol|[Vv]lc|[Ee]o[mg]|[Ff]eh|[Rr]istretto|[Ss]xiv|[Aa]tril|[Ee]vince|[Zz]athura|my_float_window|[Pp]inentry-gtk-2)
+	[Mm]pv|[Pp]avucontrol|[Vv]lc|[Ee]o[mg]|[Ff]eh|[Rr]istretto|[Ss]xiv|[Aa]tril|[Ee]vince|[Zz]athura|my_float_window|[Pp]inentry-gtk-2|\
+	[Mm]ate-control-center|[Mm]ate-appearance-properties|[Gg]cr-prompter)
 		echo "state=floating"
 		echo "center=on"
 		;;

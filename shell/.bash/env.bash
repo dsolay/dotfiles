@@ -19,9 +19,6 @@ _checkexec() {
 # of my dotfiles.
 [ -d "$HOME/bin" ] && appendpath "$HOME/bin"
 
-# Include npm package globally to path
-[ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
-
 # Default editor.  On Debian the Vim GUI is provided by a separate
 # package.
 if _checkexec code; then
@@ -35,8 +32,9 @@ fi
 # Default browser.  This leverages the MIME list.
 export BROWSER=/usr/bin/xdg-open
 
-# Directory of pass store
+# Pass config
 export PASSWORD_STORE_DIR="/home/ernest/workspace/sypass"
+export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 
 # XDG Paths
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -56,6 +54,12 @@ export PIPENV_VENV_IN_PROJECT=1
 
 # npm
 export NPM_HOME="$HOME/.npm-global"
+# Include npm package globally to path
+[ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
 
 # gpg
 export GNUPGHOME="~/.gnupg/"
+
+# Python env
+# export WORKON_HOME=$HOME/.virtualenvs   # Optional
+# export PROJECT_HOME=$HOME/projects      # Optional
