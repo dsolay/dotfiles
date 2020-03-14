@@ -63,3 +63,6 @@ export GNUPGHOME="~/.gnupg/"
 # Python env
 # export WORKON_HOME=$HOME/.virtualenvs   # Optional
 # export PROJECT_HOME=$HOME/projects      # Optional
+
+# QT
+export QT_PLUGIN_PATH=/usr/lib/qt/plugins
