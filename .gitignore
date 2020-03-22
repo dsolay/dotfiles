@@ -26,3 +26,5 @@
 *.sql
 *.sqlite
 *.uuid
+**/spotify-tui/.*
+**/spotify-tui/client.yml
