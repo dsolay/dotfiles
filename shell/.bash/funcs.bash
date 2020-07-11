@@ -681,3 +681,16 @@ function fix_ammend_pull() {
         git switch $1
     fi
 }
+
+function merge-pdf() {
+    gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=merged.pdf $@
+}
+
+function split-pdf() {
+    gs -sDEVICE=pdfwrite \
+        -q -dNOPAUSE -dBATCH \
+        -sOutputFile=splited.pdf \
+        -dFirstPage=$1 \
+        -dLastPage=$2 \
+        $3
+}
