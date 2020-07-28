@@ -84,6 +84,9 @@ set hidden
 " Set leader key
 let mapleader = ","
 
+" Save
+inoremap <C-s> <Esc>:w<CR>
+
 " Go to the nth tabpage
 nnoremap <A-F1> 1gt
 nnoremap <A-F2> 2gt
@@ -97,12 +100,12 @@ nnoremap <A-F9> 9gt
 nnoremap <A-F10> 10gt
 
 " Enable Buffer navigation like firefox
-nnoremap  <Leader><S-tab>   :bprevious<CR>
-nnoremap  <S-tab>           :bNext<CR>
-noremap   <A-q>             <Esc>:bd<CR>
-inoremap  <Leader><S-tab>   <Esc>:bprevious<CR>i
-inoremap  <S-tab>           <Esc>:bNext<CR>i
-inoremap  <A-q>             <Esc>:bd<CR>
+nnoremap  <Leader><tab>   :bp<CR>
+nnoremap  <S-tab>         :bn<CR>
+noremap   <A-q>           <Esc>:bd<CR>
+inoremap  <Leader><tab>   <Esc>:bprevious<CR>i
+inoremap  <S-tab>         <Esc>:bNext<CR>i
+inoremap  <A-q>           <Esc>:bd<CR>
 
 " Show a list of all open buffers
 nnoremap <Leader>bb :buffers<CR>:b<space>
@@ -111,8 +114,8 @@ nnoremap <Leader>bb :buffers<CR>:b<space>
 nnoremap <Leader><S-tab> :b#<CR>
 
 " Zoom window split
-noremap Zz <silent> :NERDTreeClose<CR> <bar> <c-w>_ <bar> <c-w><bar>
+noremap <silent> Zz :NERDTreeClose<CR> <bar> <c-w>_ <bar> <c-w><bar>
 noremap Zo <c-w>= <bar> :T<CR>
 
 " Exit from terminal mode
-:tnoremap <Esc> <C-\><C-n>
+:tnoremap <A-q> <C-\><C-n>

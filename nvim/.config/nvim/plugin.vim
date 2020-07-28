@@ -20,7 +20,7 @@ Plug 'tpope/vim-fugitive'
 " Fuzzy file name searcher
 Plug 'ctrlpvim/ctrlp.vim'
 
-" Adds the ability to close all except the current buffer
+"Adds the ability to close all except the current buffer
 Plug 'vim-scripts/BufOnly.vim'
 
 " Unfortunately, neovim doesn't support bindeval, so I can't use powerline.
@@ -49,3 +49,6 @@ Plug 'junegunn/vim-slash'
 
 " vscode autocmpletion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Toggle comments
+Plug 'preservim/nerdcommenter'

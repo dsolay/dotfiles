@@ -21,6 +21,8 @@ command T NERDTree
 " abbreviate T to t
 cabbrev t T
 
+let g:NERDTreeGitStatusShowIgnored = 1
+
 " Enable the powerline fonts.
 let g:airline_powerline_fonts = 1
 
