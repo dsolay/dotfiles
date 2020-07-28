@@ -28,3 +28,4 @@
 *.uuid
 **/spotify-tui/.*
 **/spotify-tui/client.yml
+nvim/.config/nvim/plugged
