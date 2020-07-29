@@ -68,7 +68,7 @@ case "$window_class" in
 		;;
 	[Pp]olybar)
 		echo "manage=off"
-  		xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" $window_id
+  	xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" $window_id
 		;;
 	[Cc]aja)
 		echo "desktop=^3"

@@ -1,11 +1,11 @@
 #!/bin/sh
 
-player_status=$(playerctl --player=spotifyd status 2> /dev/null)
+player_status=$(playerctl status 2> /dev/null)
 
 if [ "$player_status" = "Playing" ]; then
-    echo "$(playerctl --player=spotifyd metadata --format " {{ artist }} - {{ title }}")"
+    echo "#1 $(playerctl metadata artist) - $(playerctl metadata title)"
 elif [ "$player_status" = "Paused" ]; then
-    echo ""
+    echo "#2 $(playerctl metadata artist) - $(playerctl metadata title)"
 else
-    echo " $player_status"
+    echo "#3"
 fi

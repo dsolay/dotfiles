@@ -40,7 +40,7 @@ export PS2="> "
 # it's already enabled in /etc/bash.bashrc and /etc/profile sources
 # /etc/bash.bashrc).
 if ! shopt -oq posix; then
-	[ -f ~/.bash/bash-completion.bash ] && . ~/.bash/bash-completion.bash 
+	[ -f ~/.bash/bash-completion.bash ] && . ~/.bash/bash-completion.bash
 fi
 
 if [ "$(command -v fzf 2> /dev/null)" ]; then

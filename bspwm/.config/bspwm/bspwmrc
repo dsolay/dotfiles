@@ -112,9 +112,7 @@ _check sxhkd && sxhkd -c "$HOME"/.config/sxhkd/sxhkdrc{,_bspc} &
 # fi
 
 # Launch polybar.
-if _check polybar; then
-	~/.config/polybar/launch.sh
-fi
+_check polybar && ~/.config/polybar/launch.sh
 
 # Display compositor for enabling shadow effects and transparency
 # (disable it if performance is bad---also bear in mind that I do not

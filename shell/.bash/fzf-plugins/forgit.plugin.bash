@@ -51,7 +51,8 @@ forgit_diff() {
 
 # git add selector
 forgit_add() {
-    forgit_inside_work_tree || return 1
+    echo "git add"
+		forgit_inside_work_tree || return 1
     local changed unmerged untracked files opts
     changed=$(git config --get-color color.status.changed red)
     unmerged=$(git config --get-color color.status.unmerged red)
@@ -68,6 +69,7 @@ forgit_add() {
         awk '{printf "[%10s]  ", $1; $1=""; print $0}' |
         FZF_DEFAULT_OPTS="$opts" fzf | cut -d] -f2 |
         sed 's/.* -> //') # for rename case
+		echo $files
     [[ -n "$files" ]] && echo "$files" |xargs -I{} git add {} && git status --short && return
     echo 'Nothing to add.'
 }
