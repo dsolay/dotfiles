@@ -85,7 +85,7 @@ set hidden
 let mapleader = ","
 
 " Save
-inoremap <C-s> <Esc>:w<CR>
+inoremap <C-s> <Esc>:w<CR>i
 
 " Go to the nth tabpage
 nnoremap <A-F1> 1gt

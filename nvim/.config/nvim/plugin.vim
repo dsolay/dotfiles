@@ -52,3 +52,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Toggle comments
 Plug 'preservim/nerdcommenter'
+
+" shows a git diff in the sign column
+Plug 'airblade/vim-gitgutter'
