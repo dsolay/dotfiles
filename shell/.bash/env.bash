@@ -21,15 +21,8 @@ _checkexec() {
 
 # Default editor.  On Debian the Vim GUI is provided by a separate
 # package.
-if _checkexec code; then
-	export VISUAL="code"
-	export EDITOR=vim
-else
-	export VISUAL=vim
-	export EDITOR=$VISUAL
-fi
+export EDITOR=nvim
 
-# Default browser.  This leverages the MIME list.
 export BROWSER=/usr/bin/xdg-open
 
 # Pass config
