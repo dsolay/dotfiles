@@ -11,9 +11,9 @@ function toggle_redshift() {
 
 function print_icon() {
   if [[ $(pidof redshift) ]]; then
-   echo ""
+   echo ""
   else
-   echo ""
+   echo ""
   fi
 }
 
