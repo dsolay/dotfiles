@@ -350,6 +350,8 @@ if _checkexec git; then
 	_checkexec diff-so-fancy && _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
 fi
 
+alias ide="tmuxp load develop"
+
 # Update fonts
 alias fup="fc-cache -vf"
 

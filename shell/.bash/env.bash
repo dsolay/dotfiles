@@ -19,6 +19,9 @@ _checkexec() {
 # of my dotfiles.
 [ -d "$HOME/bin" ] && appendpath "$HOME/bin"
 
+# Add pip user packages to PATH
+[ -d "$HOME/.local/bin" ] && appendpath "$HOME/.local/bin"
+
 # Default editor.  On Debian the Vim GUI is provided by a separate
 # package.
 export EDITOR=nvim
