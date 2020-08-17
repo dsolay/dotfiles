@@ -55,3 +55,9 @@ Plug 'preservim/nerdcommenter'
 
 " shows a git diff in the sign column
 Plug 'airblade/vim-gitgutter'
+
+" Editorconfig
+Plug 'editorconfig/editorconfig-vim'
+
+" Documentation generator
+Plug 'kkoomen/vim-doge'

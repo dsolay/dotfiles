@@ -100,10 +100,10 @@ nnoremap <A-F9> 9gt
 nnoremap <A-F10> 10gt
 
 " Enable Buffer navigation like firefox
-nnoremap  <Leader><tab>   :bp<CR>
+nnoremap  <Leader><S-tab>   :bp<CR>
 nnoremap  <S-tab>         :bn<CR>
 noremap   <A-q>           <Esc>:bd<CR>
-inoremap  <Leader><tab>   <Esc>:bprevious<CR>i
+inoremap  <Leader><S-tab>   <Esc>:bprevious<CR>i
 inoremap  <S-tab>         <Esc>:bNext<CR>i
 inoremap  <A-q>           <Esc>:bd<CR>
 
@@ -111,7 +111,7 @@ inoremap  <A-q>           <Esc>:bd<CR>
 nnoremap <Leader>bb :buffers<CR>:b<space>
 
 " toggles between the current and most recently used buffers
-nnoremap <Leader><S-tab> :b#<CR>
+nnoremap <Leader><tab> :b#<CR>
 
 " Zoom window split
 noremap <silent> Zz :NERDTreeClose<CR> <bar> <c-w>_ <bar> <c-w><bar>
