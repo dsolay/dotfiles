@@ -61,3 +61,6 @@ Plug 'editorconfig/editorconfig-vim'
 
 " Documentation generator
 Plug 'kkoomen/vim-doge'
+
+" Add Pug/Jade support
+Plug 'digitaltoad/vim-pug'
