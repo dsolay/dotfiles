@@ -64,3 +64,6 @@ Plug 'kkoomen/vim-doge'
 
 " Add Pug/Jade support
 Plug 'digitaltoad/vim-pug'
+
+" Vue support
+Plug 'posva/vim-vue'

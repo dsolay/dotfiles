@@ -265,9 +265,17 @@ noremap <Leader>gs :CocSearch
 let g:ale_php_phpcbf_standard='PSR12'
 let g:ale_php_phpcs_standard='phpcs.xml.dist'
 let g:ale_php_phpmd_ruleset='phpmd.xml'
+let g:ale_linter_aliases = {'vue': ['css', 'javascript', 'typescript']}
+let g:ale_linters = {
+  \ 'javascript': ['eslint', 'flow'],
+  \ 'typescript': ['eslint', 'tslint', 'tsserver'],
+  \ 'vue': ['eslint', 'stylelint', 'vls'],
+	\}
 let g:ale_fixers = {
   \ '*': ['remove_trailing_lines', 'trim_whitespace'],
   \ 'php': ['phpcbf', 'php_cs_fixer', 'remove_trailing_lines', 'trim_whitespace'],
+	\ 'javascript': ['prettier', 'eslint'],
+  \ 'vue': ['prettier', 'eslint']
   \}
 
 "
