@@ -47,7 +47,11 @@ autocmd Filetype gitcommit setl colorcolumn=72
 " Will search the file as you type your query
 set incsearch
 
-set termguicolors
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 
 " This will close the current buffer without closing the window
 command Bd bp|bd #
@@ -112,6 +116,9 @@ nnoremap <Leader><C-e> ggVG
 " fix indentation
 nnoremap <Leader>fi gg=G
 
+" Clear search
+noremap <silent> <Leader><ESC> :let @/ = ""<CR>
+
 " Go to the nth tabpage
 nnoremap <A-F1> 1gt
 nnoremap <A-F2> 2gt
@@ -139,8 +146,8 @@ nnoremap <Leader>bb :buffers<CR>:b<space>
 nnoremap <Leader><tab> :b#<CR>
 
 " Zoom window split
-noremap Zz <silent> :NERDTreeClose<CR> <bar> <c-w>_ <bar> <c-w><bar>
-noremap Zo <c-w>= <bar> :T<CR>
+nnoremap Zz <silent> :NERDTreeClose<CR> <bar> <c-w>_ <bar> <c-w><bar>
+nnoremap Zo <c-w>= <bar> :T<CR>
 
 "
 nnoremap <Leader><Down><Down> :! tmux select-pane -t 2<CR>
