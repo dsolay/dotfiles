@@ -1,0 +1,25 @@
+{
+  "diagnostic.warningSign": "⚡",
+  "diagnostic.errorSign": "✘",
+  "diagnostic.hintSign": "瘟",
+  "diagnostic.infoSign": "",
+  "diagnostic.enable": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "Markdown",
+    "javascript",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "html",
+    "rust"
+  ],
+  "javascript.suggestionActions.enabled": false,
+  "prettier.singleQuote": true,
+  "prettier.eslintIntegration": true,
+  "prettier.stylelintIntegration": false,
+  "prettier.disableSuccessMessage": true,
+  "suggest.removeDuplicateItems": true,
+  "tsserver.npm": "~/.npm-global/bin/npm",
+  "css.validate": false,
+  "scss.validate": false
+}

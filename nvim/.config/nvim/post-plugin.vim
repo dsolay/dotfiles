@@ -109,10 +109,10 @@ endif
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-  \ pumvisible() ? coc#_select_confirm() :
-  \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-  \ <SID>check_back_space() ? "\<TAB>" :
-  \ coc#refresh()
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -244,18 +244,9 @@ noremap <Leader>gs :CocSearch
 let g:ale_php_phpcbf_standard='PSR12'
 let g:ale_php_phpcs_standard='phpcs.xml.dist'
 let g:ale_php_phpmd_ruleset='phpmd.xml'
-let g:ale_linter_aliases = {'vue': ['css', 'javascript', 'typescript']}
-let g:ale_linters = {
-  \ 'javascript': ['eslint', 'flow'],
-  \ 'typescript': ['eslint', 'tslint', 'tsserver'],
-  \ 'vue': ['eslint', 'stylelint', 'vls'],
-	\}
 let g:ale_fixers = {
-  \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-  \ 'php': ['phpcbf', 'php_cs_fixer', 'remove_trailing_lines', 'trim_whitespace'],
-	\ 'javascript': ['prettier', 'eslint'],
-  \ 'vue': ['prettier', 'eslint']
-  \}
+      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \}
 
 "
 "	~~ Vim PHP refactoring toolbox ~~

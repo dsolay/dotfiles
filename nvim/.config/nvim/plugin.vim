@@ -2,6 +2,8 @@
 " loaded. Its in a seperate file since these need to be places after the
 " plug#end call.
 
+call plug#begin("~/.local/share/nvim/plugged")
+
 " Download a better colorscheme
 Plug 'morhetz/gruvbox'
 
@@ -58,3 +60,17 @@ Plug 'ryanoasis/vim-devicons'
 
 " Use release branch (recommend)
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Fuzzy search
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" Syntax Highlighting And Indentation For 100+ Languages
+Plug 'sheerun/vim-polyglot'
+
+" Snippets files for various programming languages.
+Plug 'honza/vim-snippets'
+
+Plug 'posva/vim-vue'
+
+call plug#end()
