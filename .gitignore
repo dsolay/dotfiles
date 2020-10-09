@@ -30,3 +30,4 @@
 **/spotify-tui/client.yml
 nvim/.config/nvim/plugged
 tmux/.tmux/plugins
+tags

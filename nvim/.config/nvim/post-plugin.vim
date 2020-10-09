@@ -1,12 +1,12 @@
 " Buffer delete all others (delete all except current one)
-command Bdo BufOnly
+command! Bdo BufOnly
 cabbrev bdo BufOnly
 
 " Visual diff command.
-command Ldiffthis Linediff
+command! Ldiffthis Linediff
 cabbrev ldiffthis Linediff
 
-command Ldiffoff Linediffreset
+command! Ldiffoff Linediffreset
 cabbrev ldiffoff LinediffReset
 
 " Load colors! On the initial install this will error out, so make it silent
@@ -44,7 +44,7 @@ let g:NERDTreeMouseMode = 3
 let g:NERDTreeGitStatusShowIgnored = 1
 
 " Add a mapping for the NERDTree command, so you can just type :T to open
-command T NERDTree
+command! T NERDTree
 
 " abbreviate T to t
 cabbrev t T
@@ -59,11 +59,10 @@ autocmd Filetype yaml setl expandtab
 " Highlighting on top of the error gutter is a bit overkill...
 let g:ale_set_highlights = 0
 
+" ALE signs
 let g:ale_sign_error = '✘'
-highlight ALEErrorSign ctermfg=DarkRed ctermbg=NONE
-
-let g:ale_sign_warning = '◉'
-highlight ALEWarningSign ctermfg=Yellow ctermbg=NONE
+let g:ale_sign_warning = ''
+let g:ale_sign_info = ''
 
 " disable linting while typing
 let g:ale_lint_on_text_changed = 'never'
@@ -262,3 +261,22 @@ let g:vim_php_refactoring_phpdoc = "pdv#DocumentCurrentLine"
 "
 noremap <Leader>dg :DogeGenerate
 noremap <Leader>qdg :DogeGenerate<CR>
+
+"
+" ~~ Vimade ~~
+"
+
+let g:vimade = {}
+let g:vimade.fadelevel = 0.7
+let g:vimade.enablesigns = 0
+
+"
+" ~~ Emmet ~~
+"
+
+"Redefine trigger key
+let g:user_emmet_leader_key='<C-z>'
+
+" Enable just for html/css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall

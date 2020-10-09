@@ -1,6 +1,9 @@
 " Change leader key from \ to ,
 let mapleader = ","
 
+" Reload vim configuration
+nnoremap <Leader>sv :source $MYVIMRC<CR>
+
 " Disable F1 bringing up the help doc every time
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>

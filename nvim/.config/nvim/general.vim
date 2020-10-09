@@ -45,17 +45,24 @@ augroup templatesNew
 augroup END
 "}}}
 
+" Highlight line only in crrent window
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
+
 " Stop concealing quotes in JSON
 let g:vim_json_syntax_conceal = 0
 
 " Enable JSX syntax highlighting in .js files
 let g:jsx_ext_required = 0
 
-:augroup numbertoggle
-:  autocmd!
-:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-:augroup END
+"augroup numbertoggle
+"  autocmd!
+"  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+"  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+"augroup END
 
 
 " More natural split opening.

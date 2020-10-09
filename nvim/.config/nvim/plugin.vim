@@ -2,8 +2,6 @@
 " loaded. Its in a seperate file since these need to be places after the
 " plug#end call.
 
-call plug#begin("~/.local/share/nvim/plugged")
-
 " Download a better colorscheme
 Plug 'morhetz/gruvbox'
 
@@ -71,6 +69,14 @@ Plug 'sheerun/vim-polyglot'
 " Snippets files for various programming languages.
 Plug 'honza/vim-snippets'
 
-Plug 'posva/vim-vue'
+" Gutentags is a plugin that takes care of the much needed management of tags files in Vim
+Plug 'ludovicchabant/vim-gutentags'
 
-call plug#end()
+" An eye catching plugin that fades your inactive buffers and preserves syntax highlighting!!!!
+Plug 'TaDaa/vimade'
+
+" FocusGained and FocusLost autocommand events are not working in terminal vim. This plugin restores them when using vim inside Tmux.
+Plug 'tmux-plugins/vim-tmux-focus-events'
+
+" Emmet extension
+Plug 'mattn/emmet-vim'
