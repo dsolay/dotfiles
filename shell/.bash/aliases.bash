@@ -79,7 +79,7 @@ if _checkexec pacman; then
 	# act on package targets
 	alias pin="sudo pacman -S"
 	alias pinu="sudo pacman -U"
-    alias pun='sudo pacman -Rs'   # remove
+	alias pun='sudo pacman -Rs'   # remove
 	alias prm='sudo pacman -R --nosave --recursive' # really remove, configs and all
 
 	# list local packages
@@ -94,29 +94,29 @@ if _checkexec pacman; then
 fi
 
 if _checkexec docker; then
-    alias dp='docker pull'
-    alias dps='docker ps'
-    alias dpsa='docker ps -a'
-    alias dimg='docker images'
-    alias dit='docker run -it --rm'
+	alias dp='docker pull'
+	alias dps='docker ps'
+	alias dpsa='docker ps -a'
+	alias dimg='docker images'
+	alias dit='docker run -it --rm'
 	alias ditx='docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix'
-    alias deit='docker exec -it'
-    alias ds='docker start'
-    alias drm='docker rm -f $(docker ps -aq)'
-    alias drmi='docker rmi'
-    alias db='docker build -t'
-    alias dlog='docker logs'
+	alias deit='docker exec -it'
+	alias ds='docker start'
+	alias drm='docker rm -f $(docker ps -aq)'
+	alias drmi='docker rmi'
+	alias db='docker build -t'
+	alias dlog='docker logs'
 
-    if _checkexec docker-compose; then
-        alias dc='docker-compose'
-        alias dcb='docker-compose build'
-        alias dcps='docker-compose ps'
-        alias dcup='docker-compose up -d'
-        alias dcrm='docker-compose rm'
-        alias dcst='docker-compose stop'
-        alias dcexc='docker-compose exec'
-        alias dclog='docker-compose logs'
-    fi
+	if _checkexec docker-compose; then
+		alias dc='docker-compose'
+		alias dcb='docker-compose build'
+		alias dcps='docker-compose ps'
+		alias dcup='docker-compose up -d'
+		alias dcrm='docker-compose rm'
+		alias dcst='docker-compose stop'
+		alias dcexc='docker-compose exec'
+		alias dclog='docker-compose logs'
+	fi
 fi
 
 # Common tasks and utilities
@@ -153,8 +153,8 @@ alias df='df -kTh'
 
 # Aliases inside tmux session
 if [[ $TERM == *tmux* ]]; then
-    alias :sp='tmux split-window'
-    alias :vs='tmux split-window -h'
+	alias :sp='tmux split-window'
+	alias :vs='tmux split-window -h'
 fi
 alias rtmux='tmux source-file ~/.tmux.conf'
 alias tkw='tmux kill-window -t'
@@ -163,18 +163,18 @@ alias tmew='tmux new'
 
 # Update mirror list
 if _checkexec reflector; then
-    alias mir='sudo reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
+	alias mir='sudo reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
 fi
 
 # Record Screen
 if _checkexec byzanz-record; then
-    alias gif='byzanz-record -x 1090 -w 750 -y 430 -h 480 -v -d 15 ~/Videos/$(date +%a-%d-%S).gif'
+	alias gif='byzanz-record -x 1090 -w 750 -y 430 -h 480 -v -d 15 ~/Videos/$(date +%a-%d-%S).gif'
 fi
 
 alias rec='ffmpeg -video_size 1920x1080 -framerate 60 -f x11grab -i :0.0 -c:v libx264 -qp 0 -preset ultrafast ~/Videos/$(date +%a-%d-%S).mkv'
 
 if _checkexec python; then
-    alias calc='python -qi -c "from math import *"'
+	alias calc='python -qi -c "from math import *"'
 fi
 
 alias brok='sudo find . -type l -! -exec test -e {} \; -print'
@@ -198,8 +198,8 @@ alias off='sudo shutdown -h now'
 
 # _Entering_ Vim is easy.
 if _checkexec vim; then
-    alias v='vim'
-    alias vi='vim'
+	alias v='vim'
+	alias vi='vim'
 fi
 
 # cd into the previous working directory by omitting `cd`.
@@ -288,7 +288,7 @@ fi
 # When I need to copy the contents of a file to the clipboard
 if _checkexec xclip; then
 	alias xclipc='xclip -selection clipboard' # followed by path to file
-    alias copy='xclip -sel clip <'
+	alias copy='xclip -sel clip <'
 fi
 
 # Flatpak commands
@@ -350,7 +350,8 @@ if _checkexec git; then
 	_checkexec diff-so-fancy && _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
 fi
 
-alias ide="tmuxp load develop"
+# Open current directory in nvim
+alias ide="nvim ."
 
 # Update fonts
 alias fup="fc-cache -vf"

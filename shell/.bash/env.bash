@@ -57,5 +57,4 @@ export NPM_HOME="$HOME/.npm-global"
 export GNUPGHOME="~/.gnupg/"
 
 # Python env
-# export WORKON_HOME=$HOME/.virtualenvs   # Optional
-# export PROJECT_HOME=$HOME/projects      # Optional
+export WORKON_HOME=$HOME/.virtualenvs   # Optional
