@@ -122,11 +122,11 @@ monitor = 0
 #   mouse: follow mouse pointer
 #   keyboard: follow window with keyboard focus
 #   none: don't follow anything
-# 
+#
 # "keyboard" needs a windowmanager that exports the
 # _NET_ACTIVE_WINDOW property.
 # This should be the case for almost all modern windowmanagers.
-# 
+#
 # If this option is set to mouse or keyboard, the monitor option
 # will be ignored.
 follow = keyboard
@@ -175,7 +175,7 @@ startup_notification = false
 dmenu = /usr/bin/dmenu -p dunst:
 
 # Browser for opening urls in context menu.
-browser = /usr/bin/xdg-open
+browser = /usr/bin/firefox
 
 # Align icons left/right/off
 icon_position = left
@@ -215,22 +215,16 @@ history = ctrl+shift+grave
 # IMPORTANT: colors have to be defined in quotation marks.
 # Otherwise the "#" and following would be interpreted as a comment.
 [urgency_low]
-# background = "#312e30"
-# foreground = "#949d9f"
 background = "#2b303b"
 foreground = "#c0c5ce"
 timeout = 6
 
 [urgency_normal]
-# background = "#232323"
-# foreground = "#aeadaf"
 background = "#2b303b"
 foreground = "#c0c5ce"
 timeout = 8
 
 [urgency_critical]
-# background = "#d2813d"
-# foreground = "#232323"
 background = "#2b303b"
 foreground = "#bf616a"
 frame_color = "#bf616a"

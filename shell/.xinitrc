@@ -61,12 +61,12 @@ xsetroot -cursor_name left_ptr
 
 # Do NOT put commands below the exec lines
 exec_session(){
-	case $SESSION in
-		bspwm) exec bspwm ;;
-		i3|i3wm) exec i3 --shmlog-size 0 ;;
-		mate) exec mate-session ;;
-		*) exec bspwm ;;
-	esac
+    case $SESSION in
+        bspwm) exec bspwm ;;
+        i3|i3wm) exec i3 --shmlog-size 0 ;;
+        mate) exec mate-session ;;
+        *) exec bspwm ;;
+    esac
 }
 
 exec_session
