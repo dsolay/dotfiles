@@ -1,13 +1,10 @@
 {
   "diagnostic.displayByAle": true,
   "javascript.suggestionActions.enabled": false,
-  "prettier.singleQuote": true,
-  "prettier.eslintIntegration": true,
-  "prettier.stylelintIntegration": false,
-  "prettier.disableSuccessMessage": true,
   "suggest.removeDuplicateItems": true,
-  "tsserver.npm": "~/.npm-global/bin/npm",
   "css.validate": false,
   "scss.validate": false,
+  "prettier.disableLanguages": [],
+  "vetur.format.enable": false,
   "vetur.validation.style": false
 }

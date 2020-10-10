@@ -12,10 +12,15 @@ if (has("nvim"))
 endif
 if (has("termguicolors"))
   set termguicolors
+
+  " This is only necessary if you use \"set termguicolors".
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 
-set t_8b=^[[48;2;%lu;%lu;%lum
-set t_8f=^[[38;2;%lu;%lu;%lum
+" fixes glitch? in colors when using vim with tmux
+set background=dark
+set t_Co=256
 
 " #TEMPLATES {{{
 " Prefill new files created by vim with contents from the following templates
@@ -57,13 +62,6 @@ let g:vim_json_syntax_conceal = 0
 
 " Enable JSX syntax highlighting in .js files
 let g:jsx_ext_required = 0
-
-"augroup numbertoggle
-"  autocmd!
-"  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-"  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-"augroup END
-
 
 " More natural split opening.
 set splitbelow
@@ -110,7 +108,8 @@ set wildignore+=**/node_modules/**,**/dist/**,**_site/**,*.swp,*.png,*.jpg,*.gif
 set clipboard+=unnamedplus
 
 " Toggle Hybrid Numbers in insert and normal mode
-:set number relativenumber
+set number
+set relativenumber
 
 " Show Invisibles
 set list

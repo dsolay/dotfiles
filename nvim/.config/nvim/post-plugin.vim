@@ -12,7 +12,7 @@ cabbrev ldiffoff LinediffReset
 " Load colors! On the initial install this will error out, so make it silent
 " so it installs without issues.
 silent! colorscheme gruvbox
-set background=dark
+" set background=dark
 
 " Enable the powerline fonts.
 let g:airline_powerline_fonts = 1
@@ -280,3 +280,9 @@ let g:user_emmet_leader_key='<C-z>'
 " Enable just for html/css
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
+
+"
+" ~~ Vim devicons ~~
+"
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
