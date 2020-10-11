@@ -87,3 +87,14 @@ nnoremap <Leader><tab> :b#<CR>
 
 nnoremap n nzz
 nnoremap N Nzz
+
+" Multiple replace with s*
+" hit . to repeatedly replace a change to the word under the cursor
+nnoremap <silent> s* :let @/='\<'.expand('<cword>').'\>'<CR>cgn
+xnoremap <silent> s* "sy:let @/=@s<CR>cgn
+
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+vnoremap <leader>d c<c-r>=system('base64 --decode', @")<CR><ESC>
+vnoremap <leader>e c<c-r>=system('base64', @")<CR><ESC>
