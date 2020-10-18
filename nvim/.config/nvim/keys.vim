@@ -42,9 +42,6 @@ nnoremap <leader>s :mksession<CR>
 " turn off search highlights
 nnoremap <leader><space> :nohlsearch<CR>
 
-" Reload Vim config
-nnoremap <Leader>r :so ~/.config/nvim/init.vim<CR>
-
 " Create file under cursor
 :map <leader>gf :e <cfile><cr>
 
