@@ -18,7 +18,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'    " Nerdtree git support!
 
 " Typing
 Plug 'chun-yang/auto-pairs'           " Inserts quotes and parenthesis in pairs as you type.
-Plug 'tpope/vim-surround'             "  The plugin provides mappings to easily delete, change and add such surroundings in pairs.
+Plug 'tpope/vim-surround'             " The plugin provides mappings to easily delete, change and add such surroundings in pairs.
+Plug 'tpope/vim-repeat'               " remaps '.' command in a way that plugins can tap into it.
 
 " Tmux
 Plug 'tmux-plugins/vim-tmux-focus-events' " FocusGained and FocusLost autocommand events in terminal vim when using inside Tmux.
