@@ -1,8 +1,0 @@
-[user]
-	name = Protesilaos Stavrou
-	email = info@protesilaos.com
-	signingkey = 99BD6459CD5CA3EA
-[core]
-	editor = vim
-[commit]
-	gpgsign = true
