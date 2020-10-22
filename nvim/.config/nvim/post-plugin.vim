@@ -9,9 +9,20 @@ cabbrev ldiffthis Linediff
 command! Ldiffoff Linediffreset
 cabbrev ldiffoff LinediffReset
 
+"
+" ~~ Gruvbox theme ~~
+"
+set background=dark
+
+let g:gruvbox_material_enable_italic = 1
+let g:gruvbox_material_enable_bold = 1    " Enable bold in function name
+let g:gruvbox_material_transparent_background = 1
+let g:gruvbox_material_current_word = 'bold'
+let g:gruvbox_material_background = 'soft'
+
 " Load colors! On the initial install this will error out, so make it silent
 " so it installs without issues.
-silent! colorscheme gruvbox
+silent! colorscheme gruvbox-material
 
 "
 " ~~ Airline ~~
@@ -37,7 +48,8 @@ let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#ale#enabled = 1
 
 " Set the theme for vim-airline
-autocmd VimEnter * AirlineTheme gruvbox
+let g:airline_theme = 'gruvbox_material'
+"autocmd VimEnter * AirlineTheme gruvbox
 
 "
 " ~~ NERDTree config ~~
@@ -257,8 +269,8 @@ autocmd FileType html,css EmmetInstall
 "
 " ~~ Vim devicons ~~
 "
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
 
 "
 " ~~ fzf-preview ~~
@@ -266,18 +278,24 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
 nmap <Leader>f [fzf-p]
 xmap <Leader>f [fzf-p]
 
-nnoremap <silent> [fzf-p]p     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
-nnoremap <silent> [fzf-p]gs    :<C-u>CocCommand fzf-preview.GitStatus<CR>
-nnoremap <silent> [fzf-p]ga    :<C-u>CocCommand fzf-preview.GitActions<CR>
-nnoremap <silent> [fzf-p]b     :<C-u>CocCommand fzf-preview.Buffers<CR>
-nnoremap <silent> [fzf-p]B     :<C-u>CocCommand fzf-preview.AllBuffers<CR>
-nnoremap <silent> [fzf-p]o     :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
-nnoremap <silent> [fzf-p]<C-o> :<C-u>CocCommand fzf-preview.Jumps<CR>
-nnoremap <silent> [fzf-p]g;    :<C-u>CocCommand fzf-preview.Changes<CR>
-nnoremap <silent> [fzf-p]/     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
-nnoremap <silent> [fzf-p]*     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
-nnoremap          [fzf-p]gr    :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
-xnoremap          [fzf-p]gr    "sy:CocCommand   fzf-preview.ProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-nnoremap <silent> [fzf-p]t     :<C-u>CocCommand fzf-preview.BufferTags<CR>
-nnoremap <silent> [fzf-p]q     :<C-u>CocCommand fzf-preview.QuickFix<CR>
-nnoremap <silent> [fzf-p]l     :<C-u>CocCommand fzf-preview.LocationList<CR>
+nnoremap <silent> [fzf-p]d      :<C-u>CocCommand fzf-preview.DirectoryFiles<CR>
+nnoremap <silent> [fzf-p]p      :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
+nnoremap <silent> [fzf-p]gs     :<C-u>CocCommand fzf-preview.GitStatus<CR>
+nnoremap <silent> [fzf-p]ga     :<C-u>CocCommand fzf-preview.GitActions<CR>
+nnoremap <silent> [fzf-p]b      :<C-u>CocCommand fzf-preview.Buffers<CR>
+nnoremap <silent> [fzf-p]B      :<C-u>CocCommand fzf-preview.AllBuffers<CR>
+nnoremap <silent> [fzf-p]o      :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
+nnoremap <silent> [fzf-p]<C-o>  :<C-u>CocCommand fzf-preview.Jumps<CR>
+nnoremap <silent> [fzf-p]g;     :<C-u>CocCommand fzf-preview.Changes<CR>
+nnoremap <silent> [fzf-p]/      :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+nnoremap <silent> [fzf-p]*      :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap          [fzf-p]gr     :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
+xnoremap          [fzf-p]gr     "sy:CocCommand   fzf-preview.ProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <silent> [fzf-p]t      :<C-u>CocCommand fzf-preview.BufferTags<CR>
+nnoremap <silent> [fzf-p]q      :<C-u>CocCommand fzf-preview.QuickFix<CR>
+nnoremap <silent> [fzf-p]l      :<C-u>CocCommand fzf-preview.LocationList<CR>
+
+"
+" ~~ Vimux ~~
+"
+noremap <Leader>vp :VimuxPromptCommand<CR>

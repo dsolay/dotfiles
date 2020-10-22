@@ -6,16 +6,11 @@ runtime macros/matchit.vim
 
 syntax enable
 
-if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
 if (has("termguicolors"))
-  set termguicolors
-
   " This is only necessary if you use \"set termguicolors".
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
 endif
 
 " fixes glitch? in colors when using vim with tmux
@@ -77,7 +72,6 @@ set softtabstop=2
 set shiftwidth=2 " when indenting with '>', use 2 spaces width
 "}}}
 
-set number " Show line numbers
 " set noswapfile " No swap file
 set directory^=$HOME/.vim/tmp//
 set nobackup
@@ -169,18 +163,15 @@ endif
 " Enable word completion
 set complete+=kspell
 
-hi NonText guifg=#4a4a59
-hi SpecialKey guifg=white guibg=#cc0000
-
 " Strip trailing whitespace from all files
-autocmd BufWritePre * %s/\s\+$//e
-autocmd BufWritePre * %s/\s\+$//e
-autocmd BufWritePre * %s/\s\+$//e
+"autocmd BufWritePre * %s/\s\+$//e
+"autocmd BufWritePre * %s/\s\+$//e
+"autocmd BufWritePre * %s/\s\+$//e
 
 " Automatically remove the preview window after autocompletion
 autocmd CompleteDone * pclose
 
-au BufRead,BufNewFile,BufReadPost *.json set syntax=json
+"au BufRead,BufNewFile,BufReadPost *.json set syntax=json
 
 " Spell checking for markdown files
 autocmd BufRead,BufNewFile *.md setlocal spell

@@ -9,7 +9,7 @@ Plug 'sheerun/vim-polyglot'           " Syntax Highlighting And Indentation For 
 Plug 'vim-airline/vim-airline'        " Unfortunately, neovim doesn't support bindeval, so I can't use powerline.
 
 " Themes
-Plug 'morhetz/gruvbox'                " Download a better colorscheme
+Plug 'sainnhe/gruvbox-material'       " Gruvbox material color scheme
 Plug 'vim-airline/vim-airline-themes' " Download powerline theme for the statusbar.
 
 " Tree
@@ -23,6 +23,7 @@ Plug 'tpope/vim-repeat'               " remaps '.' command in a way that plugins
 
 " Tmux
 Plug 'tmux-plugins/vim-tmux-focus-events' " FocusGained and FocusLost autocommand events in terminal vim when using inside Tmux.
+Plug 'benmills/vimux'                     " vim plugin to interact with tmux
 
 " Autocomplete
 Plug 'vim-scripts/dbext.vim'                    " Required for sql completion.
