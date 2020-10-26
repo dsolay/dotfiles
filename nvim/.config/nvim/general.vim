@@ -137,7 +137,8 @@ endif
 set foldlevelstart=99
 
 " Enable folds that are for the most part placed in the comments.
-set foldmethod=marker
+set foldmethod=indent
+autocmd FileType vim setlocal foldmethod=marker
 
 " Jump to match when searching
 set incsearch
