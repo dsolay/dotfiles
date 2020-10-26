@@ -13,6 +13,10 @@ grep -ev '^#' ~/.config/ncmpcpp/config
 ncmpcpp_directory=~/.config/ncmpcpp
 lyrics_directory=~/.config/ncmpcpp/lyrics
 
+# mpd server
+mpd_host=127.0.0.1
+mpd_port=6600
+
 # Define Music directory (needed for editing tags)
 mpd_music_dir=~/Music/
 
@@ -27,7 +31,7 @@ display_volume_level=no
 display_bitrate=no
 clock_display_seconds=no
 use_console_editor=yes
-external_editor=/usr/bin/vim
+external_editor=/usr/bin/nvim
 titles_visibility=yes
 header_visibility=yes
 statusbar_visibility=yes
