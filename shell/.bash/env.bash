@@ -10,7 +10,7 @@ appendpath () {
 
 # Shorter version of a common command that it used herein.
 _checkexec() {
-	command -v "$1" > /dev/null
+    command -v "$1" > /dev/null
 }
 
 # Include my scripts in the PATH.  To avoid conflicts, I always prepend
@@ -48,10 +48,12 @@ export GOPATH="$HOME/go"
 # pipenv
 export PIPENV_VENV_IN_PROJECT=1
 
-# npm
+# folder to store globally packages
 export NPM_HOME="$HOME/.npm-global"
-# Include npm package globally to path
 [ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
+
+# Include nodenv to path
+[ -d "$HOME/.nodenv/bin" ] && export PATH="$HOME/.nodenv/bin:$PATH"
 
 # gpg
 export GNUPGHOME="~/.gnupg/"
