@@ -72,8 +72,7 @@ set softtabstop=2
 set shiftwidth=2 " when indenting with '>', use 2 spaces width
 "}}}
 
-" set noswapfile " No swap file
-set directory^=$HOME/.vim/tmp//
+set directory^=$HOME/.nvim/tmp//
 set nobackup
 set nowritebackup
 
@@ -130,7 +129,7 @@ set nofixendofline
 
 " Activate persistent undo
 if has('persistent_undo')
-  set undodir=$HOME/.vim/undo
+  set undodir=$HOME/.nvim/undo
   set undofile
 endif
 
