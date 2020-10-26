@@ -104,13 +104,6 @@ _check sxhkd && sxhkd -c "$HOME"/.config/sxhkd/sxhkdrc{,_bspc} &
 # Load my XTerm and relevant configurations.
 [ -f "$HOME"/.Xresources ] && xrdb -I "$HOME" -merge "$HOME"/.Xresources
 
-# Launch my custom Lemonbar implementation (the system panel).
-# if _check melonpanel; then
-# 	# Make sure we have no running instances
-# 	pgrep -x melonpanel && pkill -x melonpanel
-# 	melonpanel
-# fi
-
 # Launch polybar.
 _check polybar && ~/.config/polybar/launch.sh
 
@@ -142,7 +135,7 @@ fi
 _check mate-settings-daemon && mate-settings-daemon &
 
 # start music server
-_check mpd && mpd
+#_check mpd && mpd
 
 # Start the bridge between mpd and mpris2.  Enabling the MPRIS
 # implementation allows other programs that handle multimedia to
