@@ -14,7 +14,6 @@ if (has("termguicolors"))
 endif
 
 " fixes glitch? in colors when using vim with tmux
-set background=dark
 set t_Co=256
 
 " #TEMPLATES {{{
