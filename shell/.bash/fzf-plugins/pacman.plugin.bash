@@ -1,4 +1,4 @@
 pfzin()
 {
-    pacman -Slq | fzf -m --preview 'pacman -Si {1}' | xargs -ro sudo pacman -S
+    pacman -Slq | fzf -m --preview 'pacman -Sii {1}' | xargs -ro sudo pacman -S
 }
