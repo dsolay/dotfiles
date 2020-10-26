@@ -51,3 +51,4 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy search
 Plug 'tpope/vim-fugitive'             " Allows you to run git commands from vim
 Plug 'christoomey/vim-conflicted'     " Easy git merge conflict resolution in vim
 Plug 'airblade/vim-gitgutter'         " shows a git diff in the sign column
+Plug 'kdheepak/lazygit.nvim', { 'branch': 'nvim-v0.4.3' } " Plugin for calling lazygit from within neovim.

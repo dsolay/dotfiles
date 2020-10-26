@@ -248,14 +248,6 @@ let g:vim_php_refactoring_phpdoc = "pdv#DocumentCurrentLine"
 noremap <Leader>dg :DogeGenerate
 
 "
-" ~~ Vimade ~~
-"
-
-let g:vimade = {}
-let g:vimade.fadelevel = 0.7
-let g:vimade.enablesigns = 0
-
-"
 " ~~ Emmet ~~
 "
 
@@ -299,3 +291,9 @@ nnoremap <silent> [fzf-p]l      :<C-u>CocCommand fzf-preview.LocationList<CR>
 " ~~ Vimux ~~
 "
 noremap <Leader>vp :VimuxPromptCommand<CR>
+
+"
+" ~~ Lazygit ~~
+"
+
+nnoremap <silent> <Leader>lg :LazyGit<CR>
