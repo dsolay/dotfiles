@@ -37,7 +37,7 @@
 # We can set the keyboard layouts, as well as the toggle directly via
 # `setxkbmap`.  Example of what I used to run:
 #
-#	setxkbmap -layout 'us,gr' -option 'grp:alt_caps_toggle'
+# setxkbmap -layout 'us,gr' -option 'grp:alt_caps_toggle'
 #
 # However, doing so means losing out on the possibility to easily find
 # out the current/active layout from a script: X knows about "us,gr" in
@@ -49,18 +49,18 @@
 # keyboard layout and print its name to my system panel (custom lemonbar
 # called "melonpanel").
 {alt + Caps_Lock,super + Escape}
-	own_script_current_keyboard_layout
+  own_script_current_keyboard_layout
 
 # Environment
 # -----------
 
 # The following commands are:
 #
-# c == toggle compton (display compositor)
+# c == toggle picom (display compositor)
+# r == toggle redshift
 # d == dmenu to quickly edit dotfiles
-# f == bspwm focus mode
 # s == reload sxhkd
-# p == reload melonpanel (my lemonbar script)
+# p == reload polybar
 # t == dmenu to choose Tempus theme
 # m == notification with mpc status (shows album art, title, etc.)
 # k == toggle screenkey (useful for screen casts)
@@ -69,24 +69,24 @@
 #
 # Recall that these depend on my dotfiles:
 # https://gitlab.com/protesilaos/dotfiles.
-super + e ; {c,d,f,s,p,t,m,k,q,x}
-	{ \
-	toggle_compton, \
-	dotsmenu, \
-	bspwm_focus_mode, \
-	pkill -USR1 -x sxhkd && notify-send -i debian-logo "sxhkd config" "Reloaded key bindings", \
-	pkill -x melonpanel && melonpanel, \
-	tempusmenu, \
-	own_script_notify_send_mpc_status, \
-	toggle_screenkey, \
-	poweroptionsmenu, \
-	xrdb -I "$HOME" -merge "$HOME"/.Xresources \
-	}
+super + e ; {c,r,d,s,p,t,m,k,q,x}
+  { \
+  toggle --picom -t, \
+  toggle --redshift -t, \
+  dotsmenu, \
+  pkill -USR1 -x sxhkd && notify-send -i distributor-logo-archlinux "sxhkd config" "Reloaded key bindings", \
+  toggle --polybar -r, \
+  tempusmenu, \
+  own_script_notify_send_mpc_status, \
+  toggle --screenkey -t, \
+  poweroptionsmenu, \
+  xrdb -I "$HOME" -merge "$HOME"/.Xresources \
+  }
 
 # Session management (log out, lock, switch users, reboot, shutdown).
 # Can also be invoked with super + e ; q (as defined above).
 ctrl + alt + {Home,End,Delete}
-	poweroptionsmenu
+  poweroptionsmenu
 
 # Main programs
 # -------------
@@ -98,23 +98,45 @@ ctrl + alt + {Home,End,Delete}
 # terminals, like a barbarian!  Watch my screen cast on the matter:
 # https://protesilaos.com/codelog/2019-01-13-tmux-demo-bspwm/
 super + {_, shift + } Return
-	{xterm -e tmux new-session -A -s 'Solay', xterm}
+  {alacritty -e tmux new-session -A -s 'Solay', alacritty}
 
 # GUI programs.  Where these are alternatives to common CLI tools they
 # are mapped to the same number as their counterparts, but prepended
 # with a `g` (mnemonic for GUI).
 super + g ; {1,2,3}
-	{ \
-	notify-send -i firefox "Run GUI program" "Launching Web Browser" && firefox, \
-	notify-send -i system-file-manager "Run GUI program" "Launching File Manager" && caja, \
-	notify-send -i thunderbird "Run GUI program" "Launching Email Client" && thunderbird \
-	}
+  { \
+  notify-send -i firefox "Run GUI program" "Launching Web Browser" && firefox, \
+  notify-send -i system-file-manager "Run GUI program" "Launching File Manager" && caja, \
+  notify-send -i thunderbird "Run GUI program" "Launching Email Client" && thunderbird \
+  }
 
 # CLI programs.  Any browser and/or file manager should be assigned the
 # numbers 1 and 2 respectively, in order to keep consistency with the
 # above-defined GUIs.
-super + x ; {3-5}
-	xterm -e {mutt,newsboat,ncmpcpp}
+super + x ; {2-7}
+  alacritty -e {ranger,neomutt,ncmpcpp,spt,htop,trans -shell}
+
+super + T ; {2-7}
+  tmux new-window -t $(tmux display-message -p '#S') \
+  { \
+    ranger, \
+    -n mail neomutt, \
+    ncmpcpp, \
+    -n spotify spt, \
+    htop, \
+    -n translation trans -shell \
+  }
+
+# Spotifyd keys (for notifications use dunst)
+# b == Toggle spotifyd
+# p == Togle play-pause
+# n == Show notificacion for current status in format {icon} {Album} {Title}
+super + shift + s ; {b,p,n}
+  { \
+    toggle --spotifyd -t, \
+    sp play, \
+    sp notify
+  }
 
 # I use "my_float_window" as an application name or class for those rare
 # occasions where I prefer a floating window at launch.
@@ -122,12 +144,12 @@ super + x ; {3-5}
 # Note that the executable `calc` is contained in the Debian package
 # `apcalc`.
 super + x ; 0
-	xterm -class "my_float_window" -e calc
+  alacritty --class "Alacritty","my_float_window" -e python -qi -c "from math import *"
 
 # Bring up the help text for common keybindings
 super + {F1,Home}
-	xterm -class "my_float_window" \
-	-geometry '100x30' -e less "$HOME/.config/sxhkd/cheatsheet_sxhkdrc.txt"
+  alacritty --class "Alacritty","my_float_window" \
+  --dimensions 100 30 -e less "$HOME/.config/sxhkd/cheatsheet_sxhkdrc.txt"
 
 # sbgmenu: dmenu interface for browsing images from my "Pictures"
 # directory.  There is an option to just display the selected file, or
@@ -151,17 +173,17 @@ super + {F1,Home}
 #
 # NOTE the keys are mnemonics for Backgrounds, Wallpapers, Tasks.
 super + x; {b,w,t}
-	{sbgmenu,nbm,stmmenu}
+  {sbgmenu,nbm,stmmenu}
 
 # dmenu_run and passmenu using my custom colours.
 super + {d,p,r}
-	{own_script_run_dmenu_xcolors,own_script_run_passmenu_xcolors,own_script_run_rofi -r}
+  {own_script_run_dmenu_xcolors,own_script_run_passmenu_xcolors,own_script_run_rofi -r}
 
 # dmenu specifically for flatpaks.  While it is possible to include
 # these in the $PATH, or to query by `.desktop` file, I prefer to keep
 # them separate.
 super + shift + d
-	flatpakmenu
+  flatpakmenu
 
 # Tools and utilities
 # -------------------
@@ -173,27 +195,35 @@ super + shift + d
 #### implementation in lieu of the actual commands, which assigns the key
 #### chords I have specified in `dunstrc`.
 ###super + {_, shift + } v
-###	VIEW {context menu of} last notification (shows max 3 at a time)
+### VIEW {context menu of} last notification (shows max 3 at a time)
 ###super + {_, shift + } c
-###	CLOSE {all} notification{s}
+### CLOSE {all} notification{s}
 
 # Screenshots (requires `scrot`).  First one is for the focused window.
 # The other is of the entire X session (including all active monitors).
 # Note that `scrot` also has an interactive mode that I do not use.
 Print
-	scrot -u -z '%Y-%m-%d_%H:%M:%S_$wx$h$n.png' -e 'mv $f $$(xdg-user-dir PICTURES)/screenshots/' && notify-send -i gnome-screenshot "Window view screenshot" "Saved image to Desktop"
+  scrot -u -z '%Y-%m-%d_%H:%M:%S_$wx$h$n.png' -e 'mv $f $$(xdg-user-dir PICTURES)/screenshots/' && notify-send -i gnome-screenshot "Window view screenshot" "Saved image to Desktop"
 
 super + Print
-	scrot -s '%Y-%m-%d_%H:%M:%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES)/screenshots/ && xclip -selection clipboard -t image/png -i $$(xdg-user-dir PICTURES)/screenshots/`ls -1 -t $$(xdg-user-dir PICTURES)/screenshots/ | head -1`' && notify-send -i gnome-screenshot "Screen view screenshot" "Saved image to $(xdg-user-dir PICTURES)/screenshots"
+  scrot -s '%Y-%m-%d_%H:%M:%S_$wx$h.png' -e 'mv $f $$(xdg-user-dir PICTURES)/screenshots/ && xclip -selection clipboard -t image/png -i $$(xdg-user-dir PICTURES)/screenshots/`ls -1 -t $$(xdg-user-dir PICTURES)/screenshots/ | head -1`' && notify-send -i gnome-screenshot "Screen view screenshot" "Saved image to $(xdg-user-dir PICTURES)/screenshots"
 
 # Control the laptop's screen brightness (requires `xbacklight`).
 XF86MonBrightness{Down,Up}
-	xbacklight {-dec 15,-inc 15}
+  xbacklight {-dec 15,-inc 15}
 
 # Screen locker (requires `slock`, which in Debian is provided by the
 # package `suckless-tools`).
 XF86ScreenSaver
-	slock
+  slock
+
+# Open mail service
+XF86Mail
+  alacritty -e neomutt
+
+# Open file explorerr
+XF86Explorer
+  alacritty -e ranger
 
 # Media controls
 # --------------
@@ -203,23 +233,23 @@ XF86ScreenSaver
 # MPRIS.  `playerctl` is the tool that controls all MPRIS-aware
 # applications.  These mappings use dedicated media keys.
 XF86Audio{Play,Prev,Next,Stop}
-	playerctl {play-pause,previous,next,stop}
+  playerctl {play-pause,previous,next,stop}
 
 # mpc method that is specific to the Music Player Daemon.  This uses
 # dedicated media keys.
 super + XF86Audio{Mute,LowerVolume,RaiseVolume}
-	mpc {toggle,prev,next,stop}
+  mpc {toggle,prev,next,stop}
 
 # mpc method as above, but using the arrow keys.
 super + {Down,Left,Right,Up}
-	mpc {toggle,prev,next,stop}
+  mpc {toggle,prev,next,stop}
 
 # Speaker/output volume.  Requires `amixer` and dedicated keys.
 XF86Audio{Mute,LowerVolume,RaiseVolume}
-	amixer set Master {toggle,5%-,5%+}
+  amixer set Master {toggle,5%-,5%+}
 
 # Microphone/input volume.  Same requirements as previous definition.
 XF86AudioMicMute
-	amixer set Capture toggle
+  amixer set Capture toggle
 super + XF86Audio{Mute,LowerVolume,RaiseVolume}
-	amixer set Capture {toggle,5%-,5%+}
+  amixer set Capture {toggle,5%-,5%+}
