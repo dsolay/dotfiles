@@ -81,7 +81,7 @@ set wrap
 set formatoptions+=t
 set colorcolumn=+1
 set showmatch
-set lazyredraw
+"set lazyredraw
 
 " #FINDING FILES
 " Use the `:find` command to fuzzy search files in the working directory
