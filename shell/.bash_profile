@@ -1,10 +1,8 @@
 #
 # ~/.bash_profile
 #
-
 [[ -f ~/.bash/env.bash ]] && . ~/.bash/env.bash
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-eval "$(nodenv init -)"
 
 # Start SSH AGENT
 if [ -z "$SSH_AUTH_SOCK" ]

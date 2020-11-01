@@ -16,7 +16,16 @@
 
 # Shorter version of a common command that it used herein.
 _checkexec() {
-   command -v "$1" > /dev/null
+  command -v "$1" > /dev/null
+}
+
+prependpath () {
+  case ":$PATH:" in
+    *:"$1":*)
+      ;;
+    *)
+      PATH="$1:${PATH:+$PATH}"
+  esac
 }
 
 # General settings
@@ -29,9 +38,9 @@ export MANPAGER=$PAGER
 
 # Simple prompt
 if [ -n "$SSH_CONNECTION" ]; then
-   export PS1="\u@\h: \w \$ "
+  export PS1="\u@\h: \w \$ "
 else
-   export PS1="\w \$ "
+  export PS1="\w \$ "
 fi
 export PS2="> "
 
@@ -40,17 +49,17 @@ export PS2="> "
 # it's already enabled in /etc/bash.bashrc and /etc/profile sources
 # /etc/bash.bashrc).
 if ! shopt -oq posix; then
-   [ -f ~/.bash/bash-completion.bash ] && . ~/.bash/bash-completion.bash
+  [ -f ~/.bash/bash-completion.bash ] && . ~/.bash/bash-completion.bash
 fi
 
 if [ "$(command -v fzf 2> /dev/null)" ]; then
-   [ -f ~/.bash/key-bindings.bash ] && . ~/.bash/key-bindings.bash
-   [ -f ~/.bash/fzf-completion.bash ] && bash ~/.bash/fzf-completion.bash
+  [ -f ~/.bash/key-bindings.bash ] && . ~/.bash/key-bindings.bash
+  [ -f ~/.bash/fzf-completion.bash ] && bash ~/.bash/fzf-completion.bash
 
   # Load plugins
   for plugin in $(ls -d ~/.bash/fzf-plugins/*)
   do
-     source $plugin
+    source $plugin
   done
 fi
 
@@ -60,8 +69,8 @@ fi
 # If not running interactively, don't do anything.  This too is taken
 # from Debian 9's bashrc.
 case $- in
-   *i*) ;;
-   *) return;;
+  *i*) ;;
+  *) return;;
 esac
 
 # Don't put duplicate lines or lines starting with space in the history.
@@ -93,3 +102,23 @@ _checkexec lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Use prompt startship
 _checkexec starship && eval "$(starship init bash)"
+
+# Include composer bin
+[ -d "$HOME/.config/composer/vendor/bin" ] && prependpath "$HOME/.config/composer/vendor/bin"
+
+# Include nodenv to path
+[ -d "$HOME/.nodenv/bin" ] && prependpath "$HOME/.nodenv/bin"
+
+# Load nodenv config
+_checkexec nodenv && {
+  if [ -z "$(echo $PATH | grep -w ~/.nodenv/shims)" ]; then
+    eval "$(nodenv init -)"
+  fi
+}
+
+#Load pyenv config
+_checkexec pyenv && {
+  if [ -z "$(echo $PATH | grep -w ~/.pyenv/shims)" ]; then
+    eval "$(pyenv init -)"
+  fi
+}

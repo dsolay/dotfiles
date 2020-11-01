@@ -52,11 +52,8 @@ export PIPENV_VENV_IN_PROJECT=1
 export NPM_HOME="$HOME/.npm-global"
 [ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
 
-# Include nodenv to path
-[ -d "$HOME/.nodenv/bin" ] && export PATH="$HOME/.nodenv/bin:$PATH"
-
 # gpg
 export GNUPGHOME="~/.gnupg/"
 
 # Python env
-export WORKON_HOME=$HOME/.virtualenvs   # Optional
+#export WORKON_HOME=$HOME/.virtualenvs   # Optional
