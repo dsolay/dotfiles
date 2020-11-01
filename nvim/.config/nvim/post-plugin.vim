@@ -222,25 +222,22 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Search
 noremap <Leader>gs :CocSearch
 
+
+"
+" ~~ Coc Actions ~~
+"
+" Remap for do codeAction of selected region
+function! s:cocActionsOpenFromSelected(type) abort
+  execute 'CocCommand actions.open ' . a:type
+endfunction
+
+xmap <silent> <leader>a :<C-u>execute 'CocCommand actions.open ' . visualmode()<CR>
+nmap <silent> <leader>a :<C-u>set operatorfunc=<SID>cocActionsOpenFromSelected<CR>g@
+
 "
 "	~~ ALE PHP ~~
 "
-
-let g:ale_php_phpcbf_standard='PSR12'
-let g:ale_php_phpcs_standard='phpcs.xml.dist'
-let g:ale_php_phpmd_ruleset='phpmd.xml'
-let g:ale_fixers = {
-      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-      \}
-
-"
-"	~~ Vim PHP refactoring toolbox ~~
-"
-
-let g:vim_php_refactoring_default_property_visibility = 'private'
-let g:vim_php_refactoring_default_method_visibility = 'private'
-let g:vim_php_refactoring_auto_validate_visibility = 1
-let g:vim_php_refactoring_phpdoc = "pdv#DocumentCurrentLine"
+let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'] }
 
 "
 " ~~ Vim doge ~~

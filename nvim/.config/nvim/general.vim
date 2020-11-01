@@ -69,13 +69,6 @@ set expandtab " On pressing tab, insert 2 spaces
 set tabstop=2 " show existing tab with 2 spaces width
 set softtabstop=2
 set shiftwidth=2 " when indenting with '>', use 2 spaces width
-
-au BufNewFile,BufRead *.py
-    \ set expandtab
-    \ set autoindent
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
 "}}}
 
 set directory^=$HOME/.nvim/tmp//
@@ -168,11 +161,6 @@ endif
 
 " Enable word completion
 set complete+=kspell
-
-" Strip trailing whitespace from all files
-"autocmd BufWritePre * %s/\s\+$//e
-"autocmd BufWritePre * %s/\s\+$//e
-"autocmd BufWritePre * %s/\s\+$//e
 
 " Automatically remove the preview window after autocompletion
 autocmd CompleteDone * pclose
