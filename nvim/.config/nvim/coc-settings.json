@@ -6,5 +6,6 @@
   "scss.validate": false,
   "prettier.disableLanguages": [],
   "vetur.format.enable": false,
-  "vetur.validation.style": false
+  "vetur.validation.style": false,
+  "python.jediEnabled": false
 }
