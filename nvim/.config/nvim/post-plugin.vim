@@ -49,7 +49,6 @@ let g:airline#extensions#ale#enabled = 1
 
 " Set the theme for vim-airline
 let g:airline_theme = 'gruvbox_material'
-"autocmd VimEnter * AirlineTheme gruvbox
 
 "
 " ~~ NERDTree config ~~
@@ -68,6 +67,9 @@ cabbrev t T
 
 " Use spaces instead just for yaml
 autocmd Filetype yaml setl expandtab
+
+" Toggle nerdtree
+nnoremap <C-b> :NERDTreeToggle %<CR>
 
 "
 " ~~ ALE config ~~
@@ -294,3 +296,18 @@ noremap <Leader>vp :VimuxPromptCommand<CR>
 "
 
 nnoremap <silent> <Leader>lg :LazyGit<CR>
+
+"
+" ~~ vim-markdown ~~
+"
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+
+"
+" ~~ vim-latex ~~
+"
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'

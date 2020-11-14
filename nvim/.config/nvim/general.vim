@@ -1,7 +1,8 @@
 " Disallow detection of filetypes
 filetype off
-
+filetype plugin on
 filetype plugin indent on    " required
+
 runtime macros/matchit.vim
 
 syntax enable

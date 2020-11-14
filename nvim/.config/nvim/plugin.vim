@@ -47,6 +47,9 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}       " Multiple cursors/sel
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }       " Fuzzy search
 Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }  " Documentation generator
 Plug 'adoy/vim-php-refactoring-toolbox'                   " PHP Refactoring Toolbox for VIM
+Plug 'godlygeek/tabular', {'for': 'markdown'}             " Align text
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}       " Syntax highlighting, matching rules and mappings for the original Markdown and extensions.
+Plug 'vim-latex/vim-latex'                                " Provides a rich tool of features for editing latex files
 
 " Debug
 Plug 'vim-vdebug/vdebug'                                  " Debug
