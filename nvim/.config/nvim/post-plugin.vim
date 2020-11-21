@@ -97,6 +97,8 @@ let g:ale_list_window_size = 5
 let g:ale_fix_on_save = 1
 let g:ale_disable_lsp = 1
 
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1
 
 "
 " ~~ CoC config ~~
