@@ -10,11 +10,11 @@ Plug 'vim-airline/vim-airline'                            " Unfortunately, neovi
 
 " Themes
 Plug 'sainnhe/gruvbox-material'                           " Gruvbox material color scheme
-Plug 'vim-airline/vim-airline-themes'                     " Download powerline theme for the statusbar.
+"Plug 'vim-airline/vim-airline-themes'                    " Download powerline theme for the statusbar.
 
 " Tree
 Plug 'preservim/nerdtree'                                 " Better file system browser
-"Plug 'Xuyuanp/nerdtree-git-plugin'                        " Nerdtree git support!
+"Plug 'Xuyuanp/nerdtree-git-plugin'                       " Nerdtree git support!
 
 " Typing
 Plug 'chun-yang/auto-pairs'                               " Inserts quotes and parenthesis in pairs as you type.
@@ -22,7 +22,7 @@ Plug 'tpope/vim-surround'                                 " The plugin provides 
 Plug 'tpope/vim-repeat'                                   " remaps '.' command in a way that plugins can tap into it.
 
 " Tmux
-Plug 'tmux-plugins/vim-tmux-focus-events'                 " FocusGained and FocusLost autocommand events in terminal vim when using inside Tmux.
+"Plug 'tmux-plugins/vim-tmux-focus-events'                " FocusGained and FocusLost autocommand events in terminal vim when using inside Tmux.
 Plug 'benmills/vimux'                                     " vim plugin to interact with tmux
 
 " Autocomplete
@@ -36,12 +36,12 @@ Plug 'janko-m/vim-test'                                   " Run tests straight f
 " IDE
 Plug 'vim-scripts/BufOnly.vim'                            " Adds the ability to close all except the current buffer
 Plug 'w0rp/ale'                                           " Async linter!
-Plug 'AndrewRadev/linediff.vim'                           " Allows to diff a visual selection.
+"Plug 'AndrewRadev/linediff.vim'                          " Allows to diff a visual selection.
 Plug 'preservim/nerdcommenter'                            " Toggle comments
 Plug 'editorconfig/editorconfig-vim'                      " Editorconfig
 Plug 'honza/vim-snippets'                                 " Snippets files for various programming languages.
 Plug 'ludovicchabant/vim-gutentags'                       " Gutentags is a plugin that takes care of the much needed management of tags files in Vim
-Plug 'ryanoasis/vim-devicons'                             " files icons
+"Plug 'ryanoasis/vim-devicons'                            " files icons
 Plug 'yggdroot/indentline'                                " Display the identation levels with thin vertical lines.
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}       " Multiple cursors/selections
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }       " Fuzzy search
@@ -56,6 +56,6 @@ Plug 'vim-vdebug/vdebug'                                  " Debug
 
 " Git
 Plug 'tpope/vim-fugitive'                                 " Allows you to run git commands from vim
-"Plug 'christoomey/vim-conflicted'                         " Easy git merge conflict resolution in vim
-"Plug 'airblade/vim-gitgutter'                             " shows a git diff in the sign column
+"Plug 'christoomey/vim-conflicted'                        " Easy git merge conflict resolution in vim
+"Plug 'airblade/vim-gitgutter'                            " shows a git diff in the sign column
 Plug 'kdheepak/lazygit.nvim', { 'branch': 'nvim-v0.4.3' } " Plugin for calling lazygit from within neovim.
