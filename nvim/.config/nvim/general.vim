@@ -17,34 +17,6 @@ endif
 " fixes glitch? in colors when using vim with tmux
 set t_Co=256
 
-" #TEMPLATES {{{
-" Prefill new files created by vim with contents from the following templates
-augroup templatesRead
-  autocmd!
-  autocmd BufRead *.html,*.scss,*.css,*.rs,*.vue,LICENCE,LICENSE,.gitignore,.stylelintrc.json,eslintrc.json,.prettierrc.json call s:ApplyTemplate()
-
-  function! s:ApplyTemplate()
-    if getfsize(expand('%')) == 0
-      execute "0r ~/.config/nvim/templates/skeleton." . expand('%:e')
-    endif
-  endfun
-augroup END
-
-augroup templatesNew
-  autocmd BufNewFile *.html             0r ~/.config/nvim/templates/skeleton.html
-  autocmd BufNewFile *.scss             0r ~/.config/nvim/templates/skeleton.scss
-  autocmd BufNewFile *.css              0r ~/.config/nvim/templates/skeleton.scss
-  autocmd BufNewFile *.rs               0r ~/.config/nvim/templates/skeleton.rs
-  autocmd BufNewFile *.vue              0r ~/.config/nvim/templates/skeleton.vue
-  autocmd BufNewFile LICENCE            0r ~/.config/nvim/templates/skeleton.LICENCE
-  autocmd BufNewFile LICENSE            0r ~/.config/nvim/templates/skeleton.LICENCE
-  autocmd BufNewFile .gitignore         0r ~/.config/nvim/templates/skeleton.gitignore
-  autocmd BufNewFile .stylelintrc.json  0r ~/.config/nvim/templates/skeleton.stylelintrc
-  autocmd BufNewFile .eslintrc.json     0r ~/.config/nvim/templates/skeleton.eslintrc
-  autocmd BufNewFile .prettierrc.json   0r ~/.config/nvim/templates/skeleton.prettierrc
-augroup END
-"}}}
-
 " Highlight line only in crrent window
 augroup CursorLine
   au!
