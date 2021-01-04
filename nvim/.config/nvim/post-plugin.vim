@@ -69,7 +69,7 @@ cabbrev t T
 autocmd Filetype yaml setl expandtab
 
 " Toggle nerdtree
-nnoremap <C-b> :NERDTreeToggle %<CR>
+nnoremap <C-t> :NERDTreeToggle %<CR>
 
 "
 " ~~ ALE config ~~
