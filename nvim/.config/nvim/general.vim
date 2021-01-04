@@ -48,7 +48,7 @@ set directory^=$HOME/.nvim/tmp//
 set nobackup
 set nowritebackup
 
-set textwidth=120
+set textwidth=80
 set linebreak
 set wrap
 set formatoptions+=t
