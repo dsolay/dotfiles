@@ -92,3 +92,9 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 vnoremap <leader>d c<c-r>=system('base64 --decode', @")<CR><ESC>
 vnoremap <leader>e c<c-r>=system('base64', @")<CR><ESC>
+
+" Resize buffer
+noremap <silent> <C-S-Left> :vertical resize -5<CR>
+noremap <silent> <C-S-Right> :vertical resize +5<CR>
+noremap <silent> <C-S-Up> :resize +5<CR>
+noremap <silent> <C-S-Down> :resize -5<CR>
