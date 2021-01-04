@@ -6,5 +6,11 @@ symbol = " "
 only_with_files = true
 disabled = false
 
+[nodejs]
+symbol = " "
+
+[php]
+symbol = " "
+
 [python]
 symbol = " "
