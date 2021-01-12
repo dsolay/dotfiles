@@ -56,6 +56,9 @@ set colorcolumn=+1
 set showmatch
 "set lazyredraw
 
+let g:netrw_home=$HOME.'/.nvim'
+
+
 " #FINDING FILES
 " Use the `:find` command to fuzzy search files in the working directory
 " The `:b` command can also be used to do the same for open buffers
