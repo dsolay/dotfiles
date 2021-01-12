@@ -31,3 +31,5 @@
 nvim/.config/nvim/plugged
 tmux/.tmux/plugins
 tags
+
+.php_cs.cache
