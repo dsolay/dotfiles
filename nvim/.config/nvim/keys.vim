@@ -24,9 +24,6 @@ nnoremap <Leader>fi gg=G
 " Clear search
 noremap <silent> <Leader><ESC> :let @/ = ""<CR>
 
-" Save state of open Windows and Buffers
-nnoremap <leader>s :mksession<CR>
-
 " turn off search highlights
 nnoremap <leader><space> :nohlsearch<CR>
 
@@ -98,3 +95,7 @@ noremap <silent> <C-S-Left> :vertical resize -5<CR>
 noremap <silent> <C-S-Right> :vertical resize +5<CR>
 noremap <silent> <C-S-Up> :resize +5<CR>
 noremap <silent> <C-S-Down> :resize -5<CR>
+
+" Session
+nnoremap <Leader>s :mksession ~/.nvim/sessions/
+nnoremap <Leader>os :source ~/.nvim/sessions/
