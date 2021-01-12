@@ -9,5 +9,18 @@
   "prettier.disableLanguages": [],
   "vetur.format.enable": false,
   "vetur.validation.style": false,
-  "python.jediEnabled": false
+  "python.jediEnabled": false,
+  "intelephense.diagnostics.typeErrors": false,
+  "intelephense.diagnostics.undefinedMethods": false,
+  "intelephense.format.enable": false,
+  "intelephense.files.exclude": [
+    "**/.git/**",
+    "**/.svn/**",
+    "**/.hg/**",
+    "**/CVS/**",
+    "**/.DS_Store/**",
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**/{Test,test,Tests,tests}/**/*Test.php"
+  ]
 }

@@ -1,14 +1,7 @@
 " Linter
-let b:ale_linters = ['php', 'phpstan']
+let b:ale_linters = ['phpstan']
 
 " Fixers
-let b:ale_fixers = ['php-cs-fixer']
+let b:ale_fixers = ['prettier', 'php_cs_fixer']
 
-"
-" ~~ Vim PHP refactoring toolbox ~~
-"
-
-let g:vim_php_refactoring_default_property_visibility = 'private'
-let g:vim_php_refactoring_default_method_visibility = 'private'
-let g:vim_php_refactoring_auto_validate_visibility = 1
-"let g:vim_php_refactoring_phpdoc = "pdv#DocumentCurrentLine"
+let g:ale_php_phpstan_executable = system('if ! type git &> /dev/null; then echo phpstan; else PSE=`git rev-parse --show-toplevel 2> /dev/null`/vendor/bin/phpstan; if [ -x "$PSE" ]; then echo -n $PSE; else echo phpstan; fi; fi')

@@ -344,3 +344,25 @@ let g:vim_markdown_conceal_code_blocks = 0
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+
+" ~~ vdebug ~~
+"
+"
+let g:vdebug_options = {}
+let g:vdebug_options.port = 9003
+"let g:vdebug_options.debug_file_level = 2
+"let g:vdebug_options.debug_file = ~/.vdebug.log
+
+let g:vdebug_keymap = {
+    \    "run" : "<Leader>xs",
+    \    "run_to_cursor" : "<S-F9>",
+    \    "step_over" : "<S-F2>",
+    \    "step_into" : "<S-F3>",
+    \    "step_out" : "<S-F4>",
+    \    "close" : "<S-F6>",
+    \    "detach" : "<S-F7>",
+    \    "set_breakpoint" : "<S-b>",
+    \    "get_context" : "<S-c>",
+    \    "eval_under_cursor" : "<Leader>xc",
+    \    "eval_visual" : "<Leader>xv",
+    \}
