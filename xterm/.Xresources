@@ -69,7 +69,7 @@ xterm*highlightTextColor: XtDefaultBackground
 ! font will be used if the one before is not available.  "Monospace" is
 ! a fontconfig alias that ultimately points to "DejaVu Sans Mono" (see
 ! my dotfiles fontconfig).
-xterm*faceName: JetBrainsMono Nerd Font Mono:size=12:minspace=false
+xterm*faceName: DejaVuSansMono Nerd Font Mono
 xterm*faceSize: 12
 xterm*renderFont: true
 xterm*boldColors: false
