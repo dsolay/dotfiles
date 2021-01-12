@@ -284,11 +284,11 @@ noremap <Leader>dg :DogeGenerate
 "
 
 "Redefine trigger key
-let g:user_emmet_leader_key='<C-z>'
+"let g:user_emmet_leader_key='<C-z>'
 
 " Enable just for html/css
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
+"let g:user_emmet_install_global = 0
+"autocmd FileType html,css EmmetInstall
 
 "
 " ~~ Vim devicons ~~
@@ -366,3 +366,13 @@ let g:vdebug_keymap = {
     \    "eval_under_cursor" : "<Leader>xc",
     \    "eval_visual" : "<Leader>xv",
     \}
+
+"
+" ~~ vim-template ~~
+"
+nnoremap <Leader>lt :Template<CR>
+
+"
+" ~~ vim vue ~~
+"
+let g:vue_pre_processors = ['pug']
