@@ -112,7 +112,7 @@ _checkexec starship && eval "$(starship init bash)"
 # Load nodenv config
 _checkexec nodenv && {
   if [ -z "$(echo $PATH | grep -w ~/.nodenv/shims)" ]; then
-    eval "$(nodenv init -)"
+    eval "$(nodenv init - --no-rehash)"
   fi
 }
 
