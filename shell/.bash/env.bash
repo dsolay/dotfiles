@@ -49,8 +49,8 @@ export GOPATH="$HOME/go"
 export PIPENV_VENV_IN_PROJECT=1
 
 # folder to store globally packages
-export NPM_HOME="$HOME/.npm-global"
-[ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
+#export NPM_HOME="$HOME/.npm-global"
+#[ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
 
 # gpg
 export GNUPGHOME="~/.gnupg/"
