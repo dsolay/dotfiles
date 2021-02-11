@@ -269,6 +269,9 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " Search
 noremap <Leader>gs :CocSearch
 
+" Reindex php file
+nnoremap <Leader>ri :CocCommand intelephense.index.workspace<CR>
+
 "
 "	~~ ALE PHP ~~
 "
