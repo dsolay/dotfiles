@@ -682,4 +682,15 @@ function split-pdf() {
     -dFirstPage=$1 \
     -dLastPage=$2 \
     $3
-  }
+}
+
+function compress-pdf() {
+  gs -sDEVICE=pdfwrite \
+    -dCompatibilityLevel=$2 \
+    -dPDFSETTINGS=/prepress \
+    -dNOPAUSE \
+    -dQUIET \
+    -dBATCH \
+    -sOutputFile=compressed_PDF_file.pdf \
+    $1
+}
