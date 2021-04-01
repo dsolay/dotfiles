@@ -1,14 +1,3 @@
-" Buffer delete all others (delete all except current one)
-command! Bdo BufOnly
-cabbrev bdo BufOnly
-
-" Visual diff command.
-command! Ldiffthis Linediff
-cabbrev ldiffthis Linediff
-
-command! Ldiffoff Linediffreset
-cabbrev ldiffoff LinediffReset
-
 "
 " ~~ Gruvbox theme ~~
 "
