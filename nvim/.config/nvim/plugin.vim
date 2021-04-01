@@ -39,3 +39,6 @@ Plug 'vim-vdebug/vdebug',  { 'branch': 'master' }         " Debug
 
 " Git
 Plug 'kdheepak/lazygit.nvim', { 'branch': 'nvim-v0.4.3' } " Plugin for calling lazygit from within neovim.
+
+" Productivity
+Plug 'glidenote/memolist.vim'                             " This is a vimscript for create and manage memo.

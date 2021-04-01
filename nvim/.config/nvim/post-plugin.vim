@@ -293,6 +293,8 @@ xnoremap          [fzf-p]gr     "sy:CocCommand   fzf-preview.ProjectGrep<Space>-
 nnoremap <silent> [fzf-p]t      :<C-u>CocCommand fzf-preview.BufferTags<CR>
 nnoremap <silent> [fzf-p]q      :<C-u>CocCommand fzf-preview.QuickFix<CR>
 nnoremap <silent> [fzf-p]l      :<C-u>CocCommand fzf-preview.LocationList<CR>
+nnoremap <silent> [fzf-p]ml     :<C-u>CocCommand fzf-preview.MemoList<CR>
+nnoremap <silent> [fzf-p]mg     :<C-u>CocCommand fzf-preview.MemoListGrep<Space>
 
 "
 " ~~ Lazygit ~~
@@ -343,3 +345,13 @@ let g:vue_pre_processors = ['pug']
 "
 
 let g:templates_directory = ['/home/ernest/.config/nvim/templates']
+
+"
+" ~~ Memolist ~~
+"
+"
+nnoremap <Leader>mn  :MemoNew<CR>
+nnoremap <Leader>ml  :MemoList<CR>
+nnoremap <Leader>mg  :MemoGrep<CR>
+
+let g:memolist_prompt_tags = 1
