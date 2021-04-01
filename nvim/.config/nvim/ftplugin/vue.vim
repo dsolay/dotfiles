@@ -1,4 +1,4 @@
-" Run both javascript and vue linters for vue files.
+" Run typescript or javascript and vue linters for vue files.
 let b:ale_linter_aliases = ['typescript', 'javascript', 'vue', 'css']
 
 " Select the eslint and vls linters.
