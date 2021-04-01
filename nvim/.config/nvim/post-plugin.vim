@@ -262,7 +262,7 @@ noremap <Leader>gs :CocSearch
 nnoremap <Leader>ri :CocCommand intelephense.index.workspace<CR>
 
 "
-"	~~ ALE PHP ~~
+"	~~ ALE ~~
 "
 let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'] }
 
@@ -270,23 +270,6 @@ let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'] }
 " ~~ Vim doge ~~
 "
 noremap <Leader>dg :DogeGenerate
-
-"
-" ~~ Emmet ~~
-"
-
-"Redefine trigger key
-"let g:user_emmet_leader_key='<C-z>'
-
-" Enable just for html/css
-"let g:user_emmet_install_global = 0
-"autocmd FileType html,css EmmetInstall
-
-"
-" ~~ Vim devicons ~~
-"
-"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {}
-"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['vue'] = ''
 
 "
 " ~~ fzf-preview ~~
@@ -312,11 +295,6 @@ nnoremap <silent> [fzf-p]q      :<C-u>CocCommand fzf-preview.QuickFix<CR>
 nnoremap <silent> [fzf-p]l      :<C-u>CocCommand fzf-preview.LocationList<CR>
 
 "
-" ~~ Vimux ~~
-"
-noremap <Leader>vp :VimuxPromptCommand<CR>
-
-"
 " ~~ Lazygit ~~
 "
 
@@ -327,15 +305,6 @@ nnoremap <silent> <Leader>lg :LazyGit<CR>
 "
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_conceal_code_blocks = 0
-
-"
-" ~~ vim-latex ~~
-"
-
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
 
 " ~~ vdebug ~~
 "
