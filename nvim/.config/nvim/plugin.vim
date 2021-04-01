@@ -15,6 +15,7 @@ Plug 'preservim/nerdtree'                                 " Better file system b
 
 " Typing
 Plug 'chun-yang/auto-pairs'                               " Inserts quotes and parenthesis in pairs as you type.
+Plug 'anyakichi/vim-surround'                             " Surround.vim is all about surroundings: parentheses, brackets, quotes, XML tags, and more.
 
 " Autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}           " Make your Vim/Neovim as smart as VSCode.
