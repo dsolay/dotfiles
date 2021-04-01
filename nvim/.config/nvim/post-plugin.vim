@@ -295,6 +295,7 @@ nnoremap <silent> [fzf-p]q      :<C-u>CocCommand fzf-preview.QuickFix<CR>
 nnoremap <silent> [fzf-p]l      :<C-u>CocCommand fzf-preview.LocationList<CR>
 nnoremap <silent> [fzf-p]ml     :<C-u>CocCommand fzf-preview.MemoList<CR>
 nnoremap <silent> [fzf-p]mg     :<C-u>CocCommand fzf-preview.MemoListGrep<Space>
+nnoremap <silent> [fzf-p]bk     :<C-u>CocCommand fzf-preview.Bookmarks<CR>
 
 "
 " ~~ Lazygit ~~
@@ -355,3 +356,12 @@ nnoremap <Leader>ml  :MemoList<CR>
 nnoremap <Leader>mg  :MemoGrep<CR>
 
 let g:memolist_prompt_tags = 1
+
+"
+" ~~ Vim Bookmarks ~~
+"
+
+let g:bookmark_sign = ''
+let g:bookmark_annotation_sign = ''
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_save = 1

@@ -33,3 +33,4 @@ tmux/.tmux/plugins
 tags
 
 .php_cs.cache
+.vim-bookmarks

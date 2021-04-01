@@ -42,3 +42,4 @@ Plug 'kdheepak/lazygit.nvim', { 'branch': 'nvim-v0.4.3' } " Plugin for calling l
 
 " Productivity
 Plug 'glidenote/memolist.vim'                             " This is a vimscript for create and manage memo.
+Plug 'MattesGroeger/vim-bookmarks'                        " Allows toggling bookmarks per line
