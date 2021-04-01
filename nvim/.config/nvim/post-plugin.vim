@@ -379,3 +379,9 @@ nnoremap <Leader>lt :Template<CR>
 " ~~ vim vue ~~
 "
 let g:vue_pre_processors = ['pug']
+
+"
+" ~~ Vim Template ~~
+"
+
+let g:templates_directory = ['/home/ernest/.config/nvim/templates']
