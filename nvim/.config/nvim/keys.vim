@@ -99,3 +99,6 @@ noremap <silent> <C-S-Down> :resize -5<CR>
 " Session
 nnoremap <Leader>s :mksession ~/.nvim/sessions/
 nnoremap <Leader>os :source ~/.nvim/sessions/
+
+" Replace word
+nnoremap <Leader>rw :%s/<C-R>=expand('<cword>')<CR>/
