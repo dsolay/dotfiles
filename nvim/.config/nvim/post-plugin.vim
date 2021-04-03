@@ -365,3 +365,14 @@ let g:bookmark_sign = ''
 let g:bookmark_annotation_sign = ''
 let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
+
+nmap <Leader>bt <Plug>BookmarkToggle
+nmap <Leader>bi <Plug>BookmarkAnnotate
+nmap <Leader>ba <Plug>BookmarkShowAll
+nmap <Leader>bn <Plug>BookmarkNext
+nmap <Leader>bp <Plug>BookmarkPrev
+nmap <Leader>bc <Plug>BookmarkClear
+nmap <Leader>bx <Plug>BookmarkClearAll
+nmap <Leader>bkk <Plug>BookmarkMoveUp
+nmap <Leader>bjj <Plug>BookmarkMoveDown
+nmap <Leader>bg <Plug>BookmarkMoveToLine
