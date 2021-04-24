@@ -144,7 +144,7 @@ alias smk='sudo make clean install && make clean'
 alias ssmk='sudo make clean install && make clean && rm -iv config.h'
 
 # network
-alias plisten='ss -ltn'
+alias plisten='ss -lptn'
 
 # Disk space
 alias du='du -hs'
