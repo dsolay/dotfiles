@@ -1,2 +1,2 @@
 let b:ale_linters = ['spectral']
-let b:ale_fixers = ['fixjson']
+let b:ale_fixers = ['fixjson', 'prettier']
