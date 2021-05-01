@@ -5,9 +5,10 @@ let mapleader = ","
 nnoremap <Leader>sv :source $MYVIMRC<CR>
 
 " Disable F1 bringing up the help doc every time
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
+"inoremap <F1> <ESC>
+"nnoremap <F1> <ESC>
+"vnoremap <F1> <ESC>
+nnoremap <F1> :help <C-R><C-w><CR>
 
 " A saner way to save files.<F2> is easy to press
 nnoremap <F2> :w<CR>
