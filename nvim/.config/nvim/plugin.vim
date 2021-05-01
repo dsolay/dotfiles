@@ -3,6 +3,7 @@
 
 " Syntax
 Plug 'sheerun/vim-polyglot'                               " Syntax Highlighting And Indentation For 100+ Languages
+Plug 'kovetskiy/sxhkd-vim'
 
 " Status bar
 Plug 'vim-airline/vim-airline'                            " Unfortunately, neovim doesn't support bindeval, so I can't use powerline.
