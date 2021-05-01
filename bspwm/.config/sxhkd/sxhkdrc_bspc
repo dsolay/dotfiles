@@ -140,7 +140,7 @@ super + m
 # NOTE the presence of the tilde ~.  If current state matches the given
 # state, then the argument is interpreted as the last state.
 super + {t,shift + space,space,f}
- 	bspc node -t ~{tiled,pseudo_tiled,floating,fullscreen}
+	bspc node -t ~{tiled,pseudo_tiled,floating,fullscreen}
 
 # Set the node flags.  Locked is a node that cannot be closed with `bspc
 # node --close`.  Marked is a specific selector that allows operating on
@@ -155,16 +155,16 @@ super + a ; {l,m,s,p}
 # parent node.
 super + s ; {2,3,4}
 	bspc config split_ratio { \
-	0.50 && notify-send "BSPWM configuration" "Split ratio set to 0.50", \
-	0.66 && notify-send "BSPWM configuration" "Split ratio set to 0.66", \
-	0.75 && notify-send "BSPWM configuration" "Split ratio set to 0.75" \
+		0.50 && notify-send "BSPWM configuration" "Split ratio set to 0.50", \
+			0.66 && notify-send "BSPWM configuration" "Split ratio set to 0.66", \
+			0.75 && notify-send "BSPWM configuration" "Split ratio set to 0.75" \
 	}
 
 # Make node split ratios equal or balanced.  The former applies to the
 # root of the tree to equalise all split ratios.  The latter applies to
 # the parent node to even out manually-split windows.
 super + s ; {e,b}
-	bspc node {@/ --equalize,@parent --balance}
+bspc node {@/ --equalize,@parent --balance}
 
 # Manipulate the workspace
 # ------------------------
@@ -209,8 +209,8 @@ super + n ; i
 # With shift, kill them all at once.
 super + n ; super + {_, shift + }r
 	{ \
-	bspc node 'any.leaf.!window.local' -k, \
-	bspwm_multifaceted_operation --kill-all-receptacles \
+		bspc node 'any.leaf.!window.local' -k, \
+			bspwm_multifaceted_operation --kill-all-receptacles \
 	}
 
 # Summon all marked windows across all desktops to the current desktop.
