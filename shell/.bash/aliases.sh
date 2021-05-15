@@ -230,7 +230,12 @@ fi
 # is provided by my dotfiles.
 if _checkexec dircolors; then
 	dircolors_data="$HOME/.local/share/my_bash/dircolors"
-	test -r $dircolors_data && eval "$(dircolors -b ${dircolors_data})" || eval "$(dircolors -b)"
+  if [[ -f "$dircolors_data" ]]
+  then
+    eval "$(dircolors -b "$dircolors_data")"
+  else
+    eval "$(dircolors -b)"
+  fi
 fi
 
 alias diff='diff --color=auto'
@@ -351,7 +356,7 @@ if _checkexec git; then
 fi
 
 # Open current directory in nvim
-alias ide="nvim ."
+alias ide="nvim-nightly"
 
 # Update fonts
 alias fup="fc-cache -vf"

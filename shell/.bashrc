@@ -100,8 +100,10 @@ _checkexec lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 # Load virtualenvwrapper
 [ -f /usr/bin/virtualenvwrapper.sh ] && source /usr/bin/virtualenvwrapper.sh
 
-# Use prompt startship
-_checkexec starship && eval "$(starship init bash)"
+# load lua paths
+if [ -z "$(echo $PATH | grep -w ~/.luarocks/bin)" ]; then
+  eval "$(luarocks path)"
+fi
 
 # Include composer bin
 [ -d "$HOME/.config/composer/vendor/bin" ] && prependpath "$HOME/.config/composer/vendor/bin"
@@ -122,3 +124,6 @@ _checkexec pyenv && {
     eval "$(pyenv init -)"
   fi
 }
+
+# Use prompt startship
+_checkexec starship && eval "$(starship init bash)"

@@ -24,7 +24,7 @@ _checkexec() {
 
 # Default editor.  On Debian the Vim GUI is provided by a separate
 # package.
-export EDITOR=nvim
+export EDITOR=nvim-nightly
 
 export BROWSER=/usr/bin/xdg-open
 
