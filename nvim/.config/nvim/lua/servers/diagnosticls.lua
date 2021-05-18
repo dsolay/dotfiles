@@ -136,6 +136,8 @@ return {
                     'json',
                     '%filepath',
                 },
+                offsetLine = 1,
+                offsetColumn = 1,
                 sourceName = 'spectral',
                 parseJson = {
                     line = 'range.start.line',
