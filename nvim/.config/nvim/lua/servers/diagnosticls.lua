@@ -98,7 +98,13 @@ return {
                     security = 'severity',
                 },
                 securities = {['2'] = 'error', ['1'] = 'warning'},
-                requiredFiles = {'.eslintrc', '.eslintrc.js'},
+                requiredFiles = {
+                    '.eslintrc.js',
+                    '.eslintrc.cjs',
+                    '.eslintrc.yaml',
+                    '.eslintrc.yml',
+                    '.eslintrc.json',
+                },
             },
             shellcheck = {
                 command = 'shellcheck',
@@ -204,10 +210,7 @@ return {
                 formatLines = 1,
                 formatPattern = {
                     [[^.*?:(\d+)\s?(\d+)\s?(.*)$]],
-                    {
-                        line = 1,
-                        message = {'[dotenv-linter] ', 3, ' [', 2, ']'},
-                    },
+                    {line = 1, message = {'[dotenv-linter] ', 3, ' [', 2, ']'}},
                 },
             },
         },
