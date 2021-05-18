@@ -69,9 +69,9 @@ return {
         'dockerfile',
         'markdown',
         'vue',
+        'env',
     },
     init_options = {
-        documentFormatting = true,
         linters = {
             eslint = {
                 command = get_eslint_bin(),
@@ -190,6 +190,23 @@ return {
                     {line = 1, column = 3, message = 4},
                 },
             },
+            dotenvlint = {
+                command = 'dotenv-linter',
+                isStderr = true,
+                debounce = 100,
+                args = {'lint', '%filepath'},
+                offsetLine = 0,
+                offsetColumn = 0,
+                sourceName = 'dotenv-linter',
+                formatLines = 1,
+                formatPattern = {
+                    [[^.*?:(\d+)\s?(\d+)\s?(.*)$]],
+                    {
+                        line = 1,
+                        message = {'[dotenv-linter] ', 3, ' [', 2, ']'},
+                    },
+                },
+            },
         },
         filetypes = {
             javascript = 'eslint',
@@ -203,6 +220,7 @@ return {
             css = 'stylelint',
             scss = 'stylelint',
             markdown = 'markdownlint',
+            env = 'dotenvlint',
         },
         formatters = {
             prettier = {
