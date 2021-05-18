@@ -3,11 +3,12 @@ local file_exists = utils.file_exists
 
 local function get_eslint_bin()
     local eslint_bin = 'eslint';
+    local modules_bin = vim.loop.cwd() .. '/node_modules/.bin'
 
-    if (file_exists(vim.loop.cwd() .. '/node_modules/.bin/eslint_d')) then
-        eslint_bin = './node_modules/.bin/eslint_d'
-    elseif file_exists(vim.loop.cwd() .. '/node_modules/.bin/eslint') then
-        eslint_bin = './node_modules/.bin/eslint'
+    if (file_exists(modules_bin .. '/eslint_d')) then
+        eslint_bin = modules_bin .. '/eslint_d'
+    elseif file_exists(modules_bin .. '/eslint') then
+        eslint_bin = modules_bin .. '/eslint'
     elseif vim.fn.executable('eslint_d') == 1 then
         eslint_bin = 'eslint_d'
     end
@@ -17,11 +18,12 @@ end
 
 local function get_prettier_bin()
     local prettier_bin = 'prettier';
+    local modules_bin = vim.loop.cwd() .. '/node_modules/.bin'
 
-    if (file_exists(vim.loop.cwd() .. '/node_modules/.bin/prettier_d')) then
-        prettier_bin = './node_modules/.bin/prettier_d'
-    elseif file_exists(vim.loop.cwd() .. '/node_modules/.bin/prettier') then
-        prettier_bin = './node_modules/.bin/prettier'
+    if (file_exists(modules_bin .. '/prettier_d')) then
+        prettier_bin = modules_bin .. '/prettier_d'
+    elseif file_exists(modules_bin .. '/prettier') then
+        prettier_bin = modules_bin .. '/prettier'
     elseif vim.fn.executable('prettier_d') == 1 then
         prettier_bin = 'prettier_d'
     end
@@ -31,9 +33,10 @@ end
 
 local function get_stylelint_bin()
     local stylelint_bin = 'stylelint';
+    local modules_bin = vim.loop.cwd() .. '/node_modules/.bin'
 
-    if (file_exists(vim.loop.cwd() .. '/node_modules/.bin/stylelint')) then
-        stylelint_bin = './node_modules/.bin/stylelint'
+    if (file_exists(modules_bin .. '/stylelint')) then
+        stylelint_bin = modules_bin .. '/stylelint'
     end
 
     return stylelint_bin
