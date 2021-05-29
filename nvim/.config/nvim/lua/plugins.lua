@@ -159,6 +159,13 @@ local function init(use)
         },
     }
 
+    -- Highlight colors
+    use {
+        'norcalli/nvim-colorizer.lua',
+        ft = {'css', 'scss', 'javascript', 'vue', 'vim', 'html', 'pug', 'lua'},
+        config = [[require('config.colorizer')]],
+    }
+
     -- Color scheme
     use {'sainnhe/gruvbox-material'}
     use {'folke/lsp-colors.nvim'}
