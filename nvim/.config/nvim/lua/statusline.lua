@@ -1,11 +1,11 @@
-local mode_fn = vim.fn.mode
 local utils = require('utils')
 local add_hi = utils.add_hi
 
 local function vcs()
     local icon = ' '
     local branch = vim.fn.system(
-                       "git branch --show-current 2>/dev/null | tr -d '\n'")
+                       'git branch --show-current 2>/dev/null | tr -d \'\n\''
+                   )
 
     return branch == '' and '' or string.format('%s %s', icon, branch .. ' ')
 end
@@ -45,7 +45,7 @@ local mode_table = {
     rm = 'More',
     ['r?'] = 'Confirm',
     ['!'] = 'Shell',
-    t = 'Terminal'
+    t = 'Terminal',
 }
 
 local function get_mode(mode) return string.upper(mode_table[mode] or 'V-Block') end
@@ -64,7 +64,7 @@ local colors = {
     fg3 = '#e9e9e9',
     color10 = '#3a3a3a',
     color11 = '#f485dd',
-    color12 = '#83adad'
+    color12 = '#83adad',
 }
 
 add_hi('StatuslineNormalAccent', colors.fg1, colors.color4, true);
@@ -85,6 +85,9 @@ add_hi('StatuslineLSPHint', colors.fg2, colors.color10, true);
 add_hi('StatuslineMiscAccent', colors.fg1, colors.color11, true);
 add_hi('StatuslineFilenameModified', colors.color5, colors.color10, true);
 add_hi('StatuslineFilenameNoMod', colors.fg2, colors.color10, false);
+add_hi('StatuslineLineCol', colors.fg1, colors.color4, false);
+add_hi('StatuslineFileEncoding', colors.fg2, colors.color10, false);
+add_hi('StatuslineFiletype', colors.fg2, colors.color10, false);
 
 local function update_colors(mode)
     local mode_color = 'StatuslineMiscAccent'
@@ -114,6 +117,17 @@ local function update_colors(mode)
     return mode_color, filename_color
 end
 
+local function path()
+    local base_name = vim.fn.expand('%:t')
+    local path_head = vim.fn.expand('%:h')
+
+    if path_head == '/' then
+        return '/' .. base_name
+    end
+
+    return vim.fn.pathshorten(path_head) .. '/' .. base_name
+end
+
 local function set_modified_symbol(modified) return modified and ' [+]' or ''; end
 
 local function get_paste() return vim.o.paste and 'PASTE ' or '' end
@@ -128,7 +142,7 @@ local function file_encoding_format()
     local fileencoding = vim.bo.fileencoding
     local fileformat = vim.bo.fileformat;
     if #fileencoding > 0 and #fileformat > 0 then
-        return table.concat {'| ', fileencoding, '[', fileformat, ']'}
+        return table.concat {fileencoding, '[', fileformat, ']', ' | '}
     end
     return ''
 end
@@ -139,25 +153,29 @@ local statusline_format = table.concat {
     '%%#%s#%s %s%%#%s#', -- path
     '%s %s', -- paste, readonly
     '%%=',
-    '%%#StatuslineLSPErrors#✘ %s %%#StatuslineLSPWarns# %s %%#StatuslineLSPInfo# %s %%#StatuslineLSPHint# %s', -- lsp status
-    '%%=', '%%#StatuslineLineCol#%s', -- line_col
-    '%%#StatuslineEncodingFormat# %s', -- encoding
-    '%s' -- filetype
+    '%%#StatuslineLSPErrors#✘ %s ', -- lsp diagnostics errors
+    '%%#StatuslineLSPWarns# %s ', -- lsp diagnostics warnings
+    '%%#StatuslineLSPInfo# %s ', -- lsp diagnostics info
+    '%%#StatuslineLSPHint# %s', -- lsp diagnostics hints
+    '%%=',
+    '%%#StatuslineFileEncoding#%s', -- encoding
+    '%%#StatuslineFiletype#%s ', -- filetype
+    '%%#StatuslineLineCol#%s', -- line_col
 }
 
 local function status()
-    local mode = mode_fn()
+    local mode = vim.fn.mode()
     local mode_color, filename_color = update_colors(mode)
-    local filename = vim.fn.expand('%:t')
-    local line_col = '%l:%c'
+    local filename = path()
+    local line_col = '  %l/%c  '
     local err, warn, info, hint = lsp_status()
 
-    return string.format(statusline_format, mode_color, get_mode(mode), vcs(),
-                         filename_color, set_modified_symbol(vim.bo.modified),
-                         filename, filename_color, get_paste(),
-                         get_readonly_space(), err, warn, info, hint,
-                         line_col, file_encoding_format(),
-                         ' | ' .. vim.bo.filetype)
+    return string.format(
+               statusline_format, mode_color, get_mode(mode), vcs(),
+               filename_color, set_modified_symbol(vim.bo.modified), filename,
+               filename_color, get_paste(), get_readonly_space(), err, warn,
+               info, hint, file_encoding_format(), vim.bo.filetype, line_col
+           )
 end
 
 local function update()
