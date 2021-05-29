@@ -55,7 +55,7 @@ local function init(use)
         'lukas-reineke/indent-blankline.nvim',
         branch = 'lua',
         setup = [[require('plugin-setup.indentline')]],
-        event = [[InsertEnter *]],
+        event = [[VimEnter *]],
     }
 
     -- Highlights
@@ -109,7 +109,7 @@ local function init(use)
         'lewis6991/gitsigns.nvim',
         requires = {'nvim-lua/plenary.nvim'},
         config = [[require('config.gitsigns')]],
-        event = 'InsertEnter *',
+        event = [[VimEnter *]],
     }
 
     use {
