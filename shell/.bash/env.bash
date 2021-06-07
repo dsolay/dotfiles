@@ -1,3 +1,5 @@
+#! /bin/bash
+
 # Append our default paths
 appendpath () {
     case ":$PATH:" in
@@ -12,6 +14,11 @@ appendpath () {
 _checkexec() {
     command -v "$1" > /dev/null
 }
+
+# session-wide environment for pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
 
 # Include my scripts in the PATH.  To avoid conflicts, I always prepend
 # `own_script_` to my files.  There are some exceptions though, where I
@@ -53,7 +60,7 @@ export PIPENV_VENV_IN_PROJECT=1
 #[ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
 
 # gpg
-export GNUPGHOME="~/.gnupg/"
+export GNUPGHOME="$HOME/.gnupg/"
 
 # Python env
 #export WORKON_HOME=$HOME/.virtualenvs   # Optional
