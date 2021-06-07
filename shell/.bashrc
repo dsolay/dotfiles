@@ -1,4 +1,5 @@
-#
+#! /bin/bash
+
 # ~/.bashrc
 #
 
@@ -49,17 +50,21 @@ export PS2="> "
 # it's already enabled in /etc/bash.bashrc and /etc/profile sources
 # /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  [ -f ~/.bash/bash-completion.bash ] && . ~/.bash/bash-completion.bash
+    # shellcheck source=.bash/bash-completion.bash
+  [ -f ~/.bash/bash-completion.bash ] && source ~/.bash/bash-completion.bash
 fi
 
 if [ "$(command -v fzf 2> /dev/null)" ]; then
-  [ -f ~/.bash/key-bindings.bash ] && . ~/.bash/key-bindings.bash
+  # shellcheck source=.bash/key-bindings.bash
+  [ -f ~/.bash/key-bindings.bash ] && source ~/.bash/key-bindings.bash
   [ -f ~/.bash/fzf-completion.bash ] && bash ~/.bash/fzf-completion.bash
 
   # Load plugins
-  for plugin in $(ls -d ~/.bash/fzf-plugins/*)
+  for plugin in ~/.bash/fzf-plugins/*.plugin.bash
   do
-    source $plugin
+    [[ -e "$plugin" ]] || break
+    # shellcheck source=/dev/null
+    source "$plugin"
   done
 fi
 
@@ -92,18 +97,17 @@ shopt -s checkwinsize
 _checkexec lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Load aliases
-[ -f ~/.bash/aliases.sh ] && . ~/.bash/aliases.sh
+# shellcheck source=.bash/aliases.sh
+[ -f ~/.bash/aliases.sh ] && source ~/.bash/aliases.sh
 
 # Load functions
-[ -f ~/.bash/funcs.sh ] && . ~/.bash/funcs.sh
-
-# Load virtualenvwrapper
-[ -f /usr/bin/virtualenvwrapper.sh ] && source /usr/bin/virtualenvwrapper.sh
+# shellcheck source=.bash/funcs.sh
+[ -f ~/.bash/funcs.sh ] && source ~/.bash/funcs.sh
 
 # load lua paths
-if [ -z "$(echo $PATH | grep -w ~/.luarocks/bin)" ]; then
-  eval "$(luarocks path)"
-fi
+_checkexec luarocks && {
+  test ! "$(echo "$PATH" | grep -w ~/.luarocks/bin)" && eval "$(luarocks path)"
+}
 
 # Include composer bin
 [ -d "$HOME/.config/composer/vendor/bin" ] && prependpath "$HOME/.config/composer/vendor/bin"
@@ -112,18 +116,12 @@ fi
 [ -d "$HOME/.nodenv/bin" ] && prependpath "$HOME/.nodenv/bin"
 
 # Load nodenv config
-_checkexec nodenv && {
-  if [ -z "$(echo $PATH | grep -w ~/.nodenv/shims)" ]; then
-    eval "$(nodenv init - --no-rehash)"
-  fi
+ _checkexec nodenv && {
+  test ! "$(echo "$PATH" | grep -w ~/.nodenv/shims)" && eval "$(nodenv init - --no-rehash)"
 }
 
 #Load pyenv config
-_checkexec pyenv && {
-  if [ -z "$(echo $PATH | grep -w ~/.pyenv/shims)" ]; then
-    eval "$(pyenv init -)"
-  fi
-}
+_checkexec pyenv && eval "$(pyenv init -)"
 
 # Use prompt startship
 _checkexec starship && eval "$(starship init bash)"
