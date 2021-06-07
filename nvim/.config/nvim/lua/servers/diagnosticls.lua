@@ -109,7 +109,12 @@ return {
             shellcheck = {
                 command = 'shellcheck',
                 debounce = 100,
-                args = {'--format=json', '-'},
+                args = {
+                    '--format=json',
+                    '--source-path=SCRIPTDIR',
+                    '--external-sources',
+                    '-',
+                },
                 sourceName = 'shellcheck',
                 parseJson = {
                     line = 'line',
