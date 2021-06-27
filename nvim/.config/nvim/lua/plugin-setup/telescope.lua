@@ -3,7 +3,7 @@ local map = require('utils').map
 local opts = {silent = true}
 map('n', '<leader>fb', [[<cmd>Telescope buffers<cr>]], opts)
 map('n', '<leader>fp', [[<cmd>Telescope git_files<cr>]], opts)
-map('n', '<leader>ff', [[<cmd>Telescope find_files<cr>]], opts)
+map('n', '<leader>ff', [[<cmd>Telescope find_files hidden=true<cr>]], opts)
 map('n', '<leader>fg', [[<cmd>Telescope live_grep<cr>]], opts)
 map('n', '<leader>fq', [[<cmd>Telescope quickfix<cr>]], opts)
 map('n', '<leader>fl', [[<cmd>Telescope localist<cr>]], opts)
