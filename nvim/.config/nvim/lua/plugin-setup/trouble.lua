@@ -7,5 +7,5 @@ map('n', '<leader>tow', '<cmd>TroubleToggle lsp_workspace_diagnostics<cr>', opts
 map('n', '<leader>tod', '<cmd>TroubleToggle lsp_document_diagnostics<cr>', opts)
 map('n', '<leader>toq', '<cmd>TroubleToggle loclist<cr>', opts)
 map('n', '<leader>tol', '<cmd>TroubleToggle quickfix<cr>', opts)
-map('n', '<leader>gR', '<cmd>TroubleToggle lsp_references<cr>', opts)
-map('n', '<leader>gD', '<cmd>TroubleToggle lsp_definitions<cr>', opts)
+map('n', '<leader>tgr', '<cmd>TroubleToggle lsp_references<cr>', opts)
+map('n', '<leader>tgd', '<cmd>TroubleToggle lsp_definitions<cr>', opts)
