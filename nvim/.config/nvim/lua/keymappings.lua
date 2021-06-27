@@ -3,9 +3,6 @@ local map = utils.map
 
 local opts = {silent = true}
 
--- Disable annoying F1 binding
-map('', '<f1>', '<cmd>FloatermToggle<cr>')
-
 -- Show help under the cursor
 map('n', '<leader>h', ':help <c-r><c-w><cr>', opts)
 
@@ -21,7 +18,7 @@ map('n', '<leader><c-e>', 'ggVG', opts)
 map('n', 's*', [[<cmd>let @/=expand('<cword>')<cr>cgn]], opts)
 
 -- Search and replace
-map('n', '<leader>rw', ":%s/<C-R>=expand('<cword>')<cr>/")
+map('n', '<leader>rw', ':%s/<C-R>=expand(\'<cword>\')<cr>/')
 
 -- Search word under the cursosr
 -- Make * stay at the cursor position
@@ -47,35 +44,47 @@ map('n', '<c-k>', '<c-w>k', opts)
 map('n', '<c-l>', '<c-w>l', opts)
 
 -- Move lines
-map('n', '<S-Up>',    '<cmd>m-2<cr>', opts)
-map('n', '<S-Down>',  '<cmd>m+<cr>',  opts)
-map('i', '<S-Up>',    '<cmd>m-2<cr>', opts)
-map('i', '<S-Down>',  '<cmd>m+<cr>',  opts)
+map('n', '<S-Up>', '<cmd>m-2<cr>', opts)
+map('n', '<S-Down>', '<cmd>m+<cr>', opts)
+map('i', '<S-Up>', '<cmd>m-2<cr>', opts)
+map('i', '<S-Down>', '<cmd>m+<cr>', opts)
 
 -- Enable Buffer navigation like firefox
-map('n', '<c-left>',  '<cmd>bp<cr>', opts)
+map('n', '<c-left>', '<cmd>bp<cr>', opts)
 map('n', '<c-right>', '<cmd>bn<cr>', opts)
-map('n', '<A-q>',     '<cmd>bd<cr>', opts)
-map('i', '<c-left>',  '<cmd>bp<cr>', opts)
+map('n', '<A-q>', '<cmd>bd<cr>', opts)
+map('i', '<c-left>', '<cmd>bp<cr>', opts)
 map('i', '<c-right>', '<cmd>bn<cr>', opts)
-map('i', '<A-q>',     '<cmd>bd<cr>', opts)
+map('i', '<A-q>', '<cmd>bd<cr>', opts)
 
 -- Resize buffer
-map('', '<C-S-Left>',   '<cmd>vertical resize -5<cr>', opts)
-map('', '<C-S-Right>',  '<cmd>vertical resize +5<cr>', opts)
-map('', '<C-S-Up>',     '<cmd>resize +5<cr>', opts)
-map('', '<C-S-Down>',   '<cmd>resize -5<cr>', opts)
+map('', '<C-S-Left>', '<cmd>vertical resize -5<cr>', opts)
+map('', '<C-S-Right>', '<cmd>vertical resize +5<cr>', opts)
+map('', '<C-S-Up>', '<cmd>resize +5<cr>', opts)
+map('', '<C-S-Down>', '<cmd>resize -5<cr>', opts)
 
 -- Spell
 map('n', '<F7>', ':setlocal spell! spelllang=es<cr>', opts)
 map('i', '<F7>', '<C-o>:setlocal spell! spelllang=es<cr>', opts)
 
 -- Current path
-map('n', '<leader>pwd', "<cmd>echo expand('%')<cr>")
+map('n', '<leader>pwd', '<cmd>echo expand(\'%\')<cr>')
 map('i', '<F11>', [[<esc>:echo expand('%')<cr>i]])
 
 -- Back to last cursosr position
 map('n', '<BS>', [[g`']], opts)
 
--- Remove the las line
+-- Remove the last line
 map('n', '$d', [[:$d<cr>]])
+
+map(
+    'n', '<A-d>',
+    [[<cmd>lua require'lspsaga.floaterm'.open_float_terminal()<cr>]],
+    {noremap = true, silent = true}
+)
+
+map(
+    't', '<A-d>',
+    [[<C-\><C-n>:lua require'lspsaga.floaterm'.close_float_terminal()<cr>]],
+    {noremap = true, silent = true}
+)

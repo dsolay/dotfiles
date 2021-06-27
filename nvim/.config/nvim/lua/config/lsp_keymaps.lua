@@ -74,16 +74,4 @@ return {
     {'n', ']d', [[<cmd>lua Diagnostic_next()<cr>]], opts},
     {'n', '[d', [[<cmd>lua Diagnostic_prev()<cr>]], opts},
     {'n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>', opts},
-    {
-        'n',
-        '<A-d>',
-        [[<cmd>lua require'lspsaga.floaterm'.open_float_terminal()<cr>]],
-        opts,
-    },
-    {
-        't',
-        '<A-d>',
-        [[<C-\><C-n>:lua require'lspsaga.floaterm'.close_float_terminal()<cr>]],
-        opts,
-    },
 };
