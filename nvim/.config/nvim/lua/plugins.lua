@@ -149,6 +149,7 @@ local function init(use)
     use {
         'kdav5758/TrueZen.nvim',
         config = [[require('config.true_zen')]],
+        setup = [[require('plugin-setup.truezen')]],
         cmd = {
             'TZMinimalist',
             'TZFocus',
