@@ -709,3 +709,10 @@ function compress-pdf() {
     -sOutputFile=compressed_PDF_file.pdf \
     "$1"
 }
+
+function glNoGraph() {
+  git log \
+    --color=always \
+    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" \
+    "$@"
+}
