@@ -10,24 +10,24 @@ _checkexec() {
 # Colourise man pages
 man() {
   env \
-    LESS_TERMCAP_mb=$(tput bold; tput setaf 6) \
-    LESS_TERMCAP_md=$(tput bold; tput setaf 6) \
-    LESS_TERMCAP_me=$(tput sgr0) \
-    LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
-    LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
-    LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 4) \
-    LESS_TERMCAP_mr=$(tput rev) \
-    LESS_TERMCAP_mh=$(tput dim) \
-    LESS_TERMCAP_ZN=$(tput ssubm) \
-    LESS_TERMCAP_ZV=$(tput rsubm) \
-    LESS_TERMCAP_ZO=$(tput ssupm) \
-    LESS_TERMCAP_ZW=$(tput rsupm) \
+    LESS_TERMCAP_mb="$(tput bold; tput setaf 6)" \
+    LESS_TERMCAP_md="$(tput bold; tput setaf 6)" \
+    LESS_TERMCAP_me="$(tput sgr0)" \
+    LESS_TERMCAP_se="$(tput rmso; tput sgr0)" \
+    LESS_TERMCAP_ue="$(tput rmul; tput sgr0)" \
+    LESS_TERMCAP_us="$(tput smul; tput bold; tput setaf 4)" \
+    LESS_TERMCAP_mr="$(tput rev)" \
+    LESS_TERMCAP_mh="$(tput dim)" \
+    LESS_TERMCAP_ZN="$(tput ssubm)" \
+    LESS_TERMCAP_ZV="$(tput rsubm)" \
+    LESS_TERMCAP_ZO="$(tput ssupm)" \
+    LESS_TERMCAP_ZW="$(tput rsupm)" \
     man "$@"
   }
 
 # Back up a file. Usage "backupthis <filename>"
 backupthis() {
-  cp -riv $1 ${1}-$(date +%Y%m%d%H%M).backup;
+  cp -riv "$1" "${1}-$(date +%Y%m%d%H%M)".backup;
 }
 
 # shell helper functions
@@ -52,20 +52,25 @@ cd() {
 
 src()
 {
-  . ~/.bashrc 2>/dev/null
+  source ~/.bashrc 2>/dev/null
 }
 
 por()
 {
   local orphans
   orphans="$(pacman -Qtdq 2>/dev/null)"
-  [[ -z $orphans ]] && printf "System has no orphaned packages\n" || sudo pacman -Rns $orphans
+  if [[ -z $orphans ]];
+  then
+    printf "System has no orphaned packages\n"
+  else
+    sudo pacman -Rns "$orphans"
+  fi
 }
 
 pss()
 {
   PS3=$'\n'"Enter a package number to install, Ctrl-C to exit"$'\n\n'">> "
-  select pkg in $(pacman -Ssq "$1"); do sudo pacman -S $pkg; break; done
+  select pkg in $(pacman -Ssq "$1"); do sudo pacman -S "$pkg"; break; done
 }
 
 pacsearch()
@@ -132,13 +137,13 @@ deadsym()
 gitpr()
 {
   github="pull/$1/head:$2"
-  _fetchpr $github $2 $3
+  _fetchpr "$github" "$2" "$3"
 }
 
 bitpr()
 {
   bitbucket="refs/pull-requests/$1/from:$2"
-  _fetchpr $bitbucket $2 $3
+  _fetchpr "$bitbucket" "$2" "$3"
 }
 
 _fetchpr()
@@ -153,7 +158,7 @@ _fetchpr()
     branch=$2
     origin=${3:-origin}
     if git rev-parse --git-dir &> /dev/null; then
-      git fetch $origin $ref && git checkout $branch
+      git fetch "$origin" "$ref" && git checkout "$branch"
     else
       echo 'error: not in git repo'
     fi
@@ -204,12 +209,12 @@ sanitize()
 
 mp()
 {
-  ps "$@" -u $USER -o pid,%cpu,%mem,bsdtime,command
+  ps "$@" -u "$USER" -o pid,%cpu,%mem,bsdtime,command
 }
 
 pp()
 {
-  mp f | awk '!/awk/ && $0~var' var=${1:-".*"}
+  mp f | awk '!/awk/ && $0~var' var="${1:-".*"}"
 }
 
 ff()
@@ -219,7 +224,7 @@ ff()
 
 fe()
 {
-  find . -type f -iname '*'"${1:-}"'*' -exec ${2:-file} {} \;
+  find . -type f -iname '*'"${1:-}"'*' -exec "${2:-file}" {} \;
 }
 
 ranger()
@@ -270,7 +275,8 @@ fstr()
   esac done
   shift $((OPTIND - 1))
   [[ $# -lt 1 ]] && printf "fstr: find string in files.\n%s" "$usage"
-  find . -type f -name "${2:-*}" -print 0 | xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
+  find . -type f -name "${2:-*}" -print 0 \
+    | xargs -0 egrep --color=always -sn "${case}" "$1" 2>&- | more
 }
 
 swap()
@@ -363,8 +369,8 @@ killp()
   [[ $# -lt 1 || $# -gt 2 ]] && printf "Usage: killp [-SIGNAL] pattern" && return 1
   [[ $# -eq 2 ]] && sig=$1
   for pid in $(mp | awk '!/awk/ && $0~pat { print $1 }' pat=${!#}); do
-    name=$(mp | awk '$1~var { print $5 }' var=$pid)
-    ask "Kill process $pid <$name> with signal $sig?" && kill $sig $pid
+    name=$(mp | awk '$1~var { print $5 }' var="$pid")
+    ask "Kill process $pid <$name> with signal $sig?" && kill "$sig" "$pid"
   done
 }
 
@@ -388,7 +394,6 @@ mdf()
 
 mip()
 {
-  local ip
   ip4=$(ip -4 addr show enp34s0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
   ip6=$(ip -6 addr show enp34s0 | grep -oP '(?<=inet6\s)[\da-f:]+')
   printf "%s\n" "IPv4: ${ip4:-Not connected}"
@@ -403,7 +408,7 @@ ii()
   echo -e "\n\e[1;31mCurrent date:\e[m "            ; date
   echo -e "\n\e[1;31mMachine stats:\e[m "           ; uptime
   echo -e "\n\e[1;31mMemory stats:\e[m "            ; free -h
-  echo -e "\n\e[1;31mDiskspace:\e[m "               ; mdf / $HOME
+  echo -e "\n\e[1;31mDiskspace:\e[m "               ; mdf / "$HOME"
   echo -e "\n\e[1;31mLocal IP Address:\e[m"         ; mip
   echo -e "\n\e[1;31mOpen connections:\e[m "        ; ss -lt;
   echo
@@ -420,7 +425,7 @@ rep()
 
 ask()
 {
-  printf "$@" '[y/N] '; read -r ans
+  printf "%s" "$@" '[y/N] '; read -r ans
   case "$ans" in
     y*|Y*) return 0 ;;
     *) return 1
@@ -458,7 +463,7 @@ fast_chr()
 {
   local __octal
   local __char
-  printf -v __octal '%03o' $1
+  printf -v __octal '%03o' "$1"
   printf -v __char \\$__octal
   REPLY=$__char
 }
@@ -509,12 +514,12 @@ genecho()
 }
 
 booting() {
-  sudo dd if=$1 of="${2}" bs=4M status=progress oflag=sync
+  sudo dd if="$1" of="${2}" bs=4M status=progress oflag=sync
 }
 
 format() {
-  sudo wipefs -a $1 \
-    && sudo parted -s $1 mklabel msdos mkpart primary fat32 1MiB 100% \
+  sudo wipefs -a "$1" \
+    && sudo parted -s "$1" mklabel msdos mkpart primary fat32 1MiB 100% \
     && sudo mkfs."${2}" -F 32 "${1}1"
   }
 
@@ -527,12 +532,14 @@ genssl(){
 
 
 terminate() {
-  kill -9 $(ps -ef | grep -v grep | grep $1 | awk '{print $2}')
+  kill -9 "$(pgrep "$1")"
 }
 
 dlna() {
   [ -f ~/.config/minidlna/minidlna.log ] && rm ~/.config/minidlna/minidlna.log
-  minidlnad -R -f /home/$USER/.config/minidlna/minidlna.conf -P /home/$USER/.config/minidlna/minidlna.pid
+  minidlnad -R \
+    -f "/home/$USER/.config/minidlna/minidlna.conf" \
+    -P "/home/$USER/.config/minidlna/minidlna.pid"
 }
 
 docker-ip() {
@@ -540,29 +547,29 @@ sudo docker inspect --format '{{range .NetworkSettings.Networks}}{{.IPAddress}}{
 }
 
 ssh-init() {
-if ps -p $SSH_AGENT_PID > /dev/null
+if ps -p "$SSH_AGENT_PID" > /dev/null
 then
   echo "add ssh key..."
-  ssh-add $1
+  ssh-add "$1"
 else
   echo "init ssh-agent..."
-  eval $(ssh-agent -s)
+  eval "$(ssh-agent -s)"
 
-  ssh-init $@
+  ssh-init "$@"
 fi
 }
 
 encrypt() {
-  gpg --recipient $1 --encrypt-files $2
+  gpg --recipient "$1" --encrypt-files "$2"
 }
 
 decrypt() {
-  gpg --decrypt-files $1
+  gpg --decrypt-files "$1"
 }
 
 ekey() {
-  gpg --export-secret-keys --armor $1 > $2/secret.asc
-  gpg --export --armor $1 > $2/public.asc
+  gpg --export-secret-keys --armor "$1" > "$2/secret.asc"
+  gpg --export --armor "$1" > "$2/public.asc"
 }
 
 usb-boot() {
@@ -571,22 +578,26 @@ sudo qemu-system-x86_64 \
   -rtc base=localtime \
   -m "${2:-2G}" \
   -vga std \
-  -drive file=$1,readonly,cache=none,format=raw,if=virtio
+  -drive file="$1",readonly,cache=none,format=raw,if=virtio
 }
 
 mnt-iso() {
-sudo mount -o loop $1 $2
+sudo mount -o loop "$1" "$2"
 }
 
 ftpm() {
-  curlftpfs ftp://$1:$2/ /media/ftp/
+  curlftpfs ftp://"$1":"$2"/ /media/ftp/
 }
 
 yss() {
   arg="$1"; shift
   case $arg in
-    -e|--exact) yay -Ss $1 | grep --color=auto -w "$1" | grep --color=auto -E "*/$1($|\s)" ;;
-    *) yay -Ss $arg | grep --color=auto -w "$arg"
+    -e|--exact)
+      yay -Ss "$1" | grep -E "$1($|\s)"
+    ;;
+    *)
+      yay -Ss "$arg" | grep -w "$arg"
+    ;;
   esac
 }
 
@@ -600,13 +611,13 @@ function expand_alias {
   fi
 }
 
-vercomp () {
-  if [[ $1 == $2 ]]
+function vercomp () {
+  if [[ $1 == "$2" ]]
   then
     return 0
   fi
   local IFS=.
-  local i ver1=($1) ver2=($2)
+  local i ver1=("$1") ver2=("$2")
   # fill empty fields in ver1 with zeros
   for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
   do
@@ -631,14 +642,14 @@ vercomp () {
   return 0
 }
 
-testvercomp () {
-  vercomp $1 $2
+function testvercomp () {
+  vercomp "$1" "$2"
   case $? in
     0) op='=';;
     1) op='>';;
     2) op='<';;
   esac
-  if [[ $op != $3 ]]
+  if [[ $op != "$3" ]]
   then
     echo "FAIL: Expected '$3', Actual '$op', Arg1 '$1', Arg2 '$2'"
   else
@@ -656,41 +667,45 @@ function fix_gitignore() {
 function fix_ammend_pull() {
   git_version=$(git --version | cut -d " " -f 3)
 
-  vercomp $git_version 2.23
+  vercomp "$git_version" 2.23
   if [ $? -eq 2 ];
   then
     git checkout -b backup
-    git branch -D $1
-    git pull origin $1
-    git checkout $1
+    git branch -D "$1"
+    git pull origin "$1"
+    git checkout "$1"
   else
     git switch -c backup
-    git branch -D $1
-    git pull origin $1
-    git switch $1
+    git branch -D "$1"
+    git pull origin "$1"
+    git switch "$1"
   fi
 }
 
 function merge-pdf() {
-  gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sOutputFile=merged.pdf $@
+  gs \
+    -dBATCH -dNOPAUSE \
+    -q -sDEVICE=pdfwrite \
+    -dPDFSETTINGS=/prepress \
+    -sOutputFile=merged.pdf "$@"
 }
 
 function split-pdf() {
   gs -sDEVICE=pdfwrite \
     -q -dNOPAUSE -dBATCH \
     -sOutputFile=splited.pdf \
-    -dFirstPage=$1 \
-    -dLastPage=$2 \
-    $3
+    -dFirstPage="$1" \
+    -dLastPage="$2" \
+    "$3"
 }
 
 function compress-pdf() {
   gs -sDEVICE=pdfwrite \
-    -dCompatibilityLevel=$2 \
+    -dCompatibilityLevel="$2" \
     -dPDFSETTINGS=/prepress \
     -dNOPAUSE \
     -dQUIET \
     -dBATCH \
     -sOutputFile=compressed_PDF_file.pdf \
-    $1
+    "$1"
 }
