@@ -12,61 +12,6 @@ _checkexec() {
 # remember the original command when necessary.  There are some
 # exceptions for commands I seldom execute.
 
-# APT (package management on Debian)
-# ----------------------------------
-
-# If you are coming to Debian from Arch-based distros, check
-# compatibility with `pacman`:
-# https://wiki.archlinux.org/index.php/Pacman/Rosetta
-if _checkexec apt; then
-	# up{dating,grading}.  The -V shows version changes.
-	alias au="sudo apt update"
-	alias aug="sudo apt upgrade -V"
-	alias auu="sudo apt update && sudo apt upgrade -V"
-	alias afu="sudo apt full-upgrade -V"
-	alias auufu="sudo apt update && sudo apt upgrade -V && sudo apt full-upgrade -V"
-
-	# act on package targets
-	alias ai="sudo apt install"
-	alias air="sudo apt install --reinstall"
-	alias ar="sudo apt remove -V"
-
-	# list local packages
-	alias ard="apt rdepends" # followed by package name to print reverse dependencies
-	alias ali="apt list --installed"
-	alias alu="apt list --upgradable"
-	alias aulu="sudo apt update && apt list --upgradable"
-
-	# act on the repos
-	alias as="apt search"
-	alias ash="apt show"
-	alias adl="apt download" # gets source .deb in current directory
-
-	# package handling
-	alias aac="sudo apt autoclean"
-	alias aar="sudo apt autoremove -V"
-	alias ama="sudo apt-mark auto"
-	alias amm="sudo apt-mark manual"
-fi
-
-# No point in checking for dpkg on a Debian system.  Still, it can help
-# people who copy-paste stuff.
-if _checkexec dpkg; then
-	alias dgl='dpkg --listfiles' # target a package name, e.g. dgl bspwm
-	alias dgg='dpkg --get-selections' # would normally be pipped to grep
-	# The following removes/purges unused configs without asking for
-	# confirmation.  Same end product as 'alias apc' (see below where
-	# aptitude is defined).
-	alias dgp='sudo dpkg --purge $(dpkg --get-selections | grep deinstall | cut -f 1)'
-fi
-
-if _checkexec aptitude; then
-	# The following two aliases perform the same action of removing
-	# unused system files.  Unlike 'alias dgp', confirmation is needed.
-	#alias apc="sudo aptitude purge ?config-files"
-	alias apc="sudo aptitude purge ~c"
-fi
-
 # PACMAN (package management on Arch)
 # ----------------------------------
 
@@ -167,11 +112,8 @@ if _checkexec reflector; then
 fi
 
 # Record Screen
-if _checkexec byzanz-record; then
-	alias gif='byzanz-record -x 1090 -w 750 -y 430 -h 480 -v -d 15 ~/Videos/$(date +%a-%d-%S).gif'
-fi
-
-alias rec='ffmpeg -video_size 1920x1080 -framerate 60 -f x11grab -i :0.0 -c:v libx264 -qp 0 -preset ultrafast ~/Videos/$(date +%a-%d-%S).mkv'
+alias rec='ffmpeg -video_size 1920x1080 -framerate 60 -f x11grab -i :0.0 -f alsa
+-ac 2 -i pulse ~/Videos/records/$(date +%a-%d-%S).mkv'
 
 if _checkexec python; then
 	alias calc='python -qi -c "from math import *"'
@@ -252,6 +194,7 @@ alias egrep='egrep --color=auto'
 # the previous dir denoted by two dots).  I would also like to use the
 # -p option, which prepends a forward slash to directories, but it does
 # not seem to work with symlinked directories. For more, see `man ls`.
+alias la='ls -lia --color=auto --group-directories-first'
 alias ls='ls -pv --color=auto --group-directories-first'
 alias lsa='ls -pvA --color=auto --group-directories-first'
 alias lsl='ls -lhpv --color=auto --group-directories-first'
@@ -259,12 +202,6 @@ alias lsla='ls -lhpvA --color=auto --group-directories-first'
 
 # Extra tasks and infrequently used tools
 # ---------------------------------------
-
-# These options are very opinionated, disabling images, javascript,
-# etc.  See `man surf`.
-if _checkexec surf; then
-	alias surf="surf -giKMnps"
-fi
 
 # Quick shortcuts for `mpv`.  When I want to play a podcast that only
 # shows a static image, I run the command with the --no-video option.
@@ -349,10 +286,6 @@ if _checkexec git; then
 	alias gfetch='git fetch'
 	alias gpm='git push -u origin master'
 	alias gph='git push -u origin HEAD'
-
-	alias glNoGraph='git log --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" "$@"'
-	_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
-	_checkexec diff-so-fancy && _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
 fi
 
 # Open current directory in nvim
