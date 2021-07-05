@@ -289,7 +289,7 @@ if _checkexec git; then
 fi
 
 # Open current directory in nvim
-alias ide="nvim-nightly"
+alias ide="nvim"
 
 # Update fonts
 alias fup="fc-cache -vf"
