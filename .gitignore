@@ -35,3 +35,4 @@ tags
 .php_cs.cache
 .vim-bookmarks
 nvim/.config/nvim/plugin/packer_compiled.vim
+nvim/.config/nvim/plugin/packer_compiled.lua

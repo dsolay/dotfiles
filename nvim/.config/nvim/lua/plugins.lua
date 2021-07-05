@@ -53,7 +53,6 @@ local function init(use)
     -- Indentation tracking
     use {
         'lukas-reineke/indent-blankline.nvim',
-        branch = 'lua',
         setup = [[require('plugin-setup.indentline')]],
         event = [[VimEnter *]],
     }
