@@ -2,8 +2,15 @@
 #
 # ~/.bash_profile
 #
+_checkexec() {
+  command -v "$1" > /dev/null
+}
+
 [[ -f ~/.bash/env.bash ]] && source .bash/env.bash
 [[ -f ~/.bashrc ]] && source .bashrc
+
+# load anyenv config
+_checkexec anyenv && eval "$(anyenv init -)"
 
 # Start SSH AGENT
 if [ -z "$SSH_AUTH_SOCK" ]

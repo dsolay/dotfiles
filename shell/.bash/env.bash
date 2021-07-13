@@ -10,15 +10,25 @@ appendpath () {
     esac
 }
 
+prependpath () {
+  case ":$PATH:" in
+    *:"$1":*)
+      ;;
+    *)
+      PATH="$1:${PATH:+$PATH}"
+  esac
+}
+
 # Shorter version of a common command that it used herein.
 _checkexec() {
     command -v "$1" > /dev/null
 }
 
-# session-wide environment for pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
+# add anyenv to path
+prependpath "$HOME/.anyenv/bin"
+
+# Include composer bin
+prependpath "$HOME/.config/composer/vendor/bin"
 
 # Include my scripts in the PATH.  To avoid conflicts, I always prepend
 # `own_script_` to my files.  There are some exceptions though, where I
@@ -55,12 +65,5 @@ export GOPATH="$HOME/go"
 # pipenv
 export PIPENV_VENV_IN_PROJECT=1
 
-# folder to store globally packages
-#export NPM_HOME="$HOME/.npm-global"
-#[ -d "$NPM_HOME/bin" ] && appendpath "$NPM_HOME/bin"
-
 # gpg
 export GNUPGHOME="$HOME/.gnupg/"
-
-# Python env
-#export WORKON_HOME=$HOME/.virtualenvs   # Optional

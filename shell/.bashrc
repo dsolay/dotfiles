@@ -109,19 +109,5 @@ _checkexec luarocks && {
   test ! "$(echo "$PATH" | grep -w ~/.luarocks/bin)" && eval "$(luarocks path)"
 }
 
-# Include composer bin
-[ -d "$HOME/.config/composer/vendor/bin" ] && prependpath "$HOME/.config/composer/vendor/bin"
-
-# Include nodenv to path
-[ -d "$HOME/.nodenv/bin" ] && prependpath "$HOME/.nodenv/bin"
-
-# Load nodenv config
- _checkexec nodenv && {
-  test ! "$(echo "$PATH" | grep -w ~/.nodenv/shims)" && eval "$(nodenv init - --no-rehash)"
-}
-
-#Load pyenv config
-_checkexec pyenv && eval "$(pyenv init -)"
-
 # Use prompt startship
 _checkexec starship && eval "$(starship init bash)"
