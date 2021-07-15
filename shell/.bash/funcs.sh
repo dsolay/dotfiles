@@ -52,7 +52,8 @@ cd() {
 
 src()
 {
-  source ~/.bashrc 2>/dev/null
+  # shellcheck source=../.bashrc
+  source ~/.bashrc 2> /dev/null
 }
 
 por()
@@ -380,15 +381,16 @@ mdf()
   cols=$(( ${COLUMNS:-$(tput cols)} / 3 ))
   for fs in "$@"; do
     [[ ! -d $fs ]] && printf "%s :No such file or directory" "$fs" && continue
-    local info=($(command df -P $fs | awk 'END{ print $2,$3,$5 }'))
-    local free=($(command df -Pkh $fs | awk 'END{ print $4 }'))
+    IFS=" "
+    read -r -a info <<< "$(command df -P "$fs" | awk 'END{ print $2,$3,$5 }')"
+    read -r -a free <<< "$(command df -Pkh "$fs" | awk 'END{ print $4 }')"
     local nbstars=$((cols * info[1] / info[0]))
     local out="["
     for ((i=0; i<cols; i++)); do
       [[ $i -lt $nbstars ]] && out=$out"*" || out=$out"-"
     done
     out="${info[2]} $out] (${free[*]} free on $fs)"
-    printf "%s\n\n" "$out"
+    printf "%s\n" "$out"
   done
 }
 
@@ -464,7 +466,7 @@ fast_chr()
   local __octal
   local __char
   printf -v __octal '%03o' "$1"
-  printf -v __char \\$__octal
+  printf -v __char "%s" "\\\\$__octal"
   REPLY=$__char
 }
 
@@ -493,10 +495,10 @@ EOF
     (( c >>= 6, l++, p += o + 1, o >>= 1 ))
   done
 
-    # shellcheck disable=2034
-    fast_chr $(( t = p | c ))
-    echo -n "$REPLY$s"
-  }
+  # shellcheck disable=2034
+  fast_chr $(( t = p | c ))
+  echo -n "$REPLY$s"
+}
 
 
 genecho()
@@ -532,7 +534,10 @@ genssl(){
 
 
 terminate() {
-  kill -9 "$(pgrep "$1")"
+  for pid in $(pgrep "$1")
+  do
+    kill -9 "$pid"
+  done
 }
 
 dlna() {
