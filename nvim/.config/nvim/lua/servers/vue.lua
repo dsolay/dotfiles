@@ -1,3 +1,12 @@
+local utils = require('utils')
+local file_exists = utils.file_exists
+
+local function is_typescript_project()
+    local tsconfig_path = vim.loop.cwd() .. '/tsconfig.json'
+
+    return file_exists(tsconfig_path)
+end
+
 return {
   settings = {
     vetur = {
@@ -8,7 +17,7 @@ return {
         style = false
       },
       experimental = {
-        templateInterpolationService = true
+        templateInterpolationService = is_typescript_project()
       }
     }
   }
