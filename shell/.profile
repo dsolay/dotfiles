@@ -10,29 +10,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# Append our default paths
-appendpath () {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="${PATH:+$PATH:}$1"
-    esac
-}
-
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	    . "$HOME/.bashrc"
-    fi
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-   appendpath "$HOME/bin"
-fi
-
 # unclock keyring for terminal sessions
 # see https://wiki.archlinux.org/index.php/GNOME/Keyring#With_a_display_manager
 if [ -n "$DESKTOP_SESSION" ]; then

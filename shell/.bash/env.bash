@@ -1,29 +1,5 @@
 #! /bin/bash
 
-# Append our default paths
-appendpath () {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="${PATH:+$PATH:}$1"
-    esac
-}
-
-prependpath () {
-  case ":$PATH:" in
-    *:"$1":*)
-      ;;
-    *)
-      PATH="$1:${PATH:+$PATH}"
-  esac
-}
-
-# Shorter version of a common command that it used herein.
-_checkexec() {
-    command -v "$1" > /dev/null
-}
-
 # add anyenv to path
 prependpath "$HOME/.anyenv/bin"
 
@@ -38,6 +14,11 @@ prependpath "$HOME/.config/composer/vendor/bin"
 
 # Add pip user packages to PATH
 [ -d "$HOME/.local/bin" ] && appendpath "$HOME/.local/bin"
+
+# load lua paths
+_checkexec luarocks && {
+  test ! "$(echo "$PATH" | grep -w ~/.luarocks/bin)" && eval "$(luarocks path)"
+}
 
 # Default editor.  On Debian the Vim GUI is provided by a separate
 # package.

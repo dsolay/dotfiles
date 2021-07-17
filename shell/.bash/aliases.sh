@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Shorter version of a common command that it used herein.
-_checkexec() {
-	command -v "$1" > /dev/null
-}
-
 # Aliases
 # =======
 # A note on how I define aliases.  I try to abstract the command into

@@ -7,6 +7,25 @@ _checkexec() {
   command -v "$1" > /dev/null
 }
 
+# Append our default paths
+appendpath () {
+  case ":$PATH:" in
+    *:"$1":*)
+      ;;
+    *)
+      PATH="${PATH:+$PATH:}$1"
+  esac
+}
+
+prependpath () {
+  case ":$PATH:" in
+    *:"$1":*)
+      ;;
+    *)
+      PATH="$1:${PATH:+$PATH}"
+  esac
+}
+
 # Colourise man pages
 man() {
   env \
@@ -607,7 +626,7 @@ yss() {
 }
 
 # Expand an alias as text - https://unix.stackexchange.com/q/463327/143394
-function expand_alias {
+expand_alias() {
   if [[ -n $ZSH_VERSION ]]; then
     # shellcheck disable=2154  # aliases referenced but not assigned
     printf '%s\n' "${aliases[$1]}"
@@ -616,7 +635,7 @@ function expand_alias {
   fi
 }
 
-function vercomp () {
+vercomp() {
   if [[ $1 == "$2" ]]
   then
     return 0
@@ -647,7 +666,7 @@ function vercomp () {
   return 0
 }
 
-function testvercomp () {
+function testvercomp() {
   vercomp "$1" "$2"
   case $? in
     0) op='=';;
@@ -662,14 +681,14 @@ function testvercomp () {
   fi
 }
 
-function fix_gitignore() {
+fix_gitignore() {
   git rm -r --cached .
   git add .
   git commit -m ".gitignore fix"
   echo "fix gitignore"
 }
 
-function fix_ammend_pull() {
+fix_ammend_pull() {
   git_version=$(git --version | cut -d " " -f 3)
 
   vercomp "$git_version" 2.23
@@ -687,7 +706,7 @@ function fix_ammend_pull() {
   fi
 }
 
-function merge-pdf() {
+merge-pdf() {
   gs \
     -dBATCH -dNOPAUSE \
     -q -sDEVICE=pdfwrite \
@@ -695,7 +714,7 @@ function merge-pdf() {
     -sOutputFile=merged.pdf "$@"
 }
 
-function split-pdf() {
+split-pdf() {
   gs -sDEVICE=pdfwrite \
     -q -dNOPAUSE -dBATCH \
     -sOutputFile=splited.pdf \
@@ -704,7 +723,7 @@ function split-pdf() {
     "$3"
 }
 
-function compress-pdf() {
+compress-pdf() {
   gs -sDEVICE=pdfwrite \
     -dCompatibilityLevel="$2" \
     -dPDFSETTINGS=/prepress \
@@ -715,9 +734,15 @@ function compress-pdf() {
     "$1"
 }
 
-function glNoGraph() {
+glNoGraph() {
   git log \
     --color=always \
     --format="%C(auto)%h%d %s %C(black)%C(bold)%cr% C(auto)%an" \
     "$@"
+}
+
+php-install()
+{
+  PHP_BUILD_CONFIGURE_OPTS="--enable-intl --with-pdo-pgsql --with-pgsql" \
+    phpenv install -f "$1"
 }

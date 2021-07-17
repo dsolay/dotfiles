@@ -15,19 +15,9 @@
 #
 # Last full review on 2019-06-28
 
-# Shorter version of a common command that it used herein.
-_checkexec() {
-  command -v "$1" > /dev/null
-}
-
-prependpath () {
-  case ":$PATH:" in
-    *:"$1":*)
-      ;;
-    *)
-      PATH="$1:${PATH:+$PATH}"
-  esac
-}
+# Load functions
+# shellcheck source=.bash/funcs.sh
+[ -f ~/.bash/funcs.sh ] && source ~/.bash/funcs.sh
 
 # General settings
 # ================
@@ -44,15 +34,6 @@ else
   export PS1="\w \$ "
 fi
 export PS2="> "
-
-# The following is taken from the .bashrc shipped with Debian 9.  Enable
-# programmable completion features (you don't need to enable this, if
-# it's already enabled in /etc/bash.bashrc and /etc/profile sources
-# /etc/bash.bashrc).
-if ! shopt -oq posix; then
-    # shellcheck source=.bash/bash-completion.bash
-  [ -f ~/.bash/bash-completion.bash ] && source ~/.bash/bash-completion.bash
-fi
 
 if [ "$(command -v fzf 2> /dev/null)" ]; then
   # shellcheck source=.bash/key-bindings.bash
@@ -99,15 +80,6 @@ _checkexec lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 # Load aliases
 # shellcheck source=.bash/aliases.sh
 [ -f ~/.bash/aliases.sh ] && source ~/.bash/aliases.sh
-
-# Load functions
-# shellcheck source=.bash/funcs.sh
-[ -f ~/.bash/funcs.sh ] && source ~/.bash/funcs.sh
-
-# load lua paths
-_checkexec luarocks && {
-  test ! "$(echo "$PATH" | grep -w ~/.luarocks/bin)" && eval "$(luarocks path)"
-}
 
 # Use prompt startship
 _checkexec starship && eval "$(starship init bash)"

@@ -2,12 +2,11 @@
 #
 # ~/.bash_profile
 #
-_checkexec() {
-  command -v "$1" > /dev/null
-}
+[[ -f "$HOME"/.bashrc ]] && source "$HOME"/.bashrc
+[[ -f "$HOME"/.bash/env.bash ]] && source "$HOME"/.bash/env.bash
 
-[[ -f ~/.bash/env.bash ]] && source .bash/env.bash
-[[ -f ~/.bashrc ]] && source .bashrc
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+    . /usr/share/bash-completion/bash_completion
 
 # load anyenv config
 _checkexec anyenv && eval "$(anyenv init -)"
