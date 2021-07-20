@@ -82,6 +82,8 @@ local function make_config(server)
         return merge('force', base_config, require('servers.lua'))
     elseif server == 'vue' then
         return merge('force', base_config, require('servers.vue'))
+    elseif server == 'intelephense' then
+        return merge('force', base_config, require('servers.intelephense'))
     elseif server == 'diagnosticls' then
         return require('servers.diagnosticls')
     else
@@ -95,6 +97,8 @@ local function setup_servers()
 
     -- get all installed servers
     local servers = require'lspinstall'.installed_servers()
+
+    table.insert(servers, 'intelephense')
 
     for _, server in pairs(servers) do
         local config = make_config(server)

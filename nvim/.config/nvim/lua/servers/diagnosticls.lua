@@ -73,6 +73,7 @@ return {
         'markdown',
         'vue',
         'env',
+        'php',
     },
     init_options = {
         linters = {
@@ -220,6 +221,32 @@ return {
                     {line = 1, message = {'[dotenv-linter] ', 3, ' [', 2, ']'}},
                 },
             },
+            phpstan = {
+                command = './vendor/bin/phpstan',
+                debounce = 100,
+                rootPatterns = {
+                    'composer.json',
+                    'composer.lock',
+                    'vendor',
+                    '.git',
+                },
+                args = {
+                    'analyze',
+                    '--error-format',
+                    'raw',
+                    '--no-progress',
+                    '--memory-limit=2G',
+                    '%filepath',
+                },
+                offsetLine = 0,
+                offsetColumn = 0,
+                sourceName = 'phpstan',
+                formatLines = 1,
+                formatPattern = {
+                    '^[^:]+:(\\d+):(.*)(\\r|\\n)*$',
+                    {line = 1, message = {'[phpstan] ', 2}},
+                },
+            },
         },
         filetypes = {
             javascript = 'eslint',
@@ -234,6 +261,7 @@ return {
             scss = 'stylelint',
             markdown = 'markdownlint',
             env = 'dotenvlint',
+            php = 'phpstan',
         },
         formatters = {
             prettier = {
@@ -254,6 +282,17 @@ return {
                     '--double-quote-to-single-quote',
                 },
             },
+            ['php-cs-fixer'] = {
+                command = './vendor/bin/php-cs-fixer',
+                args = {
+                    'fix',
+                    '--using-cache=no',
+                    '--no-interaction',
+                    '%file'
+                },
+                isStdout = false,
+                doesWriteToFile = true,
+            }
         },
         formatFiletypes = {
             css = 'prettier',
@@ -265,6 +304,7 @@ return {
             vue = 'prettier',
             lua = 'lua-format',
             json = 'fixjson',
+            php = 'prettier'
         },
     },
 }
