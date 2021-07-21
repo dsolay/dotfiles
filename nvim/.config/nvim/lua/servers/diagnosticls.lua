@@ -55,7 +55,7 @@ return {
 
         buf_set_keymap(
             'n', '<space>e',
-            [[<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<cr>]],
+            [[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]],
             opts
         )
     end,

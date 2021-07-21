@@ -19,48 +19,18 @@ function Diagnostic_prev(severity)
 end
 
 return {
-    {'n', 'gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<cr>', opts},
     {'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts},
-    {
-        'n',
-        '<leader>pd',
-        [[<cmd>lua require'lspsaga.provider'.preview_definition()<cr>]],
-        opts,
-    },
-    {'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<cr>', opts},
-    {'n', 'K', [[<cmd>lua require'lspsaga.hover'.render_hover_doc()<cr>]], opts},
-    {
-        'n',
-        '<C-d>',
-        [[<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<cr>]],
-        opts,
-    },
-    {
-        'n',
-        '<C-u>',
-        [[<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<cr>]],
-        opts,
-    },
+    {'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts},
+    {'n', 'K', [[<cmd>lua vim.lsp.buf.hover()<cr>]], opts},
     {'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts},
-    {
-        'n',
-        '<leader>K',
-        [[<cmd>lua require'lspsaga.signaturehelp'.signature_help()<cr>]],
-        opts,
-    },
+    {'n', '<leader>K', [[<cmd>lua vim.lsp.buf.signature_help()<cr>]], opts},
     {'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts},
-    {'n', '<leader>rn', [[<cmd>lua require'lspsaga.rename'.rename()<cr>]], opts},
-    {
-        'n',
-        '<leader>ca',
-        [[<cmd>lua require'lspsaga.codeaction'.code_action()<cr>]],
-        opts,
-    },
+    {'n', '<leader>rn', [[<cmd>lua vim.lsp.buf.rename()<cr>]], opts},
     {'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts},
     {
         'n',
         '<space>e',
-        [[<cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<cr>]],
+        [[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]],
         opts,
     },
     {'n', ']e', [[<cmd>lua Diagnostic_next('Error')<cr>]], opts},

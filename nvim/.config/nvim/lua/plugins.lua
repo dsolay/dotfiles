@@ -33,12 +33,15 @@ local function init(use)
         setup = [[require('plugin-setup.nvim-tree')]],
     }
 
-    -- Completion and linting
+    -- terminal
     use {
-        'glepnir/lspsaga.nvim',
-        'kabouzeid/nvim-lspinstall',
-        'neovim/nvim-lspconfig',
+        'numtostr/FTerm.nvim',
+        config = function() require('FTerm').setup() end,
+        setup = [[require('plugin-setup.fterm')]]
     }
+
+    -- Completion and linting
+    use {'kabouzeid/nvim-lspinstall', 'neovim/nvim-lspconfig'}
 
     use {
         {
@@ -139,7 +142,6 @@ local function init(use)
 
     use {
         'folke/trouble.nvim',
-        -- requires = 'kyazdani42/nvim-web-devicons',
         config = [[require('config.trouble')]],
         cmd = {'TroubleToggle', 'Trouble'},
         setup = [[require('plugin-setup.trouble')]],

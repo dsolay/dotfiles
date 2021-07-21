@@ -76,15 +76,3 @@ map('n', '<BS>', [[g`']], opts)
 
 -- Remove the last line
 map('n', '$d', [[:$d<cr>]])
-
-map(
-    'n', '<A-d>',
-    [[<cmd>lua require'lspsaga.floaterm'.open_float_terminal()<cr>]],
-    {noremap = true, silent = true}
-)
-
-map(
-    't', '<A-d>',
-    [[<C-\><C-n>:lua require'lspsaga.floaterm'.close_float_terminal()<cr>]],
-    {noremap = true, silent = true}
-)

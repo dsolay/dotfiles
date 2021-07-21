@@ -18,8 +18,6 @@ sign_define(
     {text = '', texthl = 'WhiteSign', linehl = '', numhl = ''}
 )
 
-require('lspsaga').init_lsp_saga {use_saga_diagnostic_sign = false}
-
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...)
         vim.api.nvim_buf_set_keymap(bufnr, ...)

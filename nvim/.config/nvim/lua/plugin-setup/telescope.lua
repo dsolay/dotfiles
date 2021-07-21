@@ -13,3 +13,13 @@ map('n', '<leader>fc', [[<cmd>Telescope commands<cr>]], opts)
 map('n', '<leader>fm', [[<cmd>Telescope man_pages<cr>]], opts)
 map('n', '<leader>fs', [[<cmd>Telescope spell_suggest<cr>]], opts)
 map('n', '<leader>fk', [[<cmd>Telescope keymaps<cr>]], opts)
+
+-- lsp pickers
+map('n', '<leader>lr', [[<cmd>Telescope lsp_references<cr>]], opts)
+map('n', '<leader>lds', [[<cmd>Telescope lsp_document_symbols<cr>]], opts)
+map('n', '<leader>lws', [[<cmd>Telescope lsp_workspace_symbols<cr>]], opts)
+map('n', '<leader>ldws', [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]], opts)
+map('n', '<leader>lca', [[<cmd>Telescope lsp_code_actions<cr>]], opts)
+map('n', '<leader>lrca', [[<cmd>Telescope lsp_range_code_actions<cr>]], opts)
+map('n', '<leader>li', [[<cmd>Telescope lsp_implementations<cr>]], opts)
+map('n', '<leader>ld', [[<cmd>Telescope lsp_definitions<cr>]], opts)
