@@ -284,15 +284,10 @@ return {
             },
             ['php-cs-fixer'] = {
                 command = './vendor/bin/php-cs-fixer',
-                args = {
-                    'fix',
-                    '--using-cache=no',
-                    '--no-interaction',
-                    '%file'
-                },
+                args = {'fix', '--using-cache=no', '--no-interaction', '%file'},
                 isStdout = false,
                 doesWriteToFile = true,
-            }
+            },
         },
         formatFiletypes = {
             css = 'prettier',
@@ -304,7 +299,9 @@ return {
             vue = 'prettier',
             lua = 'lua-format',
             json = 'fixjson',
-            php = 'prettier'
+            php = 'prettier',
+            markdown = 'prettier',
+
         },
     },
 }
