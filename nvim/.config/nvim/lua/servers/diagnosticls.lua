@@ -55,8 +55,7 @@ return {
 
         buf_set_keymap(
             'n', '<space>e',
-            [[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]],
-            opts
+            [[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]], opts
         )
     end,
     filetypes = {
@@ -301,7 +300,6 @@ return {
             json = 'fixjson',
             php = 'prettier',
             markdown = 'prettier',
-
         },
     },
 }
