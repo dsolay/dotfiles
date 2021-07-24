@@ -48,6 +48,7 @@ local function init(use)
         'kristijanhusak/vim-dadbod-ui',
         after = 'vim-dadbod',
         cmd = {'DBUI', 'DBUIToggle'},
+        config = [[require('config.dadbod-ui')]],
         setup = [[require('plugin-setup.dadbod-ui')]],
     }
 
