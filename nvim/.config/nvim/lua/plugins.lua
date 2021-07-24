@@ -37,11 +37,20 @@ local function init(use)
     use {
         'numtostr/FTerm.nvim',
         config = function() require('FTerm').setup() end,
-        setup = [[require('plugin-setup.fterm')]]
+        setup = [[require('plugin-setup.fterm')]],
     }
 
     -- Completion and linting
     use {'kabouzeid/nvim-lspinstall', 'neovim/nvim-lspconfig'}
+
+    -- sql
+    use {'tpope/vim-dadbod', cmd = {'DB', 'DBUI', 'DBUIToggle'} }
+    use {
+        'kristijanhusak/vim-dadbod-ui',
+        after = 'vim-dadbod',
+        cmd = {'DBUI', 'DBUIToggle'},
+        setup = [[require('plugin-setup.dadbod-ui')]],
+    }
 
     use {
         {
@@ -161,7 +170,8 @@ local function init(use)
         },
     }
 
-    use { 'tpope/vim-unimpaired' }
+    use {'tpope/vim-unimpaired'}
+    use {'tpope/vim-dotenv'}
 
     -- Highlight colors
     use {
