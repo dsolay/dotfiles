@@ -29,7 +29,6 @@ local function init(use)
     -- File explorer
     use {
         'kyazdani42/nvim-tree.lua',
-        cmd = {'NvimTreeToggle', 'NvimTreeOpen', 'NvimTreeFindFile'},
         setup = [[require('plugin-setup.nvim-tree')]],
     }
 
