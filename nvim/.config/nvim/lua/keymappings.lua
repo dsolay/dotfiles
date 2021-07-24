@@ -32,7 +32,8 @@ map('', '<leader><esc>', [[<cmd>let @/=""<cr>]], opts)
 
 -- Quit, close buffers, etc.
 map('n', '<leader>q', '<cmd>qa<cr>', opts)
-map('n', '<leader>x', '<cmd>x!<cr>', opts)
+map('n', '<leader>x', '<cmd>q!<cr>', opts)
+map('n', '<leader>X', '<cmd>x!<cr>', opts)
 
 -- Esc in the terminal
 map('t', '<esc>', [[<C-\><C-n>]])
