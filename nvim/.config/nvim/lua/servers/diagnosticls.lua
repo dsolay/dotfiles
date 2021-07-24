@@ -1,45 +1,16 @@
 local utils = require('utils')
 local file_exists = utils.file_exists
 
-local function get_eslint_bin()
-    local eslint_bin = 'eslint';
-    local modules_bin = vim.loop.cwd() .. '/node_modules/.bin'
+local function get_bin(default_bin, path)
+    local local_bin = table.concat {
+        vim.loop.cwd(),
+        (path or '/node_modules/.bin/'),
+        default_bin,
+    }
 
-    if (file_exists(modules_bin .. '/eslint_d')) then
-        eslint_bin = modules_bin .. '/eslint_d'
-    elseif file_exists(modules_bin .. '/eslint') then
-        eslint_bin = modules_bin .. '/eslint'
-    elseif vim.fn.executable('eslint_d') == 1 then
-        eslint_bin = 'eslint_d'
-    end
+    if (file_exists(local_bin)) then return local_bin end
 
-    return eslint_bin
-end
-
-local function get_prettier_bin()
-    local prettier_bin = 'prettier';
-    local modules_bin = vim.loop.cwd() .. '/node_modules/.bin'
-
-    if (file_exists(modules_bin .. '/prettier_d')) then
-        prettier_bin = modules_bin .. '/prettier_d'
-    elseif file_exists(modules_bin .. '/prettier') then
-        prettier_bin = modules_bin .. '/prettier'
-    elseif vim.fn.executable('prettier_d') == 1 then
-        prettier_bin = 'prettier_d'
-    end
-
-    return prettier_bin
-end
-
-local function get_stylelint_bin()
-    local stylelint_bin = 'stylelint';
-    local modules_bin = vim.loop.cwd() .. '/node_modules/.bin'
-
-    if (file_exists(modules_bin .. '/stylelint')) then
-        stylelint_bin = modules_bin .. '/stylelint'
-    end
-
-    return stylelint_bin
+    return default_bin
 end
 
 return {
@@ -77,7 +48,7 @@ return {
     init_options = {
         linters = {
             eslint = {
-                command = get_eslint_bin(),
+                command = get_bin('eslint'),
                 rootPatterns = {'.git'},
                 debounce = 100,
                 args = {
@@ -132,7 +103,7 @@ return {
                 },
             },
             spectral = {
-                command = 'spectral',
+                command = get_bin('spectral'),
                 debounce = 100,
                 args = {
                     'lint',
@@ -178,7 +149,7 @@ return {
                 },
             },
             stylelint = {
-                command = get_stylelint_bin(),
+                command = get_bin('stylelint'),
                 rootPatterns = {'.git'},
                 debounce = 100,
                 args = {'--formatter', 'json', '--stdin-filename', '%filepath'},
@@ -193,7 +164,7 @@ return {
                 securities = {error = 'error', warning = 'warning'},
             },
             markdownlint = {
-                command = 'markdownlint',
+                command = get_bin('markdownlint'),
                 isStderr = true,
                 debounce = 100,
                 args = {'--stdin'},
@@ -207,21 +178,20 @@ return {
                 },
             },
             dotenvlint = {
-                command = 'dotenv-linter',
-                isStderr = true,
+                command = get_bin('dotenv-linter'),
                 debounce = 100,
-                args = {'lint', '%filepath'},
+                args = {'%filepath'},
                 offsetLine = 0,
                 offsetColumn = 0,
                 sourceName = 'dotenv-linter',
                 formatLines = 1,
                 formatPattern = {
-                    [[^.*?:(\d+)\s?(\d+)\s?(.*)$]],
-                    {line = 1, message = {'[dotenv-linter] ', 3, ' [', 2, ']'}},
+                    [[^.*:(\d+)\s?(.*):\s?(.*)$]],
+                    {line = 1, message = {3, ' [', 2, ']'}},
                 },
             },
             phpstan = {
-                command = './vendor/bin/phpstan',
+                command = get_bin('phpstan', '/vendor/bin/'),
                 debounce = 100,
                 rootPatterns = {
                     'composer.json',
@@ -264,10 +234,13 @@ return {
         },
         formatters = {
             prettier = {
-                command = get_prettier_bin(),
+                command = get_bin('prettier'),
                 args = {'--stdin-filepath', '%filename'},
             },
-            fixjson = {command = 'fixjson', args = {'--stdin-filename'}},
+            fixjson = {
+                command = get_bin('fixjson'),
+                args = {'--stdin-filename'},
+            },
             ['lua-format'] = {
                 command = 'lua-format',
                 args = {
@@ -282,7 +255,7 @@ return {
                 },
             },
             ['php-cs-fixer'] = {
-                command = './vendor/bin/php-cs-fixer',
+                command = get_bin('php-cs-fixer', '/vendor/bin/'),
                 args = {'fix', '--using-cache=no', '--no-interaction', '%file'},
                 isStdout = false,
                 doesWriteToFile = true,
