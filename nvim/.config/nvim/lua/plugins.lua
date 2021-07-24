@@ -161,6 +161,8 @@ local function init(use)
         },
     }
 
+    use { 'tpope/vim-unimpaired' }
+
     -- Highlight colors
     use {
         'norcalli/nvim-colorizer.lua',
