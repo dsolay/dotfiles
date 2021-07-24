@@ -16,12 +16,14 @@ require('compe').setup {
 
     source = {
         path = true,
-        buffer = true,
+        buffer = { ignored_filetypes = {'sql'}, priority = 90 },
+        tags = { ignored_filetypes = {'sql'}, priority = 80 },
+        vsnip = true,
         nvim_lsp = true,
         nvim_lua = true,
-        vsnip = true,
+        vim_dadbod_completion = true,
         omni = false,
-        nvim_treesitter = false,
+        treesitter = true,
     }
 }
 

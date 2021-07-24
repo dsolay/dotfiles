@@ -43,7 +43,7 @@ local function init(use)
     use {'kabouzeid/nvim-lspinstall', 'neovim/nvim-lspconfig'}
 
     -- sql
-    use {'tpope/vim-dadbod', cmd = {'DB', 'DBUI', 'DBUIToggle'} }
+    use {'tpope/vim-dadbod', cmd = {'DB', 'DBUI', 'DBUIToggle'}}
     use {
         'kristijanhusak/vim-dadbod-ui',
         after = 'vim-dadbod',
@@ -52,13 +52,10 @@ local function init(use)
     }
 
     use {
-        {
-            'hrsh7th/nvim-compe',
-            config = [[require('config.compe')]],
-            event = [[InsertEnter *]],
-        },
-        {'hrsh7th/vim-vsnip', event = [[InsertEnter *]]},
-        {'rafamadriz/friendly-snippets', event = [[InsertEnter *]]},
+        {'kristijanhusak/vim-dadbod-completion', ft = {'sql'}},
+        {'hrsh7th/nvim-compe', config = [[require('config.compe')]]},
+        {'hrsh7th/vim-vsnip'},
+        {'rafamadriz/friendly-snippets'},
     }
 
     -- Indentation tracking
