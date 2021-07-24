@@ -65,7 +65,7 @@ return {
                     column = 'column',
                     endLine = 'endLine',
                     endColumn = 'endColumn',
-                    message = '[eslint] ${message} [${ruleId}]',
+                    message = '${message} [${ruleId}]',
                     security = 'severity',
                 },
                 securities = {['2'] = 'error', ['1'] = 'warning'},
@@ -92,7 +92,7 @@ return {
                     column = 'column',
                     endLine = 'endLine',
                     endColumn = 'endColumn',
-                    message = '[shellcheck] ${message} [${code}]',
+                    message = '${message} [${code}]',
                     security = 'level',
                 },
                 securities = {
@@ -120,7 +120,7 @@ return {
                     column = 'range.start.character',
                     endLine = 'range.end.line',
                     endColumn = 'range.end.character',
-                    message = '[spectral] ${message} [${code}]',
+                    message = '${message} [${code}]',
                     security = 'severity',
                 },
                 securities = {
@@ -139,7 +139,7 @@ return {
                     line = 'line',
                     column = 'column',
                     security = 'level',
-                    message = '[hadolint] ${message} [${code}]',
+                    message = '${message} [${code}]',
                 },
                 securities = {
                     error = 'error',
@@ -158,7 +158,7 @@ return {
                     errorsRoot = '[0].warnings',
                     line = 'line',
                     column = 'column',
-                    message = '[stylelint] ${text}',
+                    message = '${text}',
                     security = 'severity',
                 },
                 securities = {error = 'error', warning = 'warning'},
@@ -213,7 +213,7 @@ return {
                 formatLines = 1,
                 formatPattern = {
                     '^[^:]+:(\\d+):(.*)(\\r|\\n)*$',
-                    {line = 1, message = {'[phpstan] ', 2}},
+                    {line = 1, message = 2},
                 },
             },
         },
