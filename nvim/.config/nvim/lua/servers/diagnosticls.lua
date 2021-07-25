@@ -167,14 +167,11 @@ return {
                 command = get_bin('markdownlint'),
                 isStderr = true,
                 debounce = 100,
-                args = {'--stdin'},
-                offsetLine = 0,
-                offsetColumn = 0,
+                args = {'--json', '--stdin'},
                 sourceName = 'markdownlint',
-                formatLines = 1,
-                formatPattern = {
-                    [[^.*?:\s?(\d+)(:(\d+)?)?\s(MD\d{3}\/[A-Za-z0-9-/]+)\s(.*)$]],
-                    {line = 1, column = 3, message = 4},
+                parseJson = {
+                    line = 'lineNumber',
+                    message = '${ruleDescription} [${ruleNames[0]}/${ruleNames[1]}]',
                 },
             },
             dotenvlint = {
@@ -273,6 +270,7 @@ return {
             json = 'fixjson',
             php = 'prettier',
             markdown = 'prettier',
+            sh = 'prettier'
         },
     },
 }
