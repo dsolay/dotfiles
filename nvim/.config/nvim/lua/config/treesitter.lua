@@ -1,9 +1,31 @@
 local ts_configs = require('nvim-treesitter.configs')
 ts_configs.setup {
     ensure_installed = {
-        'bash', 'c', 'css', 'go', 'haskell', 'html', 'javascript', 'json',
-        'jsonc', 'kotlin', 'latex', 'lua', 'python', 'regex', 'rust', 'scss',
-        'toml', 'typescript', 'yaml', 'php'
+        'bash',
+        'c',
+        'css',
+        'go',
+        'graphql',
+        'haskell',
+        'html',
+        'java',
+        'javascript',
+        'json',
+        'jsonc',
+        'kotlin',
+        'latex',
+        'lua',
+        'python',
+        'regex',
+        'rust',
+        'scss',
+        'toml',
+        'typescript',
+        'tsx',
+        'yaml',
+        'php',
+        'vue',
+        'dockerfile',
     },
     highlight = {enable = true, use_languagetree = true},
     indent = {enable = false},
@@ -13,7 +35,7 @@ ts_configs.setup {
             init_selection = 'gnn',
             node_incremental = 'grn',
             scope_incremental = 'grc',
-            node_decremental = 'grm'
-        }
-    }
+            node_decremental = 'grm',
+        },
+    },
 }
