@@ -63,6 +63,7 @@ opt('lazyredraw', true)
 opt('linebreak', true, window)
 opt('wrap', true, window)
 opt('breakindent', true, window)
+opt('previewheight', 10)
 
 -- Use rigrep if installed
 if vim.fn.executable('rg') == 1 then
