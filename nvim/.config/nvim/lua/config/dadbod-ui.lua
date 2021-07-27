@@ -5,5 +5,6 @@ vim.g.db_ui_table_helpers = {
         BulkDelete = 'DELETE FROM "{table}" WHERE id IN ()',
     },
 }
+vim.g.db_ui_auto_execute_table_helpers = 1
 vim.g.db_ui_force_echo_notifications = 1
 vim.g.db_ui_win_position = 'right'
