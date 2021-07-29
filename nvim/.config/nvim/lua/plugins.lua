@@ -80,6 +80,11 @@ local function init(use)
         keys = {'gc', {'v', 'gc'}},
     }
 
+    use {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        config = [[require('config.nvim-ts-context-commentstring')]],
+    }
+
     -- Wrapping/delimiters
     use {
         {'machakann/vim-sandwich', event = [[BufEnter *]]},
