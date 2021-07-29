@@ -155,6 +155,7 @@ local function init(use)
 
     use {
         'kdav5758/TrueZen.nvim',
+        after = 'twilight.nvim',
         config = [[require('config.true_zen')]],
         setup = [[require('plugin-setup.truezen')]],
         cmd = {
@@ -169,6 +170,16 @@ local function init(use)
 
     use {'tpope/vim-unimpaired'}
     use {'tpope/vim-dotenv'}
+    use {
+        'simrat39/symbols-outline.nvim',
+        cmd = 'SymbolsOutline',
+        setup = [[require('plugin-setup.symbols-outline')]],
+    }
+    use {
+        'folke/twilight.nvim',
+        cmd = {'Twilight', 'TwilightEnable'},
+        config = [[require('config.twilight')]],
+    }
 
     -- Highlight colors
     use {
