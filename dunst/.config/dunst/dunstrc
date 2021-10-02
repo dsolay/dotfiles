@@ -1,0 +1,68 @@
+[global]
+font                  = "JetBrainsMono Nerd Font 12"
+markup                = full
+format                = "<b>%s</b>\n%b"
+transparency          = 0
+ignore_newline        = no
+show_indicators       = yes
+separator_color       = frame
+
+sort                  = yes
+alignment             = center
+bounce_freq           = 0
+word_wrap             = yes
+
+indicate_hidden       = yes
+show_age_threshold    = 120
+idle_threshold        = 120
+
+geometry              = "400x10-20+40"
+shrink                = yes
+line_height           = 0
+separator_height      = 0
+padding               = 1
+horizontal_padding    = 20
+
+monitor               = 0
+follow                = keyboard
+
+sticky_history        = yes
+history_length        = 20
+
+icon_position         = left
+max_icon_size         = 16
+icon_path             = /usr/share/icons/Papirus/16x16/apps:/usr/share/icons/Papirus/16x16/devices:/usr/share/icons/Papirus/16x16/mimetypes:/usr/share/icons/Papirus/16x16/places:/usr/share/icons/Papirus/16x16/status
+
+startup_notification  = false
+dmenu                 = /usr/bin/dmenu -p dunst:
+browser               = /usr/bin/firefox
+
+stack_duplicates      = true
+hide_duplicate_count  = false
+title                 = Dunst
+class                 = Dunst
+
+[frame]
+width = 1
+color = "#93a1a1"
+
+[shortcuts]
+close     = ctrl+space
+close_all = ctrl+shift+space
+history   = ctrl+grave
+context   = ctrl+shift+period
+
+[urgency_low]
+background  = "#586e75"
+foreground  = "#eee8d5"
+timeout     = 6
+
+[urgency_normal]
+background  = "#073642"
+foreground  = "#eee8d5"
+timeout     = 8
+
+[urgency_critical]
+background  = "#dc322f"
+foreground  = "#eee8d5"
+timeout     = 12

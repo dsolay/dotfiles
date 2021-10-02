@@ -1,0 +1,3 @@
+#!/bin/bash
+export XDEBUG_TRIGGER=debug
+/usr/bin/php "$@"

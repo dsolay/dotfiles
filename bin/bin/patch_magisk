@@ -1,0 +1,11 @@
+#! /bin/bash
+
+adb shell "rm -rf /data/local/tmp/*"
+adb shell mkdir /data/local/tmp/common /data/local/tmp/magisk_inject
+adb push META-INF/com/google/android/update-binary /data/local/tmp
+adb push boot.img /data/local/tmp
+adb push common /data/local/tmp/common
+adb push magisk_inject /data/local/tmp/magisk_inject
+adb shell "cd /data/local/tmp/magisk_inject; mv ../common/* .; chmod 755 *; sh ../update-binary indep boot_patch.sh ../boot.img; mv bin/busybox busybox"
+adb pull /data/local/tmp/magisk_inject/new-boot.img
+adb shell "cd /data/local/tmp; rm -rf *.img magisk_inject/*.img update-binary common"

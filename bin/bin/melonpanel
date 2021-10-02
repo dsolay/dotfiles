@@ -1,0 +1,410 @@
+#!/bin/bash
+
+	# This program is free software: you can redistribute it and/or modify
+	# it under the terms of the GNU General Public License as published by
+	# the Free Software Foundation, either version 3 of the License, or
+	# (at your option) any later version.
+
+	# This program is distributed in the hope that it will be useful,
+	# but WITHOUT ANY WARRANTY; without even the implied warranty of
+	# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	# GNU General Public License for more details.
+
+	# You should have received a copy of the GNU General Public License
+	# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Description
+# -----------
+#
+# Melonpanel: my `lemonbar` implementation, for use in my custom desktop
+# session (see my dotfiles https://gitlab.com/protesilaos/dotfiles).
+# I just selected the name "melon" as an anagram for "lemon" and then
+# switched "bar" with "panel".  This is to avoid naming conflicts where
+# we could accidentally kill the wrong process or whatnot.
+#
+# Debian Buster dependencies for melonpanel:
+#	apt install bspwm lemonbar xdo
+#
+# Dependencies for individual modules:
+# 	apt install amixer acpi
+#
+# Optional:
+#	apt install xfonts-terminus
+#
+# Last full review 2019-06-28
+
+# General settings
+# ----------------
+
+# Check for dependencies.  Fail if unmet.
+_checkdep() {
+	command -v "$1" > /dev/null || { echo "Missing dependency: $1"; exit 1; }
+}
+
+_checkdep bspwm
+_checkdep lemonbar
+_checkdep xdo
+
+# Kill any running lemonbar
+pgrep -x lemonbar > /dev/null && pkill -x lemonbar
+
+# Add colours from current Tempus theme.  That file is used in other
+# places as well to offer a convenient way of styling multiple tools in
+# a manner that is centralised and straightforward.  Colour definitions
+# are "color{0-15}", using the standard terminal sequence, plus
+# "foreground{,alt}", "background{,alt,dim}".  For details, see the main
+# Tempus themes repo: https://gitlab.com/protesilaos/tempus-themes
+tempus_theme="$HOME/.local/share/my_colours/active-tempus-theme.sh"
+
+# Source the colour definitions if the file exists.  Else exit.
+[ -e "$tempus_theme" ] || { echo "Missing Tempus theme"; exit 1; }
+source "$tempus_theme"
+
+melonpanel_height=22 # DO NOT EDIT the name of this parameter (checked by other scripts).
+
+# Fonts (upstream lemonbar only supports bitmap fonts)
+# ----------------------------------------------------
+# Find available fonts using `xlsfonts`.
+#
+# Meaning of these fields (between dashes):
+# https://wiki.archlinux.org/index.php/X_Logical_Font_Description
+#
+# * foundry
+# * name
+# * weight
+# * slant (r == roman, o == oblique, i == italic)
+# * font width
+# * -- means an empty field (a foundry can have something special here)
+# * pixelsize
+# * pointsize (tenths of a point)
+# * resolution X
+# * resolution Y
+# * spacing (c == cell == typographer, m == mono, p == proportional)
+# * average width
+# * character registry
+# * character encoding
+#
+# A wildcard is either 0 or *.  Can be used for quasi-scalable fonts:
+# they are still fixed-size, but are designed to match the closest size
+# at the given resolution and/or allocated space.  The method for
+# deciding on the ideal proportions is not clear to me…
+if [ -n "$(fc-list terminus)" ]; then
+	fontmain='-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso10646-1'
+	fontbold='-xos4-terminus-bold-r-normal--14-140-72-72-c-80-iso10646-1'
+else
+	fontmain='-misc-fixed-medium-r-normal--13-120-75-75-c-80-iso10646-1'
+	fontbold='-misc-fixed-bold-r-normal--13-120-75-75-c-80-iso10646-1'
+fi
+
+# OPTIONAL: Fonts for Lemonbar with Xft support (custom fork)
+# -----------------------------------------------------------
+# I have decided to maintain a fork of `lemonbar` that supports
+# outline/proportional typefaces (like the "DejaVu" family):
+# https://gitlab.com/protesilaos/lemonbar-xft
+#
+# To use this fork, you need to compile it yourself.  Instructions for
+# Debian 10 Buster here:
+#
+# * https://protesilaos.com/codelog/2019-06-23-lemonbar-xft-new/
+#
+# If you want to reproduce/verify this fork, follow these steps:
+#
+# * https://protesilaos.com/codelog/2019-06-24-lemonbar-xft-howto/
+#
+# Once you have compiled the lemonbar fork and have removed the
+# corresponding Debian package, comment out the variables below and
+# adapt them to your needs.  Valid typeface names are whatever is
+# supported by fontconfig (also see my dotfiles for the relevant rules).
+fontmain='DejaVu Sans Condensed:style=regular:size=11'
+fontbold='DejaVu Sans Condensed:style=bold:size=11'
+
+# Panel modules
+# -------------
+#
+# NOTE all functions that are meant to pipe their output to the panel
+# will echo a majuscule (letter A-Z).  This is done to easily retrieve
+# their output from the named pipe.  The letter has to be unique and,
+# ideally, use common words that denote the function of the content of
+# the command such as e.g. D for Date, N for Network...  Where this
+# would lead to conflicts, find a synonym or something close enough.
+#
+# The various sequences %{..} are part of lemonbar's syntax for styling
+# the output.  See `man lemonbar`.
+
+
+
+# Battery status.
+_battery() {
+	command -v acpi > /dev/null || return 1
+
+	local battery_label battery_status battery_output battery_status_time
+
+	battery_label='B:'
+	battery_status="$(acpi -b | awk -F '[[:space:]]+|,' '{ print $3 }')"
+	battery_output="$(acpi -b | awk -F '[[:space:]]+|,' '{ print $5 }')"
+
+	# If dischange level reaches 0-9, the whole indicator will turn to
+	# a bright colour.  Otherwise, discharging will be denoted by
+	# a coloured output of the current level followed by the minus sign.
+	case "$battery_status" in
+		'Charging')
+			echo "$battery_label %{F$color6}${battery_output}+%{F-}"
+			;;
+		'Discharging')
+			case "${battery_output%?}" in
+				[0-9])
+					echo "%{B$color11}%{F$background} $battery_label ${battery_output}- %{F-}%{B-}"
+					;;
+				*)
+					echo "$battery_label %{F$color11}${battery_output}-%{F-}"
+					;;
+			esac
+			;;
+		*)
+			echo "$battery_label ${battery_output}"
+			;;
+	esac
+}
+
+# Core temperature.
+_temperature() {
+	command -v acpi > /dev/null || return 1
+
+	local therm_label therm_status
+
+	therm_label='T:'
+	therm_status="$(acpi -t | awk -F '[[:space:]]+|,' '{ print $5 }')"
+	therm_status="${therm_status:0:2}"
+
+	# Up to 59 degrees celcius keep text colour same as default.  60-79
+	# turn the colour red on normal background.  Else turn the whole
+	# indicator red.
+	case "$therm_status" in
+		[12345][0-9])
+			echo "$therm_label ${therm_status}°C"
+			;;
+		[67][0-9])
+			echo "$therm_label %{F$color1}${therm_status}°C%{F-}"
+			;;
+		*)
+			echo "%{F$background}%{B$color1} $therm_label ${therm_status}°C %{B-}%{F-}"
+			;;
+	esac
+}
+
+# Check the sound volume and whether it is muted or not.  Output the
+# appropriate indicators.
+_volume() {
+	command -v amixer > /dev/null || return 1
+
+	local volume_status volume_level volume_label
+
+	_amixer_get() {
+		amixer get Master | \
+		sed "/^\ *Front R/!d ; s,\(^.*\) \[\(.*%\)\] \[\(.*\)\],\\${1},"
+	}
+
+	volume_status="$(_amixer_get 3)"
+	volume_level="$(_amixer_get 2)"
+	volume_label='V:'
+
+	case "$volume_status" in
+		'off')
+			echo "$volume_label $volume_level (Muted)"
+			;;
+		'on')
+			echo "$volume_label $volume_level"
+			;;
+	esac
+}
+
+# Keyboard indicators.
+_keyboard() {
+	local kd_layout kb_caps
+
+	# Checks if the current layout is set to Greek (adjust accordingly).
+	# If yes, the indicator will be displayed, else it is assumed that
+	# English is being used.
+	if [ "$(setxkbmap -query | sed '/^layout/!d ; s,^.*:[\ ]*,,g')" = 'gr' ]; then
+		kb_layout="%{B$backgroundalt}%{U$foreground}%{+u} EL %{-u}%{U-}%{B-}"
+	fi
+
+	# Show an indicator if Caps Lock is on.
+	if [ "$(xset -q | grep Caps | awk '{ print $4 }')" = 'on' ]; then
+		kb_caps="%{B$backgroundalt}%{U$foreground}%{+u} CAPS %{-u}%{U-}%{B-}"
+	fi
+
+	# Print the indicators next each other in the given order.
+	printf "%s %s" "$kb_layout" "$kb_caps"
+}
+
+_datetime() {
+	local dt_label dt_status
+
+	dt_label='D:'
+	dt_status="$(date +'%a %-d %b %H:%M')"
+
+	echo "$dt_label $dt_status"
+}
+
+
+# Include all modules in a single infinite loop that iterates every
+# second (adjust interval accordingly, as it can be taxing on system
+# resources).
+_modules() {
+	while true; do
+		echo "B" "$(_battery)"
+		echo "T" "$(_temperature)"
+		echo "D" "$(_datetime)"
+		echo "K" "$(_keyboard)"
+		echo "V" "$(_volume)"
+		sleep 1s
+	done
+}
+
+# Piping and reading the output of the modules
+# --------------------------------------------
+
+# The design of this section has been heavily inspired/adapted from the
+# examples provided by upstream bspwm.
+
+# set path to named pipe used to store process data for these operations
+melonpanel_fifo='/tmp/melonpanel.fifo'
+
+# make sure you delete any existing named pipe
+[ -e "$melonpanel_fifo" ] && rm "$melonpanel_fifo"
+
+# create a new named pipe
+mkfifo "$melonpanel_fifo"
+
+# pipe the output of the modules to the fifo
+_modules > "$melonpanel_fifo" &
+bspc subscribe report > "$melonpanel_fifo" &
+
+# Read the content of the fifo file.  We differantiate between modules
+# based on the majuscule (letter A-Z) they piped into melonpanel_fifo
+# (see modules above).  Here we just add a shorter variable to each
+# module, which helps position it on the panel (the last printf).
+_melonpanel() {
+	local laptop_external_monitor
+
+	laptop_external_monitor="$(xrandr --query | grep 'VGA1 connected')"
+
+	while read -r line ; do
+		case $line in
+			B*)
+				# battery status
+				bat="${line#?}"
+				;;
+			T*)
+				# temperature
+				therm="${line#?}"
+				;;
+			D*)
+				# current date and time
+				date="${line#?}"
+				;;
+			K*)
+				# keyboard layout (en or gr)
+				key="${line#?}"
+				;;
+			V*)
+				# volume level
+				vol="${line#?}"
+				;;
+			W*)
+				# bspwm's state
+				wm=
+				IFS=':'
+				set -- ${line#?}
+				while [ "$#" -gt 0 ] ; do
+					item="$1"
+					name="${item#?}"
+					case "$item" in
+						[mMfFoOuULG]*)
+							case "$item" in
+								m*)
+									# monitor
+									FG="$foregroundalt" # needed to avoid invalid colour error
+									on_focused_monitor=
+									name=
+									;;
+								M*)
+									# focused monitor
+									FG="$foregroundalt" # needed to avoid invalid colour error
+									on_focused_monitor=1
+									name=
+									;;
+								# {Free,Occupied,Urgent} focused
+								[FOU]*)
+									if [ -n "$on_focused_monitor" ]; then
+										name="%{T2}${name/*/[$name]}%{T-}" # the %{Tx} specifies the bold font
+										FG="$foreground"
+									else
+										name="${name/*/ $name-}"
+										FG="$foregroundalt"
+									fi
+									;;
+								# {free,occupied,urgent} unfocused
+								f*)
+									FG="$foregroundalt"
+									name="${name/*/ $name }"
+									;;
+								o*)
+									FG="$foregroundalt"
+									name="${name/*/ $name^}"
+									;;
+								u*)
+									FG="$color1"
+									name="${name/*/ $name\#}"
+									;;
+								# desktop layout for monocle and node flags
+								LM|G*?)
+									FG="$foreground"
+									name="${name/*/ $name }"
+									;;
+								*)
+									FG="$foregroundalt"
+									name="${name/*/ * }"
+									;;
+							esac
+							wm="${wm}%{F$FG}${name}%{F-}"
+							;;
+					esac
+					shift
+				done
+		esac
+
+		_panel_layout() {
+			echo "%{l}$wm%{r}$key $bat $therm $vol $date "
+		}
+
+		if [ -n "$laptop_external_monitor" ]; then
+			printf "%s%s\n" "%{Sf}$(_panel_layout)" "%{Sl}$(_panel_layout)"
+		else
+			printf "%s\n" "%{Sf}$(_panel_layout)"
+		fi
+	done
+}
+
+# Launch the panel with the given parameters
+# ------------------------------------------
+
+# NOTE the syntax for the background value.  If you want transparency,
+# just replace "ff" with a lower value: "00" means no opacity.  This is
+# hexadecimal notation: 0-9, a-f, A-F.
+_melonpanel < "$melonpanel_fifo" | lemonbar -u 1 -p -g "x${melonpanel_height}" \
+-F "$foreground" -B "#ff${background:1}" -f "$fontmain" -f "$fontbold" -n "Melonpanel" &
+
+# Hide panel when windows are in full screen mode.  This does not work
+# all the time, especially with lower `sleep` values, requiring a
+# re-launch of melonpanel (pkill -x melonpanel && melonpanel).  I have
+# yet to find a robust solution.
+#
+# Source of this snippet (with minor adapatations by me):
+# https://github.com/baskerville/bspwm/issues/484
+until bar_id=$(xdo id -a 'Melonpanel'); do
+	sleep 1s
+done
+
+xdo below -t $(xdo id -n root) $bar_id &

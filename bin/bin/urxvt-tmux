@@ -1,0 +1,19 @@
+#! /bin/bash
+
+echo "$1\n$2\n$3"
+
+tmux has-session -t gns3 2>/dev/null
+if [[ $? -eq 1 ]]; then
+    # echo "Session not found."
+    urxvt -title $1 -e tmux -2 new-session -A -s gns3 -n $1 telnet $2 $3
+else
+    # echo "Session found."
+    #tmux select-window -t gns3:$1 2>/dev/null
+    if [[ $(tmux list-window -t gns3 | grep -io $1) ]]; then
+        # echo "Session found."
+        tmux select-window -t gns3:$1
+    else
+        # echo "Session not found."
+        tmux -2 attach -t gns3; tmux new-window -t gns3:+ -n $1 telnet $2 $3
+    fi
+fi

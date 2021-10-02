@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# tempusmenu --- dmenu interface for `tempus`.
+#
+# Provides an interactive menu from where to choose the argument that is
+# passed to the `tempus` script.  That will then live reload the session
+# to apply the new theme.  This functionality is integral to my dotfiles:
+# https://gitlab.com/protesilaos/dotfiles.
+#
+# Copyright (c) 2019 Protesilaos Stavrou <info@protesilaos.com>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# Check for dependency, else exit the given function that calls this.
+_depcheck() {
+	command -v "$1" > /dev/null || { echo "Missing dependency: $1."; return 1; }
+}
+
+_depcheck dmenu
+
+_filesource() {
+	if [ -f "$1" ]; then
+		source "$1"
+	fi
+}
+
+tempus_files="$HOME"/.local/share/my_colours
+[ -d "$tempus_files" ] || { echo "Missing path to Tempus themes."; exit 1; }
+
+tempus_active="$tempus_files"/active-tempus-theme.sh
+tempus_shell_files="$tempus_files"/shell/
+
+dmenu_font="$HOME"/.local/share/my_custom_ui_font.sh
+
+_filesource "$tempus_active"
+_filesource "$dmenu_font"
+
+_themes() {
+	# The parameter expansions here keep only the theme's unique name:
+	# /path/to/tempus_classic.sh ==> classic
+	while IFS= read -r -d $'\0' line; do
+		line="${line##[a-z/_]*tempus_}"
+		printf "%s\\n" "${line%.sh}"
+	done < <(find "$tempus_shell_files" -type f -name '*.sh' -print0 | sort -z)
+}
+
+_dmenu() {
+	dmenu -p 'Select Tempus theme' -nb "${background:-'#000000'}" -nf "${foreground:-'#ffffff'}" \
+	-sb "${color5:-'#bb6688'}" -sf "${background:-'#000000'}" -fn "${my_custom_ui_font:-'DejaVu Sans-10'}"
+}
+
+selection="$(_themes | _dmenu)"
+
+if [ "$?" = 0 ]; then
+	case "$selection" in
+		autumn|classic|dawn|day|dusk|fugit|future|night|past|rift|spring|summer|tempest|totus|warp|winter)
+			tempus "$selection"
+			;;
+		*)
+			echo "Not a valid Tempus theme: $selection"
+			exit 1
+			;;
+	esac
+fi

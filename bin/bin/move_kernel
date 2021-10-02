@@ -1,0 +1,19 @@
+#! /bin/bash
+
+KERNEL_PATH=/boot
+INITRAMFS=initramfs-linux.img
+INITRAMFS_FALLBACK=initramfs-linux-fallback.img
+VMLINUX=vmlinuz-linux
+
+backup() {
+    name="backup_$(uname -r).tar.gz"
+    tar -czf ~/Documents/$name "$KERNEL_PATH/efi/$INITRAMFS" "$KERNEL_PATH/efi/$INITRAMFS_FALLBACK" "$KERNEL_PATH/efi/$VMLINUX"
+}
+
+if [ -f "$KERNEL_PATH/$INITRAMFS" -a "$KERNEL_PATH/$INITRAMFS_FALLBACK" -a "$KERNEL_PATH/$VMLINUX" ]; then
+    echo "Backup old kernel..."
+    backup
+
+    echo -e "\nMove new kernel..."
+    sudo mv -v "$KERNEL_PATH/$INITRAMFS" "$KERNEL_PATH/$INITRAMFS_FALLBACK" "$KERNEL_PATH/$VMLINUX" "$KERNEL_PATH/efi"
+fi
