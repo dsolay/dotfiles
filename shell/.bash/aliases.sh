@@ -11,52 +11,52 @@
 # ----------------------------------
 
 if _checkexec pacman; then
-	# up{dating,grading}.  The -V shows version changes.
-	alias pup='sudo pacman -Syuu' # update
-	alias afu="sudo apt full-upgrade -V"
-	alias auufu="sudo apt update && sudo apt upgrade -V && sudo apt full-upgrade -V"
+  # up{dating,grading}.  The -V shows version changes.
+  alias pup='sudo pacman -Syuu' # update
+  alias afu="sudo apt full-upgrade -V"
+  alias auufu="sudo apt update && sudo apt upgrade -V && sudo apt full-upgrade -V"
 
-	# act on package targets
-	alias pin="sudo pacman -S"
-	alias pinu="sudo pacman -U"
-	alias pun='sudo pacman -Rs'   # remove
-	alias prm='sudo pacman -R --nosave --recursive' # really remove, configs and all
+  # act on package targets
+  alias pin="sudo pacman -S"
+  alias pinu="sudo pacman -U"
+  alias pun='sudo pacman -Rs'   # remove
+  alias prm='sudo pacman -R --nosave --recursive' # really remove, configs and all
 
-	# list local packages
-	alias pls='pacman -Ql' # list files
-	alias plsi='pacman -Qe' # list instaled package
+  # list local packages
+  alias pls='pacman -Ql' # list files
+  alias plsi='pacman -Qe' # list instaled package
 
-	# act on the repos
-	# alias psse="sudo pacman -Ss"
+  # act on the repos
+  # alias psse="sudo pacman -Ss"
 
-	# package handling
-	alias pcc='sudo pacman -Scc'  # clear cache
+  # package handling
+  alias pcc='sudo pacman -Scc'  # clear cache
 fi
 
 if _checkexec docker; then
-	alias dp='docker pull'
-	alias dps='docker ps'
-	alias dpsa='docker ps -a'
-	alias dimg='docker images'
-	alias dit='docker run -it --rm'
-	alias ditx='docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix'
-	alias deit='docker exec -it'
-	alias ds='docker start'
-	alias drm='docker rm -f $(docker ps -aq)'
-	alias drmi='docker rmi'
-	alias db='docker build -t'
-	alias dlog='docker logs'
+  alias dp='docker pull'
+  alias dps='docker ps'
+  alias dpsa='docker ps -a'
+  alias dimg='docker images'
+  alias dit='docker run -it --rm'
+  alias ditx='docker run -it --rm -e DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix'
+  alias deit='docker exec -it'
+  alias ds='docker start'
+  alias drm='docker rm -f $(docker ps -aq)'
+  alias drmi='docker rmi'
+  alias db='docker build -t'
+  alias dlog='docker logs'
 
-	if _checkexec docker-compose; then
-		alias dc='docker-compose'
-		alias dcb='docker-compose build'
-		alias dcps='docker-compose ps'
-		alias dcup='docker-compose up -d'
-		alias dcrm='docker-compose rm'
-		alias dcst='docker-compose stop'
-		alias dcexc='docker-compose exec'
-		alias dclog='docker-compose logs'
-	fi
+  if _checkexec docker-compose; then
+    alias dc='docker-compose'
+    alias dcb='docker-compose build'
+    alias dcps='docker-compose ps'
+    alias dcup='docker-compose up -d'
+    alias dcrm='docker-compose rm'
+    alias dcst='docker-compose stop'
+    alias dcexc='docker-compose exec'
+    alias dclog='docker-compose logs'
+  fi
 fi
 
 # Common tasks and utilities
@@ -71,8 +71,8 @@ fi
 # command and the alias have the same name.  Example is my `cp` which is
 # aliased to `cp -iv`:
 #
-#	cp == cp -iv
-#	\cp == cp
+# cp == cp -iv
+# \cp == cp
 
 # Build pkg
 alias pkg='makepkg --printsrcinfo > .SRCINFO && makepkg -fsrc'
@@ -93,8 +93,8 @@ alias df='df -kTh'
 
 # Aliases inside tmux session
 if [[ $TERM == *tmux* ]]; then
-	alias :sp='tmux split-window'
-	alias :vs='tmux split-window -h'
+  alias :sp='tmux split-window'
+  alias :vs='tmux split-window -h'
 fi
 alias rtmux='tmux source-file ~/.tmux.conf'
 alias tkw='tmux kill-window -t'
@@ -103,7 +103,7 @@ alias tmew='tmux new'
 
 # Update mirror list
 if _checkexec reflector; then
-	alias mir='sudo reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
+  alias mir='sudo reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
 fi
 
 # Record Screen
@@ -111,7 +111,7 @@ alias rec='ffmpeg -video_size 1920x1080 -framerate 60 -f x11grab -i :0.0 -f alsa
 -ac 2 -i pulse ~/Videos/records/$(date +%a-%d-%S).mkv'
 
 if _checkexec python; then
-	alias calc='python -qi -c "from math import *"'
+  alias calc='python -qi -c "from math import *"'
 fi
 
 alias brok='sudo find . -type l -! -exec test -e {} \; -print'
@@ -135,8 +135,8 @@ alias off='sudo shutdown -h now'
 
 # _Entering_ Vim is easy.
 if _checkexec vim; then
-	alias v='vim'
-	alias vi='vim'
+  alias v='vim'
+  alias vi='vim'
 fi
 
 # cd into the previous working directory by omitting `cd`.
@@ -156,17 +156,17 @@ alias rm='rm -Iv'
 
 # Some common tasks for the `rsync` utiity.
 if _checkexec rsync; then
-	alias rsync='rsync --progress'
-	alias rsyncavz='rsync -avz --progress'
-	alias rsyncavzr='rsync -avzr --progress'
-	alias rsyncavzrd='rsync -avzr --delete --progress'
+  alias rsync='rsync --progress'
+  alias rsyncavz='rsync -avz --progress'
+  alias rsyncavzr='rsync -avzr --progress'
+  alias rsyncavzrd='rsync -avzr --delete --progress'
 fi
 
 # Enable automatic color support for common commands that list output
 # and also add handy aliases.  Note the link to the `dircolors`.  This
 # is provided by my dotfiles.
 if _checkexec dircolors; then
-	dircolors_data="$HOME/.local/share/my_bash/dircolors"
+  dircolors_data="$HOME/.local/share/my_bash/dircolors"
   if [[ -f "$dircolors_data" ]]
   then
     eval "$(dircolors -b "$dircolors_data")"
@@ -204,83 +204,83 @@ alias lsla='ls -lhpvA --color=auto --group-directories-first'
 # --ytdl-raw-options is for those occasions where a video is 4k or
 # something that slows things down considerably.
 if _checkexec mpv; then
-	alias mpvna='mpv --no-audio'
-	alias mpvnv='mpv --no-video'
-	alias mpvhd="mpv --ytdl-raw-options='format=[[bestvideo=height<=720]]'"
+  alias mpvna='mpv --no-audio'
+  alias mpvnv='mpv --no-video'
+  alias mpvhd="mpv --ytdl-raw-options='format=[[bestvideo=height<=720]]'"
 fi
 
 # Quick shortcuts for `youtube-dl`.  Output is placed in the present
 # working directory.
 if _checkexec youtube-dl; then
-	alias ytaud='youtube-dl --add-metadata -ci --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
-	alias ytvid='youtube-dl --add-metadata --no-playlist --no-part --write-description --newline --prefer-free-formats -o "%(title)s.%(ext)s" '
+  alias ytaud='youtube-dl --add-metadata -ci --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
+  alias ytvid='youtube-dl --add-metadata --no-playlist --no-part --write-description --newline --prefer-free-formats -o "%(title)s.%(ext)s" '
 fi
 
 # Certbot.  This is a utility that handles Let's Encrypt certificates
 # for https connections.
 if _checkexec certbot; then
-	alias certm='sudo certbot certonly -a manual -d'
+  alias certm='sudo certbot certonly -a manual -d'
 fi
 
 # When I need to copy the contents of a file to the clipboard
 if _checkexec xclip; then
-	alias xclipc='xclip -selection clipboard' # followed by path to file
-	alias copy='xclip -sel clip <'
+  alias xclipc='xclip -selection clipboard' # followed by path to file
+  alias copy='xclip -sel clip <'
 fi
 
 # Flatpak commands
 # ----------------
 
 if _checkexec flatpak; then
-	alias fli="flatpak install" # must be followed by a source, e.g. fli flathub
-	alias fliu="flatpak uninstall"
-	alias flls="flatpak list --app --columns='desc,app,orig'"
-	alias flu="flatpak update"
+  alias fli="flatpak install" # must be followed by a source, e.g. fli flathub
+  alias fliu="flatpak uninstall"
+  alias flls="flatpak list --app --columns='desc,app,orig'"
+  alias flu="flatpak update"
 fi
 
 # Git commands
 # ------------
 
 if _checkexec git; then
-	# add, commit
-	alias gadd='git add -v'
-	alias gaddp='git add --patch'
-	alias gaddi='git add --interactive'
-	alias gall='git add -Av'
-	alias gcom='git commit' # opens in the predefined editor.
-	alias gcomm='git commit -m' # pass a message directly: gcomm 'My commit'
-	alias gca='git commit --amend'
-	alias grh='git reset HEAD'
+  # add, commit
+  alias gadd='git add -v'
+  alias gaddp='git add --patch'
+  alias gaddi='git add --interactive'
+  alias gall='git add -Av'
+  alias gcom='git commit' # opens in the predefined editor.
+  alias gcomm='git commit -m' # pass a message directly: gcomm 'My commit'
+  alias gca='git commit --amend'
+  alias grh='git reset HEAD'
 
-	# stats and diffs
-	alias gsh='git show'
-	alias gsho='git show --oneline'
-	alias glog='git log --oneline'
-	alias gsta='git status'
-	alias gstat='git status'
-	alias gdif='git diff'
-	alias gdiff='git diff'
-	alias gdifs='git diff --stat --summary'
-	alias gdiffss='git diff --stat --summary'
+  # stats and diffs
+  alias gsh='git show'
+  alias gsho='git show --oneline'
+  alias glog='git log --oneline'
+  alias gsta='git status'
+  alias gstat='git status'
+  alias gdif='git diff'
+  alias gdiff='git diff'
+  alias gdifs='git diff --stat --summary'
+  alias gdiffss='git diff --stat --summary'
 
-	# branching
-	alias gch='git checkout'
-	alias gchb='git checkout -b'
-	alias gbd='git branch -d'
-	alias gbl='git branch --list'
-	alias gpd='git push origin --delete'
-	alias gmerg='git merge --edit --stat'
-	alias gmerge='git merge --edit --stat'
+  # branching
+  alias gch='git checkout'
+  alias gchb='git checkout -b'
+  alias gbd='git branch -d'
+  alias gbl='git branch --list'
+  alias gpd='git push origin --delete'
+  alias gmerg='git merge --edit --stat'
+  alias gmerge='git merge --edit --stat'
 
-	# tagging
-	alias gtag='git tag --sign' # followed by the tag's name
-	alias gtagl='git tag --list'
+  # tagging
+  alias gtag='git tag --sign' # followed by the tag's name
+  alias gtagl='git tag --list'
 
-	# syncing
-	alias gpull='git pull'
-	alias gfetch='git fetch'
-	alias gpm='git push -u origin master'
-	alias gph='git push -u origin HEAD'
+  # syncing
+  alias gpull='git pull'
+  alias gfetch='git fetch'
+  alias gpm='git push -u origin master'
+  alias gph='git push -u origin HEAD'
 fi
 
 # Open current directory in nvim
