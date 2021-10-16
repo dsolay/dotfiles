@@ -69,11 +69,9 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] =
 
 -- config that activates keymaps and enables snippet support
 local function make_config(server)
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities.textDocument.completion.completionItem.resolveSupport =
-        {properties = {'documentation', 'detail', 'additionalTextEdits'}}
-
+    local capabilities = require('cmp_nvim_lsp').update_capabilities(
+                             vim.lsp.protocol.make_client_capabilities()
+                         )
     local base_config = {capabilities = capabilities, on_attach = on_attach}
 
     local server_name = server.name

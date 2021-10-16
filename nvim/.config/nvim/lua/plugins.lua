@@ -34,10 +34,7 @@ local function init(use)
     }
 
     -- terminal
-    use {
-        'numtostr/FTerm.nvim',
-        setup = [[require('plugin-setup.fterm')]],
-    }
+    use {'numtostr/FTerm.nvim', setup = [[require('plugin-setup.fterm')]]}
 
     -- LSP
     use {'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer'}
@@ -51,10 +48,25 @@ local function init(use)
         setup = [[require('plugin-setup.dadbod-ui')]],
     }
 
+    -- Pretty symbols
+    use 'kyazdani42/nvim-web-devicons'
+    use {'onsails/lspkind-nvim', config = [[require('config.lspkind')]]}
+
     -- Completion and snnippets
     use {
         {'kristijanhusak/vim-dadbod-completion', ft = {'sql'}},
-        {'hrsh7th/nvim-compe', config = [[require('config.compe')]]},
+        {'hrsh7th/cmp-nvim-lsp'},
+        {'hrsh7th/cmp-buffer'},
+        {'hrsh7th/cmp-path'},
+        {'hrsh7th/cmp-nvim-lua'},
+        {'hrsh7th/nvim-cmp', config = [[require('config.compe')]]},
+        {
+            'tzachar/cmp-tabnine',
+            run = './install.sh',
+            requires = 'hrsh7th/nvim-cmp',
+            config = [[require('config.tabnine')]]
+        },
+        {'hrsh7th/cmp-vsnip'},
         {'hrsh7th/vim-vsnip'},
         {'rafamadriz/friendly-snippets'},
     }
@@ -126,9 +138,6 @@ local function init(use)
         config = [[require('config.octo')]],
         cmd = 'Octo',
     }
-
-    -- Pretty symbols
-    use 'kyazdani42/nvim-web-devicons'
 
     -- REPLs
     use {
