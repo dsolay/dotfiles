@@ -57,13 +57,13 @@ local on_attach = function(client, bufnr)
 end
 
 -- Config diagnostics
-vim.lsp.handlers["textDocument/publishDiagnostics"] =
+vim.lsp.handlers['textDocument/publishDiagnostics'] =
     vim.lsp.with(
         vim.lsp.diagnostic.on_publish_diagnostics, {
             underline = true,
             virtual_text = false,
             signs = true,
-            update_in_insert = false
+            update_in_insert = false,
         }
     )
 
@@ -76,13 +76,14 @@ local function make_config(server)
 
     local base_config = {capabilities = capabilities, on_attach = on_attach}
 
-    if (server == 'lua') then
+    local server_name = server.name
+    if (server_name == 'lua') then
         return merge('force', base_config, require('servers.lua'))
-    elseif server == 'vue' then
+    elseif server_name == 'vue' then
         return merge('force', base_config, require('servers.vue'))
-    elseif server == 'intelephense' then
+    elseif server_name == 'intelephense' then
         return merge('force', base_config, require('servers.intelephense'))
-    elseif server == 'diagnosticls' then
+    elseif server_name == 'diagnosticls' then
         return require('servers.diagnosticls')
     else
         return base_config
@@ -91,24 +92,14 @@ end
 
 -- lsp-install
 local function setup_servers()
-    require'lspinstall'.setup()
+    local lsp_installer = require('nvim-lsp-installer')
 
-    -- get all installed servers
-    local servers = require'lspinstall'.installed_servers()
-
-    table.insert(servers, 'intelephense')
-
-    for _, server in pairs(servers) do
-        local config = make_config(server)
-
-        require'lspconfig'[server].setup(config)
-    end
+    lsp_installer.on_server_ready(
+        function(server)
+            server:setup(make_config(server))
+            vim.cmd [[ do User LspAttachBuffers ]]
+        end
+    )
 end
 
 setup_servers()
-
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require'lspinstall'.post_install_hook = function()
-    setup_servers() -- reload installed servers
-    vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
-end

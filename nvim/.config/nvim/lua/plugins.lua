@@ -39,8 +39,8 @@ local function init(use)
         setup = [[require('plugin-setup.fterm')]],
     }
 
-    -- Completion and linting
-    use {'kabouzeid/nvim-lspinstall', 'neovim/nvim-lspconfig'}
+    -- LSP
+    use {'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer'}
 
     -- sql
     use {'tpope/vim-dadbod'}
@@ -51,6 +51,7 @@ local function init(use)
         setup = [[require('plugin-setup.dadbod-ui')]],
     }
 
+    -- Completion and snnippets
     use {
         {'kristijanhusak/vim-dadbod-completion', ft = {'sql'}},
         {'hrsh7th/nvim-compe', config = [[require('config.compe')]]},
