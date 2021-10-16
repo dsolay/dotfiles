@@ -72,34 +72,6 @@ return {
                     style = 'style',
                 },
             },
-            spectral = {
-                command = get_bin('spectral'),
-                debounce = 100,
-                args = {
-                    'lint',
-                    '--ignore-unknown-format',
-                    '--format',
-                    'json',
-                    '%filepath',
-                },
-                offsetLine = 1,
-                offsetColumn = 1,
-                sourceName = 'spectral',
-                parseJson = {
-                    line = 'range.start.line',
-                    column = 'range.start.character',
-                    endLine = 'range.end.line',
-                    endColumn = 'range.end.character',
-                    message = '${message} [${code}]',
-                    security = 'severity',
-                },
-                securities = {
-                    ['0'] = 'error',
-                    ['1'] = 'warning',
-                    ['2'] = 'info',
-                    ['3'] = 'hint',
-                },
-            },
             hadolint = {
                 command = 'hadolint',
                 sourceName = 'hadolint',
@@ -186,7 +158,6 @@ return {
         },
         filetypes = {
             sh = 'shellcheck',
-            json = 'spectral',
             dockerfile = 'hadolint',
             css = 'stylelint',
             scss = 'stylelint',

@@ -81,6 +81,8 @@ local function make_config(server)
         return merge('force', base_config, require('servers.lua'))
     elseif (server_name == 'eslint') then
         return merge('force', base_config, require('servers.eslint'))
+    elseif (server_name == 'jsonls') then
+        return merge('force', base_config, require('servers.jsonls'))
     elseif server_name == 'vue' then
         return merge('force', base_config, require('servers.vue'))
     elseif server_name == 'intelephense' then
