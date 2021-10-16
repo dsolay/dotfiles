@@ -79,6 +79,8 @@ local function make_config(server)
     local server_name = server.name
     if (server_name == 'lua') then
         return merge('force', base_config, require('servers.lua'))
+    elseif (server_name == 'eslint') then
+        return merge('force', base_config, require('servers.eslint'))
     elseif server_name == 'vue' then
         return merge('force', base_config, require('servers.vue'))
     elseif server_name == 'intelephense' then

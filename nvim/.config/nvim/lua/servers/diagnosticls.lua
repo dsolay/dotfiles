@@ -47,36 +47,6 @@ return {
     },
     init_options = {
         linters = {
-            eslint = {
-                command = get_bin('eslint'),
-                rootPatterns = {'.git'},
-                debounce = 100,
-                args = {
-                    '--stdin',
-                    '--stdin-filename',
-                    '%filepath',
-                    '--format',
-                    'json',
-                },
-                sourceName = 'eslint',
-                parseJson = {
-                    errorsRoot = '[0].messages',
-                    line = 'line',
-                    column = 'column',
-                    endLine = 'endLine',
-                    endColumn = 'endColumn',
-                    message = '${message} [${ruleId}]',
-                    security = 'severity',
-                },
-                securities = {['2'] = 'error', ['1'] = 'warning'},
-                requiredFiles = {
-                    '.eslintrc.js',
-                    '.eslintrc.cjs',
-                    '.eslintrc.yaml',
-                    '.eslintrc.yml',
-                    '.eslintrc.json',
-                },
-            },
             shellcheck = {
                 command = 'shellcheck',
                 debounce = 100,
@@ -215,11 +185,6 @@ return {
             },
         },
         filetypes = {
-            javascript = 'eslint',
-            javascriptreact = 'eslint',
-            typescript = 'eslint',
-            typescriptreact = 'eslint',
-            vue = 'eslint',
             sh = 'shellcheck',
             json = 'spectral',
             dockerfile = 'hadolint',
