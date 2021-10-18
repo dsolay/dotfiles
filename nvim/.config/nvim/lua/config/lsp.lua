@@ -81,6 +81,8 @@ local function make_config(server)
         return merge('force', base_config, require('servers.eslint'))
     elseif (server_name == 'jsonls') then
         return merge('force', base_config, require('servers.jsonls'))
+    elseif (server_name == 'volar') then
+        return merge('force', base_config, require('servers.volar'))
     elseif server_name == 'intelephense' then
         return merge('force', base_config, require('servers.intelephense'))
     elseif server_name == 'diagnosticls' then
