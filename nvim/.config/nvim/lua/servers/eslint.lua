@@ -5,7 +5,7 @@ local function get_package_manager()
     local base_path = vim.loop.cwd()
 
     if (file_exists(base_path .. '/yarn.lock')) then
-        return "yarn"
+        return 'yarn'
     elseif (file_exists(base_path .. '/package-lock.json')) then
         return 'npm'
     end
@@ -22,6 +22,7 @@ return {
         'typescriptreact',
         'typescript.tsx',
         'vue',
+        'php ',
     },
     settings = {format = false, packageManager = get_package_manager()},
 }
