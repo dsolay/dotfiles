@@ -1,23 +1,23 @@
 vim.g.db_ui_table_helpers = {
     postgresql = {
-        Constraints = [[SELECT con.*
-        FROM pg_catalog.pg_constraint con
-            INNER JOIN pg_catalog.pg_class rel
-            ON rel.oid = con.conrelid
-            INNER JOIN pg_catalog.pg_namespace nsp
-            ON nsp.oid = connamespace
-        WHERE nsp.nspname = '{schema}'
-            AND rel.relname = '{table}';
+        Constraints = [[
+SELECT con.*
+FROM pg_catalog.pg_constraint con
+INNER JOIN pg_catalog.pg_class rel ON rel.oid = con.conrelid
+INNER JOIN pg_catalog.pg_namespace nsp ON nsp.oid = connamespace
+WHERE nsp.nspname = '{schema}' AND rel.relname = '{table}';
         ]],
-        AddForeignKey = [[ALTER TABLE "{schema}"."{table}"
-        ADD CONSTRAINT {table}_field_fkey FOREIGN KEY (field)
-        REFERENCES "{schema}".foreign_table (id)
-        ON UPDATE CASCADE
-        ON DELETE NO ACTION
-        NOT VALID;
+        AddForeignKey = [[
+ALTER TABLE "{schema}"."{table}"
+ADD CONSTRAINT {table}_field_fkey FOREIGN KEY (field)
+REFERENCES "{schema}".foreign_table (id)
+ON UPDATE NO ACTION
+ON DELETE CASCADE
+NOT VALID;
         ]],
-        AddUniqueIndex = [[ALTER TABLE {schema}.{table}
-        ADD CONSTRAINT {table}_field_key UNIQUE (field);]],
+        AddUniqueIndex = [[
+ALTER TABLE {schema}.{table}
+ADD CONSTRAINT {table}_field_key UNIQUE (field);]],
         Delete = 'DELETE FROM "{schema}"."{table}"',
         DeleteColumn = 'ALTER TABLE "{schema}"."{table}" DROP COLUMN :col ;',
         DeleteById = 'DELETE FROM "{schema}"."{table}" WHERE ID = :id',
