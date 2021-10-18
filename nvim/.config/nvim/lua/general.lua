@@ -63,6 +63,7 @@ autocmd(
     true
 )
 
+-- Compile packer when plugins.lua file change
 autocmd(
     'packer_user_config',
     [[BufWritePost plugins.lua source <afile> | PackerCompile]], true
