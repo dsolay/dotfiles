@@ -54,7 +54,7 @@ local function init(use)
 
     -- Completion and snnippets
     use {
-        {'kristijanhusak/vim-dadbod-completion', ft = {'sql'}},
+        {'kristijanhusak/vim-dadbod-completion', ft = {'sql', 'mysql', 'plsql'}},
         {'hrsh7th/cmp-nvim-lsp'},
         {'hrsh7th/cmp-buffer'},
         {'hrsh7th/cmp-path'},
@@ -64,7 +64,7 @@ local function init(use)
             'tzachar/cmp-tabnine',
             run = './install.sh',
             requires = 'hrsh7th/nvim-cmp',
-            config = [[require('config.tabnine')]]
+            config = [[require('config.tabnine')]],
         },
         {'hrsh7th/cmp-vsnip'},
         {'hrsh7th/vim-vsnip'},
