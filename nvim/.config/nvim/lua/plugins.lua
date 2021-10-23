@@ -60,12 +60,6 @@ local function init(use)
         {'hrsh7th/cmp-path'},
         {'hrsh7th/cmp-nvim-lua'},
         {'hrsh7th/nvim-cmp', config = [[require('config.compe')]]},
-        {
-            'tzachar/cmp-tabnine',
-            run = './install.sh',
-            requires = 'hrsh7th/nvim-cmp',
-            config = [[require('config.tabnine')]],
-        },
         {'hrsh7th/cmp-vsnip'},
         {'hrsh7th/vim-vsnip'},
         {'rafamadriz/friendly-snippets'},
