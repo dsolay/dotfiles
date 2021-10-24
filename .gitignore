@@ -40,3 +40,4 @@ qutebrowser/.config/qutebrowser/bookmarks/urls
 qutebrowser/.config/qutebrowser/quickmarks
 qutebrowser/.config/qutebrowser/autoconfig.yml
 qutebrowser/.config/qutebrowser/qsettings/QtProject.conf
+shell/.local/share/nvim
