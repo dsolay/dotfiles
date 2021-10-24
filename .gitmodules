@@ -1,32 +1,32 @@
 [submodule "tmux/.tmux/plugins/tmux-copycat"]
   path = tmux/.tmux/plugins/tmux-copycat
   url = https://github.com/tmux-plugins/tmux-copycat.git
-  ignore = dirty
+  ignore = all
 [submodule "neomutt/.config/neomutt/gruvbox"]
   path = neomutt/.config/neomutt/gruvbox
   url = https://git.sthu.org/repos/mutt-gruvbox.git
-  ignore = dirty
+  ignore = all
 [submodule "tmux/.tmux/plugins/tmux-open"]
   path = tmux/.tmux/plugins/tmux-open
   url = https://git::@github.com/tmux-plugins/tmux-open
-  ignore = dirty
+  ignore = all
 [submodule "tmux/.tmux/plugins/tmux-prefix-highlight"]
   path = tmux/.tmux/plugins/tmux-prefix-highlight
   url = https://git::@github.com/tmux-plugins/tmux-prefix-highlight
-  ignore = dirty
+  ignore = all
 [submodule "tmux/.tmux/plugins/tpm"]
   path = tmux/.tmux/plugins/tpm
   url = https://github.com/tmux-plugins/tpm
-  ignore = dirty
+  ignore = all
 [submodule "tmux/.tmux/plugins/tmux-online-status"]
   path = tmux/.tmux/plugins/tmux-online-status
   url = https://git::@github.com/tmux-plugins/tmux-online-status
-  ignore = dirty
+  ignore = all
 [submodule "tmux/.tmux/plugins/tmux-plugin-sysstat"]
   path = tmux/.tmux/plugins/tmux-plugin-sysstat
   url = https://git::@github.com/samoshkin/tmux-plugin-sysstat
-  ignore = dirty
+  ignore = all
 [submodule "tmux/.tmux/plugins/tmux-yank"]
   path = tmux/.tmux/plugins/tmux-yank
   url = https://git::@github.com/tmux-plugins/tmux-yank
-  ignore = dirty
+  ignore = all
