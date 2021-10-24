@@ -38,7 +38,7 @@ local function init(use)
 
     -- LSP
     use {
-        'neovim/nvim-lspconfig',
+        {'neovim/nvim-lspconfig', config = [[require('config.lsp')]]},
         {'williamboman/nvim-lsp-installer', branch = 'sync-install'},
     }
 
@@ -221,5 +221,3 @@ end
 
 -- init packer
 return require('packer').startup(init)
-
-
