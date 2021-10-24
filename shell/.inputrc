@@ -1,12 +1,15 @@
-# Reduce tab completion key presses and show suggestions
-set show-all-if-ambiguous on
-# Color files by types
+# $include /etc/inputrc
+"\e[5~":history-search-backward
+"\e[6~":history-search-forward
+
 set colored-stats On
-# Append char to indicate type
-set visible-stats On
-# Mark symlinked directories
+set completion-ignore-case On
+set completion-prefix-display-length 3
 set mark-symlinked-directories On
-# Color the common prefix
-set colored-completion-prefix On
-# Color the common prefix in menu-complete
+set show-all-if-ambiguous On
+set show-all-if-unmodified On
+set visible-stats On
 set menu-complete-display-prefix On
+set colored-completion-prefix On
+
+TAB: menu-complete

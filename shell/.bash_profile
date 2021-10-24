@@ -1,7 +1,6 @@
 #! /bin/bash
 #
-# ~/.bash_profile
-#
+
 [[ -f "$HOME"/.bashrc ]] && source "$HOME"/.bashrc
 [[ -f "$HOME"/.bash/env.bash ]] && source "$HOME"/.bash/env.bash
 
