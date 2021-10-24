@@ -37,10 +37,21 @@ local function file_exists(path)
     return fn.system('test -f ' .. path .. ' && echo 1') == '1\n'
 end
 
+local function concat(a, b)
+    local result = {}
+    local n = 0
+
+    for _,v in ipairs(a) do n=n+1; result[n]=v end
+    for _,v in ipairs(b) do n=n+1; result[n]=v end
+
+    return result
+end
+
 return {
     opt = opt,
     autocmd = autocmd,
     map = map,
     add_hi = add_hi,
     file_exists = file_exists,
+    concat = concat,
 }
