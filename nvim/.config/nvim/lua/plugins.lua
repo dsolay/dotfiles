@@ -37,7 +37,10 @@ local function init(use)
     use {'numtostr/FTerm.nvim', setup = [[require('plugin-setup.fterm')]]}
 
     -- LSP
-    use {'neovim/nvim-lspconfig', 'williamboman/nvim-lsp-installer'}
+    use {
+        'neovim/nvim-lspconfig',
+        {'williamboman/nvim-lsp-installer', branch = 'sync-install'},
+    }
 
     -- sql
     use {'tpope/vim-dadbod'}
