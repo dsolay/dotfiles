@@ -169,7 +169,12 @@ alias debug="set -o nounset; set -o xtrace"
 # generally safer option.
 alias cp='cp -iv'
 alias mv='mv -iv'
-alias rm='rm -Iv'
+
+if _checkexec trash-put; then
+  alias rm='trash-put -iv'
+else
+  alias rm='rm -Iv'
+fi
 
 # Some common tasks for the `rsync` utiity.
 if _checkexec rsync; then
