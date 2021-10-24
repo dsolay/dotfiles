@@ -65,6 +65,25 @@ local function init(use)
         {'rafamadriz/friendly-snippets'},
     }
 
+    -- Debug
+    use {
+        {
+            'mfussenegger/nvim-dap',
+            config = [[require('config.dap')]],
+            setup = [[require('plugin-setup.dap')]],
+        },
+        {
+            'rcarriga/nvim-dap-ui',
+            requires = {'mfussenegger/nvim-dap'},
+            config = [[require('config.dap-ui')]],
+            setup = [[require('plugin-setup.dap-ui')]],
+        },
+        {
+            'Pocco81/DAPInstall.nvim',
+            cmd = {'DIInstall', 'DIUninstall', 'DIList'},
+        },
+    }
+
     -- Indentation tracking
     use {
         'lukas-reineke/indent-blankline.nvim',
@@ -199,3 +218,5 @@ end
 
 -- init packer
 return require('packer').startup(init)
+
+
