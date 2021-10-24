@@ -75,7 +75,7 @@ local function make_config(server)
     local base_config = {capabilities = capabilities, on_attach = on_attach}
 
     local server_name = server.name
-    if (server_name == 'lua') then
+    if (server_name == 'sumneko_lua') then
         return merge('force', base_config, require('servers.lua'))
     elseif (server_name == 'eslint') then
         return merge('force', base_config, require('servers.eslint'))
