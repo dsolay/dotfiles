@@ -1,18 +1,29 @@
 #! /bin/sh
 
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
+appendpath()
+{
+  case ":$PATH:" in
+  *:"$1":*)
+    ;;
+  *)
+    PATH="${PATH:+$PATH:}$1"
+    ;;
+  esac
+}
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
+#Append our default paths
+appendpath '/usr/local/sbin'
+appendpath '/usr/local/bin'
+appendpath '/usr/sbin'
+appendpath '/usr/bin'
+appendpath '/sbin'
+appendpath '/bin'
 
-# unclock keyring for terminal sessions
-# see https://wiki.archlinux.org/index.php/GNOME/Keyring#With_a_display_manager
-if [ -n "$DESKTOP_SESSION" ]; then
-    eval "$(gnome-keyring-daemon --start --daemonize)"
-    export SSH_AUTH_SOCK
-fi
+umask 022
+
+for script in /etc/profile.d/*.sh ; do
+  if [ -r "$script" ] ; then
+    # shellcheck source=/dev/null
+    . "$script"
+  fi
+done

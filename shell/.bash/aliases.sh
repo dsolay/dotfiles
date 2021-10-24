@@ -7,30 +7,56 @@
 # remember the original command when necessary.  There are some
 # exceptions for commands I seldom execute.
 
-# PACMAN (package management on Arch)
-# ----------------------------------
-
-if _checkexec pacman; then
+# If you are coming to Debian from Arch-based distros, check
+# compatibility with `pacman`:
+# https://wiki.archlinux.org/index.php/Pacman/Rosetta
+if _checkexec apt; then
   # up{dating,grading}.  The -V shows version changes.
-  alias pup='sudo pacman -Syuu' # update
+  alias au="sudo apt update"
+  alias aug="sudo apt upgrade -V"
+  alias auu="sudo apt update && sudo apt upgrade -V"
   alias afu="sudo apt full-upgrade -V"
   alias auufu="sudo apt update && sudo apt upgrade -V && sudo apt full-upgrade -V"
 
   # act on package targets
-  alias pin="sudo pacman -S"
-  alias pinu="sudo pacman -U"
-  alias pun='sudo pacman -Rs'   # remove
-  alias prm='sudo pacman -R --nosave --recursive' # really remove, configs and all
+  alias ai="sudo apt install"
+  alias air="sudo apt install --reinstall"
+  alias ar="sudo apt remove -V"
 
   # list local packages
-  alias pls='pacman -Ql' # list files
-  alias plsi='pacman -Qe' # list instaled package
+  alias ard="apt rdepends" # followed by package name to print reverse dependencies
+  alias ali="apt list --installed"
+  alias alu="apt list --upgradable"
+  alias aulu="sudo apt update && apt list --upgradable"
 
   # act on the repos
-  # alias psse="sudo pacman -Ss"
+  alias as="apt search"
+  alias ash="apt show"
+  alias adl="apt download" # gets source .deb in current directory
 
   # package handling
-  alias pcc='sudo pacman -Scc'  # clear cache
+  alias aac="sudo apt autoclean"
+  alias aar="sudo apt autoremove -V"
+  alias ama="sudo apt-mark auto"
+  alias amm="sudo apt-mark manual"
+fi
+
+# No point in checking for dpkg on a Debian system.  Still, it can help
+# people who copy-paste stuff.
+if _checkexec dpkg; then
+  alias dgl='dpkg --listfiles' # target a package name, e.g. dgl bspwm
+  alias dgg='dpkg --get-selections' # would normally be pipped to grep
+  # The following removes/purges unused configs without asking for
+  # confirmation.  Same end product as 'alias apc' (see below where
+  # aptitude is defined).
+  alias dgp='sudo dpkg --purge $(dpkg --get-selections | grep deinstall | cut -f 1)'
+fi
+
+if _checkexec aptitude; then
+  # The following two aliases perform the same action of removing
+  # unused system files.  Unlike 'alias dgp', confirmation is needed.
+  #alias apc="sudo aptitude purge ?config-files"
+  alias apc="sudo aptitude purge ~c"
 fi
 
 if _checkexec docker; then
@@ -74,10 +100,6 @@ fi
 # cp == cp -iv
 # \cp == cp
 
-# Build pkg
-alias pkg='makepkg --printsrcinfo > .SRCINFO && makepkg -fsrc'
-alias spkg='pkg --sign'
-
 # Build
 alias mk='make && make clean'
 alias smk='sudo make clean install && make clean'
@@ -100,11 +122,6 @@ alias rtmux='tmux source-file ~/.tmux.conf'
 alias tkw='tmux kill-window -t'
 alias tks='tmux kill-session -t'
 alias tmew='tmux new'
-
-# Update mirror list
-if _checkexec reflector; then
-  alias mir='sudo reflector --score 100 -l 50 -f 10 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
-fi
 
 # Record Screen
 alias rec='ffmpeg -video_size 1920x1080 -framerate 60 -f x11grab -i :0.0 -f alsa
@@ -198,24 +215,6 @@ alias lsla='ls -lhpvA --color=auto --group-directories-first'
 # Extra tasks and infrequently used tools
 # ---------------------------------------
 
-# Quick shortcuts for `mpv`.  When I want to play a podcast that only
-# shows a static image, I run the command with the --no-video option.
-# When I only need to view the file I use --no-audio.  The one with
-# --ytdl-raw-options is for those occasions where a video is 4k or
-# something that slows things down considerably.
-if _checkexec mpv; then
-  alias mpvna='mpv --no-audio'
-  alias mpvnv='mpv --no-video'
-  alias mpvhd="mpv --ytdl-raw-options='format=[[bestvideo=height<=720]]'"
-fi
-
-# Quick shortcuts for `youtube-dl`.  Output is placed in the present
-# working directory.
-if _checkexec youtube-dl; then
-  alias ytaud='youtube-dl --add-metadata -ci --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
-  alias ytvid='youtube-dl --add-metadata --no-playlist --no-part --write-description --newline --prefer-free-formats -o "%(title)s.%(ext)s" '
-fi
-
 # Certbot.  This is a utility that handles Let's Encrypt certificates
 # for https connections.
 if _checkexec certbot; then
@@ -285,9 +284,6 @@ fi
 
 # Open current directory in nvim
 alias ide="nvim"
-
-# Update fonts
-alias fup="fc-cache -vf"
 
 # Print PATH in human readable
 alias path='echo $PATH | tr ":" "\n" | nl'
