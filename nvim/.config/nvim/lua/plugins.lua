@@ -128,11 +128,14 @@ local function init(use)
 
     -- Search
     use {
-        'nvim-telescope/telescope.nvim',
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
-        config = [[require('config.telescope')]],
-        setup = [[require('plugin-setup.telescope')]],
-        cmd = {'Telescope'},
+        {
+            'nvim-telescope/telescope.nvim',
+            requires = {{'nvim-lua/plenary.nvim'}},
+            config = [[require('config.telescope')]],
+            setup = [[require('plugin-setup.telescope')]],
+            cmd = {'Telescope'},
+        },
+        {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
     }
 
     -- Git
