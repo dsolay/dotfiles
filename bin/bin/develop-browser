@@ -1,3 +1,0 @@
-#! /bin/bash
-
-firefox-developer-edition -start-debugger-server
