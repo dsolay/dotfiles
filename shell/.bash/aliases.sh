@@ -113,15 +113,21 @@ alias du='du -hs'
 alias duh='du -hs .[^.]*'
 alias df='df -kTh'
 
-# Aliases inside tmux session
-if [[ $TERM == *tmux* ]]; then
-  alias :sp='tmux split-window'
-  alias :vs='tmux split-window -h'
+if _checkexec tmux; then
+  # Aliases inside tmux session
+  if [[ $TERM == *tmux* ]]; then
+    alias :sp='tmux split-window'
+    alias :vs='tmux split-window -h'
+  fi
+  alias rtmux='tmux source-file ~/.tmux.conf'
+  alias tkw='tmux kill-window -t'
+  alias tks='tmux kill-session -t'
+  alias tmew='tmux new'
 fi
-alias rtmux='tmux source-file ~/.tmux.conf'
-alias tkw='tmux kill-window -t'
-alias tks='tmux kill-session -t'
-alias tmew='tmux new'
+
+if _checkexec tmuxp; then
+  alias session='tmuxp load --yes ./'
+fi
 
 # Record Screen
 alias rec='ffmpeg -video_size 1920x1080 -framerate 60 -f x11grab -i :0.0 -f alsa
