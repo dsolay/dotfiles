@@ -298,3 +298,12 @@ alias lod='echo "ಠ_ಠ"'
 alias idk='echo "¯\_(ツ)_/¯"'
 alias wtf='echo "❨╯°□°❩╯ ︵ ┻━┻"'
 alias wat='echo "⚆_⚆"'
+
+if [ -d ./aliases.d ]; then
+  for alias in ./aliases.d/*.sh
+  do
+    [[ -e "$alias" ]] || break
+    # shellcheck source=/dev/null
+    . "$alias"
+  done
+fi
