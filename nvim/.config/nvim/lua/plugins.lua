@@ -39,7 +39,7 @@ local function init(use)
     -- LSP
     use {
         {'neovim/nvim-lspconfig', config = [[require('config.lsp')]]},
-        {'williamboman/nvim-lsp-installer', branch = 'sync-install'},
+        {'williamboman/nvim-lsp-installer'},
     }
 
     -- sql
