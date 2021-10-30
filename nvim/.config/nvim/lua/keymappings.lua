@@ -40,7 +40,7 @@ map('n', '<leader>x', '<cmd>q!<cr>', opts)
 map('n', '<leader>X', '<cmd>x!<cr>', opts)
 
 -- Esc in the terminal
-map('t', '<esc>', [[<C-\><C-n>]])
+-- map('t', '<esc>', [[<C-\><C-n>]])
 
 -- Window movement
 map('n', '<c-h>', '<c-w>h', opts)

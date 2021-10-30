@@ -142,7 +142,7 @@ local function init(use)
     -- Git
     use {
         'kdheepak/lazygit.nvim',
-        setup = [[require('config.lazygit_setup')]],
+        setup = [[require('plugin-setup.lazygit')]],
         cmd = 'LazyGit',
     }
 
