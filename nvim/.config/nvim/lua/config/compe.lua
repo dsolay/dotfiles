@@ -25,17 +25,25 @@ cmp.setup(
             end,
         },
         mapping = {
-            ['<C-n>'] = cmp.mapping.select_next_item(
-                {behavior = cmp.SelectBehavior.Insert}
+            ['<C-n>'] = cmp.mapping(
+                cmp.mapping.select_next_item(
+                    {behavior = cmp.SelectBehavior.Insert}
+                ), {'i', 'c'}
             ),
-            ['<C-p>'] = cmp.mapping.select_prev_item(
-                {behavior = cmp.SelectBehavior.Insert}
+            ['<C-p>'] = cmp.mapping(
+                cmp.mapping.select_prev_item(
+                    {behavior = cmp.SelectBehavior.Insert}
+                ), {'i', 'c'}
             ),
-            ['<Down>'] = cmp.mapping.select_next_item(
-                {behavior = cmp.SelectBehavior.Select}
+            ['<Down>'] = cmp.mapping(
+                cmp.mapping.select_next_item(
+                    {behavior = cmp.SelectBehavior.Select}
+                ), {'i', 'c'}
             ),
-            ['<Up>'] = cmp.mapping.select_prev_item(
-                {behavior = cmp.SelectBehavior.Select}
+            ['<Up>'] = cmp.mapping(
+                cmp.mapping.select_prev_item(
+                    {behavior = cmp.SelectBehavior.Select}
+                ), {'i', 'c'}
             ),
             ['<C-d>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), {'i', 'c'}),
             ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), {'i', 'c'}),
@@ -43,7 +51,14 @@ cmp.setup(
             ['<C-e>'] = cmp.mapping(
                 {i = cmp.mapping.abort(), c = cmp.mapping.close()}
             ),
-            ['<CR>'] = cmp.mapping.confirm({select = true}),
+            ['<CR>'] = cmp.mapping(
+                {
+                    i = cmp.mapping.confirm(
+                        {behavior = cmp.ConfirmBehavior.Replace, select = true}
+                    ),
+                    c = cmp.mapping.confirm({select = false}),
+                }
+            ),
             ['<Tab>'] = function(fallback)
                 if cmp.visible() then
                     cmp.select_next_item()
