@@ -39,6 +39,8 @@ return {
         'lua',
         'sh',
         'json',
+        'yaml',
+        'yml',
         'dockerfile',
         'markdown',
         'vue',
@@ -47,6 +49,36 @@ return {
     },
     init_options = {
         linters = {
+            spectral = {
+                command = get_bin('spectral'),
+                debounce = 100,
+                args = {
+                    'lint',
+                    '--ignore-unknown-format',
+                    '--format',
+                    'json',
+                    '--stdin-filepath',
+                    '%filepath',
+                    '-',
+                },
+                offsetLine = 1,
+                offsetColumn = 1,
+                sourceName = 'spectral',
+                parseJson = {
+                    line = 'range.start.line',
+                    column = 'range.start.character',
+                    endLine = 'range.end.line',
+                    endColumn = 'range.end.character',
+                    message = '${message} [${code}]',
+                    security = 'severity',
+                },
+                securities = {
+                    ['0'] = 'error',
+                    ['1'] = 'warning',
+                    ['2'] = 'info',
+                    ['3'] = 'hint',
+                },
+            },
             shellcheck = {
                 command = 'shellcheck',
                 debounce = 100,
@@ -164,6 +196,9 @@ return {
             markdown = 'markdownlint',
             env = 'dotenvlint',
             php = 'phpstan',
+            json = 'spectral',
+            yaml = 'spectral',
+            yml = 'spectral'
         },
         formatters = {
             prettier = {
