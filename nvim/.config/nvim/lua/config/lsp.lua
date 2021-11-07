@@ -101,7 +101,6 @@ local function setup_servers()
     lsp_installer.on_server_ready(
         function(server)
             server:setup(make_config(server))
-            vim.cmd [[ do User LspAttachBuffers ]]
         end
     )
 end
