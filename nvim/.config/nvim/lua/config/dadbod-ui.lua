@@ -5,23 +5,22 @@ SELECT con.*
 FROM pg_catalog.pg_constraint con
 INNER JOIN pg_catalog.pg_class rel ON rel.oid = con.conrelid
 INNER JOIN pg_catalog.pg_namespace nsp ON nsp.oid = connamespace
-WHERE nsp.nspname = '{schema}' AND rel.relname = '{table}';
-        ]],
-        AddForeignKey = [[
+WHERE nsp.nspname = '{schema}' AND rel.relname = '{table}';]],
+        ['Add Foreign Key'] = [[
 ALTER TABLE "{schema}"."{table}"
 ADD CONSTRAINT {table}_field_fkey FOREIGN KEY (field)
 REFERENCES "{schema}".foreign_table (id)
 ON UPDATE NO ACTION
 ON DELETE CASCADE
-NOT VALID;
-        ]],
-        AddUniqueIndex = [[
+NOT VALID;]],
+        ['Add Unique Index'] = [[
 ALTER TABLE {schema}.{table}
 ADD CONSTRAINT {table}_field_key UNIQUE (field);]],
         Delete = 'DELETE FROM "{schema}"."{table}"',
-        DeleteColumn = 'ALTER TABLE "{schema}"."{table}" DROP COLUMN :col ;',
-        DeleteById = 'DELETE FROM "{schema}"."{table}" WHERE ID = :id',
-        BulkDelete = 'DELETE FROM "{schema}"."{table}" WHERE id IN (:ids)',
+        ['Delete Column'] = 'ALTER TABLE "{schema}"."{table}" DROP COLUMN :col ;',
+        ['Delete By Id'] = 'DELETE FROM "{schema}"."{table}" WHERE ID = :id',
+        ['Bulk Delete'] = 'DELETE FROM "{schema}"."{table}" WHERE id IN (:ids)',
+        ['Drop Table'] = 'DROP TABLE IF EXISTS {table}',
     },
     mysql = {
         ['Add Foreign Key'] = [[ALTER TABLE `{table}`
@@ -47,3 +46,4 @@ WHERE TABLE_SCHEMA = `{dbname}`
 vim.g.db_ui_auto_execute_table_helpers = 1
 vim.g.db_ui_force_echo_notifications = 1
 vim.g.db_ui_win_position = 'right'
+
