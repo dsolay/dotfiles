@@ -191,8 +191,6 @@ return {
         filetypes = {
             sh = 'shellcheck',
             dockerfile = 'hadolint',
-            css = 'stylelint',
-            scss = 'stylelint',
             markdown = 'markdownlint',
             env = 'dotenvlint',
             php = 'phpstan',
