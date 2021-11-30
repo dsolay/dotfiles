@@ -1,22 +1,10 @@
 local merge = vim.tbl_extend
-local sign_define = vim.fn.sign_define
 
-sign_define(
-    'LspDiagnosticsSignError',
-    {text = '✘', texthl = 'RedSign', linehl = '', numhl = ''}
-)
-sign_define(
-    'LspDiagnosticsSignWarning',
-    {text = '', texthl = 'YellowSign', linehl = '', numhl = ''}
-)
-sign_define(
-    'LspDiagnosticsSignInformation',
-    {text = '', texthl = 'BlueSign', linehl = '', numhl = ''}
-)
-sign_define(
-    'LspDiagnosticsSignHint',
-    {text = '', texthl = 'WhiteSign', linehl = '', numhl = ''}
-)
+local signs = { Error = "✘", Warn = "", Hint = "", Info = "" }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, linehl = '', numhl = '' })
+end
 
 local on_attach = function(client, bufnr)
     local function buf_set_keymap(...)
@@ -57,15 +45,13 @@ local on_attach = function(client, bufnr)
 end
 
 -- Config diagnostics
-vim.lsp.handlers['textDocument/publishDiagnostics'] =
-    vim.lsp.with(
-        vim.lsp.diagnostic.on_publish_diagnostics, {
-            underline = true,
-            virtual_text = false,
-            signs = true,
-            update_in_insert = false,
-        }
-    )
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})
 
 -- config that activates keymaps and enables snippet support
 local function make_config(server)
