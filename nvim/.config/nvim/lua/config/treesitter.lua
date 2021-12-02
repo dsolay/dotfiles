@@ -27,7 +27,11 @@ ts_configs.setup {
         'vue',
         'dockerfile',
     },
-    highlight = {enable = true, use_languagetree = true},
+    highlight = {
+        enable = true,
+        use_languagetree = true,
+        additional_vim_regex_highlighting = true,
+    },
     indent = {enable = false},
     rainbow = {enable = true, extended_mode = true, max_file_lines = 1000},
     context_commentstring = {enable = true, enable_autocmd = false},
@@ -42,3 +46,4 @@ ts_configs.setup {
         },
     },
 }
+
