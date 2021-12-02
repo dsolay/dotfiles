@@ -23,8 +23,14 @@ end
 
 require('nvim-treesitter.configs').setup {
     ensure_installed = get_parsers(),
-    highlight = {enable = true, use_languagetree = true},
+    highlight = {
+        enable = true,
+        use_languagetree = true,
+        additional_vim_regex_highlighting = true,
+    },
     indent = {enable = false},
+    context_commentstring = {enable = true, enable_autocmd = false},
+    matchup = {enable = true},
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -35,3 +41,4 @@ require('nvim-treesitter.configs').setup {
         },
     },
 }
+

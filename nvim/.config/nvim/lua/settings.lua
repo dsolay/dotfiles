@@ -49,6 +49,7 @@ opt(
 )
 opt('foldlevelstart', 99)
 opt('foldmethod', 'expr')
+vim.cmd[[set foldexpr=nvim_treesitter#foldexpr()]]
 opt('clipboard', 'unnamed,unnamedplus')
 opt('splitbelow', true)
 opt('splitright', true)
