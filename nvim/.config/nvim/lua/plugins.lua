@@ -105,10 +105,7 @@ local function init(use)
     -- Comment
     use {'b3nj5m1n/kommentary', config = [[require('config.kommentary')]]}
 
-    use {
-        'JoosepAlviste/nvim-ts-context-commentstring',
-        config = [[require('config.nvim-ts-context-commentstring')]],
-    }
+    use {'JoosepAlviste/nvim-ts-context-commentstring'}
 
     -- Wrapping/delimiters
     use {

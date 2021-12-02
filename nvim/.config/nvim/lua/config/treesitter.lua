@@ -29,6 +29,8 @@ ts_configs.setup {
     },
     highlight = {enable = true, use_languagetree = true},
     indent = {enable = false},
+    context_commentstring = {enable = true, enable_autocmd = false},
+    matchup = {enable = true},
     incremental_selection = {
         enable = true,
         keymaps = {
