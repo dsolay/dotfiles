@@ -29,6 +29,7 @@ ts_configs.setup {
     },
     highlight = {enable = true, use_languagetree = true},
     indent = {enable = false},
+    rainbow = {enable = true, extended_mode = true, max_file_lines = 1000},
     context_commentstring = {enable = true, enable_autocmd = false},
     matchup = {enable = true},
     incremental_selection = {

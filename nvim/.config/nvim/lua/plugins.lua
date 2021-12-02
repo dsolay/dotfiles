@@ -97,9 +97,12 @@ local function init(use)
 
     -- Highlights
     use {
-        'nvim-treesitter/nvim-treesitter',
-        config = [[require('config.treesitter')]],
-        run = ':TSUpdate',
+        {
+            'nvim-treesitter/nvim-treesitter',
+            config = [[require('config.treesitter')]],
+            run = ':TSUpdate',
+        },
+        {'p00f/nvim-ts-rainbow', requires = {'nvim-treesitter/nvim-treesitter'}},
     }
 
     -- Comment
