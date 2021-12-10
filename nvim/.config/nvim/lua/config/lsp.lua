@@ -2,8 +2,8 @@ local merge = vim.tbl_extend
 
 local signs = {Error = '✘', Warn = '', Info = '', Hint = ''}
 for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, linehl = '', numhl = '' })
+    local hl = 'DiagnosticSign' .. type
+    vim.fn.sign_define(hl, {text = icon, texthl = hl, linehl = '', numhl = ''})
 end
 
 local on_attach = function(client, bufnr)
@@ -45,20 +45,26 @@ local on_attach = function(client, bufnr)
 end
 
 -- Config diagnostics
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = false,
-})
+vim.diagnostic.config(
+    {
+        virtual_text = false,
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = false,
+    }
+)
 
 -- config that activates keymaps and enables snippet support
 local function make_config(server)
     local capabilities = require('cmp_nvim_lsp').update_capabilities(
                              vim.lsp.protocol.make_client_capabilities()
                          )
-    local base_config = {capabilities = capabilities, on_attach = on_attach}
+    local base_config = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        flags = {debounce_text_changes = 150},
+    }
 
     local server_name = server.name
     if (server_name == 'sumneko_lua') then
@@ -87,11 +93,8 @@ local function setup_servers()
     local lsp_installer = require('nvim-lsp-installer')
 
     lsp_installer.on_server_ready(
-        function(server)
-            server:setup(make_config(server))
-        end
+        function(server) server:setup(make_config(server)) end
     )
 end
 
 setup_servers()
-
