@@ -15,11 +15,13 @@ local function lsp_status()
     local warn = 0
     local info = 0
     local hint = 0
+    local severity = vim.diagnostic.severity
+
     if not vim.tbl_isempty(vim.lsp.buf_get_clients(0)) then
-        err = vim.lsp.diagnostic.get_count(0, [[Error]]);
-        warn = vim.lsp.diagnostic.get_count(0, [[Warning]]);
-        info = vim.lsp.diagnostic.get_count(0, [[Information]]);
-        hint = vim.lsp.diagnostic.get_count(0, [[Hint]]);
+        err = #vim.diagnostic.get(0, {severity = severity.ERROR});
+        warn = #vim.diagnostic.get(0, {severity = severity.WARN});
+        info = #vim.diagnostic.get(0, {severity = severity.INFO});
+        hint = #vim.diagnostic.get(0, {severity = severity.HINT});
     end
 
     return err == 0 and '' or err, warn == 0 and '' or warn,
