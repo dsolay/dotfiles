@@ -11,10 +11,11 @@ vim.g.indentLine_fileTypeExclude = {'dashboard'}
 vim.g.dashboard_default_executive = 'telescope'
 
 vim.g.dashboard_custom_section = {
-    a = {
+    -- WARNING: deprecated
+    --[[ a = {
         description = {'  Workspace          '},
         command = 'Telescope file_browser',
-    },
+    }, ]]
     b = {
         description = {'  Find File          '},
         command = 'Telescope find_files',
@@ -32,10 +33,7 @@ vim.g.dashboard_custom_section = {
         description = {'  Settings           '},
         command = ':e ~/.config/nvim/lua/settings.lua',
     },
-    g = {
-        description = {'  TODO               '},
-        command = 'TodoTelescope',
-    },
+    g = {description = {'  TODO               '}, command = 'TodoTelescope'},
 }
 
 vim.g.dashboard_custom_footer = {'Do one thing, do it well - Unix philosophy'}
@@ -46,3 +44,4 @@ local map = utils.map
 local opts = {noremap = false}
 map('n', '<leader>ss', [[:<C-u>SessionSave<cr>]], opts)
 map('n', '<leader>sl', [[:<C-u>SessionLoad<cr>]], opts)
+
