@@ -11,10 +11,11 @@ vim.g.indentLine_fileTypeExclude = {'dashboard'}
 vim.g.dashboard_default_executive = 'telescope'
 
 vim.g.dashboard_custom_section = {
-    a = {
+    -- WARNING: deprecated
+    --[[ a = {
         description = {'  Workspace          '},
         command = 'Telescope file_browser',
-    },
+    }, ]]
     b = {
         description = {'  Find File          '},
         command = 'Telescope find_files',
