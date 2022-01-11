@@ -27,12 +27,7 @@ return {
     {'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts},
     {'n', '<leader>rn', [[<cmd>lua vim.lsp.buf.rename()<cr>]], opts},
     {'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts},
-    {
-        'n',
-        '<space>e',
-        [[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]],
-        opts,
-    },
+    {'n', '<space>e', [[<cmd>lua vim.diagnostic.open_float()<cr>]], opts},
     {'n', ']e', [[<cmd>lua Diagnostic_next('Error')<cr>]], opts},
     {'n', '[e', [[<cmd>lua Diagnostic_prev('Error')<cr>]], opts},
     {'n', ']w', [[<cmd>lua Diagnostic_next('Warning')<cr>]], opts},
