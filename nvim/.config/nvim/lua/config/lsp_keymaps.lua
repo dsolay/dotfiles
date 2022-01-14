@@ -1,20 +1,20 @@
 local opts = {noremap = true, silent = true}
 
 function Diagnostic_next(severity)
-    local next = vim.lsp.diagnostic.goto_next;
+    local next = vim.diagnostic.goto_next;
     if (severity == nil or severity == '') then
-        next({enable_popup = false})
+        next({float = false})
     else
-        next({severity = severity, enable_popup = false})
+        next({severity = vim.diagnostic.severity[severity], float = false})
     end
 end
 
 function Diagnostic_prev(severity)
-    local prev = vim.lsp.diagnostic.goto_prev;
+    local prev = vim.diagnostic.goto_prev;
     if (severity == nil or severity == '') then
-        prev({enable_popup = false})
+        prev({float = false})
     else
-        prev({severity = severity, enable_popup = false})
+        prev({severity = vim.diagnostic.severity[severity], float = false})
     end
 end
 
@@ -28,14 +28,14 @@ return {
     {'n', '<leader>rn', [[<cmd>lua vim.lsp.buf.rename()<cr>]], opts},
     {'n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts},
     {'n', '<space>e', [[<cmd>lua vim.diagnostic.open_float()<cr>]], opts},
-    {'n', ']e', [[<cmd>lua Diagnostic_next('Error')<cr>]], opts},
-    {'n', '[e', [[<cmd>lua Diagnostic_prev('Error')<cr>]], opts},
-    {'n', ']w', [[<cmd>lua Diagnostic_next('Warning')<cr>]], opts},
-    {'n', '[w', [[<cmd>lua Diagnostic_prev('Warning')<cr>]], opts},
-    {'n', ']i', [[<cmd>lua Diagnostic_next('Information')<cr>]], opts},
-    {'n', '[i', [[<cmd>lua Diagnostic_prev('Information')<cr>]], opts},
-    {'n', ']h', [[<cmd>lua Diagnostic_next('Hint')<cr>]], opts},
-    {'n', '[h', [[<cmd>lua Diagnostic_prev('Hint')<cr>]], opts},
+    {'n', ']e', [[<cmd>lua Diagnostic_next(ERROR)<cr>]], opts},
+    {'n', '[e', [[<cmd>lua Diagnostic_prev(ERROR)<cr>]], opts},
+    {'n', ']w', [[<cmd>lua Diagnostic_next(WARN)<cr>]], opts},
+    {'n', '[w', [[<cmd>lua Diagnostic_prev(WARN)<cr>]], opts},
+    {'n', ']i', [[<cmd>lua Diagnostic_next(INFO)<cr>]], opts},
+    {'n', '[i', [[<cmd>lua Diagnostic_prev(INFO)<cr>]], opts},
+    {'n', ']h', [[<cmd>lua Diagnostic_next(HINT)<cr>]], opts},
+    {'n', '[h', [[<cmd>lua Diagnostic_prev(HINT)<cr>]], opts},
     {'n', ']d', [[<cmd>lua Diagnostic_next()<cr>]], opts},
     {'n', '[d', [[<cmd>lua Diagnostic_prev()<cr>]], opts},
     {'n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>', opts},
