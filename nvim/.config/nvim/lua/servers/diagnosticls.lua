@@ -25,8 +25,7 @@ return {
         )
 
         buf_set_keymap(
-            'n', '<space>e',
-            [[<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>]], opts
+            'n', '<space>e', [[<cmd>lua vim.diagnostic.open_float()<cr>]], opts
         )
     end,
     filetypes = {
@@ -196,7 +195,7 @@ return {
             php = 'phpstan',
             json = 'spectral',
             yaml = 'spectral',
-            yml = 'spectral'
+            yml = 'spectral',
         },
         formatters = {
             prettier = {
@@ -243,4 +242,3 @@ return {
         },
     },
 }
-

@@ -38,6 +38,6 @@ return {
     {'n', '[h', [[<cmd>lua Diagnostic_prev(HINT)<cr>]], opts},
     {'n', ']d', [[<cmd>lua Diagnostic_next()<cr>]], opts},
     {'n', '[d', [[<cmd>lua Diagnostic_prev()<cr>]], opts},
-    {'n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>', opts},
+    {'n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<cr>', opts},
 };
 
