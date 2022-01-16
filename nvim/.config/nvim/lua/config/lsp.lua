@@ -1,4 +1,7 @@
 local merge = vim.tbl_extend
+local utils = require('utils')
+local file_exists = utils.file_exists
+local serversPath = vim.fn.stdpath('config') .. '/lua/servers/'
 
 local signs = {Error = '✘', Warn = '', Info = '', Hint = ''}
 for type, icon in pairs(signs) do
@@ -45,38 +48,31 @@ local on_attach = function(client, bufnr)
 end
 
 -- Config diagnostics
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  underline = true,
-  update_in_insert = false,
-  severity_sort = false,
-})
+vim.diagnostic.config(
+    {
+        virtual_text = false,
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = false,
+    }
+)
 
 -- config that activates keymaps and enables snippet support
 local function make_config(server)
     local capabilities = require('cmp_nvim_lsp').update_capabilities(
                              vim.lsp.protocol.make_client_capabilities()
                          )
-    local base_config = {capabilities = capabilities, on_attach = on_attach}
+    local base_config = {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        flags = {debounce_text_changes = 150},
+    }
 
     local server_name = server.name
-    if (server_name == 'sumneko_lua') then
-        return merge('force', base_config, require('servers.lua'))
-    elseif (server_name == 'eslint') then
-        return merge('force', base_config, require('servers.eslint'))
-    elseif (server_name == 'stylelint_lsp') then
-        return merge('force', base_config, require('servers.stylelint'))
-    elseif (server_name == 'jsonls') then
-        return merge('force', base_config, require('servers.jsonls'))
-    elseif (server_name == 'volar') then
-        return merge('force', base_config, require('servers.volar'))
-    elseif (server_name == 'vuels') then
-        return merge('force', base_config, require('servers.vue'))
-    elseif server_name == 'intelephense' then
-        return merge('force', base_config, require('servers.intelephense'))
-    elseif server_name == 'diagnosticls' then
-        return require('servers.diagnosticls')
+
+    if (file_exists(serversPath .. server_name .. '.lua')) then
+        return merge('force', base_config, require('servers.' .. server_name))
     else
         return base_config
     end
@@ -92,4 +88,3 @@ local function setup_servers()
 end
 
 setup_servers()
-
