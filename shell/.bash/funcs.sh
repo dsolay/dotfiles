@@ -752,3 +752,12 @@ php-install()
   PHP_BUILD_CONFIGURE_OPTS="--enable-intl --with-pdo-pgsql --with-pgsql" \
     phpenv install -f "$1"
 }
+
+run-windows() {
+  sudo virsh start win10_21H2
+  remote-viewer spice://127.0.0.1:5900 &
+}
+
+stop-windows() {
+  sudo virsh shutdown win10_21H2
+}
