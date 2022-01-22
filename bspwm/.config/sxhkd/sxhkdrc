@@ -180,8 +180,8 @@ super + {F1,Home}
 # https://protesilaos.com/codelog/2019-02-17-unix-ways-todo/
 #
 # NOTE the keys are mnemonics for Backgrounds, Wallpapers, Tasks, Screenshot.
-super + x; {b,w,t,p}
-  {sbgmenu,nbm,stmmenu,dm-maim}
+super + x; {b,w,t,p,k,r}
+  {sbgmenu,nbm,stmmenu,dm-maim,dm-kill,dm-record}
 
 # dmenu_run and passmenu using my custom colours.
 super + {d,p,r}
