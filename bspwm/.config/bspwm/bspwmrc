@@ -22,11 +22,11 @@
 
 # Truncate a couple of common commands that are used herein.
 _bc() {
-	bspc config "$@"
+  bspc config "$@"
 }
 
 _check() {
-	command -v "$1" > /dev/null
+  command -v "$1" > /dev/null
 }
 
 # Visual options
@@ -121,13 +121,13 @@ _check feh && "$HOME"/.fehbg &
 
 # specify keyboard layout and compose key
 if _check setxkbmap; then
-	# setxkbmap -layout 'us,gr' -option 'grp:alt_caps_toggle'
-	setxkbmap -layout 'us'
-	setxkbmap -option compose:menu
+  # setxkbmap -layout 'us,gr' -option 'grp:alt_caps_toggle'
+  setxkbmap -layout 'us'
+  setxkbmap -option compose:menu
 
-	# For the key chord that performs the layout switching between US
-	# QWERTY and Greek see my `sxhkdrc`.  The script:
-	# `own_script_current_keyboard_layout`
+  # For the key chord that performs the layout switching between US
+  # QWERTY and Greek see my `sxhkdrc`.  The script:
+  # `own_script_current_keyboard_layout`
 fi
 
 # start the MATE settings daemon to apply GTK themes to running
@@ -149,6 +149,9 @@ _check mpDris2 && mpDris2 &
 
 # Unlock numpad
 _check numlockx && numlockx on
+
+# autostart redshift
+_check redshift && redshift &
 
 # Per host configurations
 # =======================
