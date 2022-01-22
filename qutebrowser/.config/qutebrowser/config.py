@@ -857,6 +857,7 @@ c.input.insert_mode.leave_on_load = True
 ## list) will work.
 ## Type: List of String
 # c.qt.args = []
+c.qt.args = ['widevine-path=/usr/lib/chromium/libwidevinecdm.so']
 
 ## Force a Qt platform to use. This sets the `QT_QPA_PLATFORM`
 ## environment variable and is useful to force using the XCB plugin when
