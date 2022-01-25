@@ -42,6 +42,8 @@ local function init(use)
         {'williamboman/nvim-lsp-installer'},
     }
 
+    use {'jose-elias-alvarez/nvim-lsp-ts-utils'}
+
     -- sql
     use {'tpope/vim-dadbod'}
     use {
