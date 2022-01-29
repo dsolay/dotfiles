@@ -30,7 +30,23 @@ require('nvim-treesitter.configs').setup {
     },
     indent = {enable = false},
     rainbow = {enable = true, extended_mode = true, max_file_lines = 1000},
-    context_commentstring = {enable = true, enable_autocmd = false},
+    context_commentstring = {
+        enable = true,
+        enable_autocmd = false,
+        config = {
+            javascript = {
+                __default = '// %s',
+                jsx_element = '{/* %s */}',
+                jsx_fragment = '{/* %s */}',
+                jsx_attribute = '// %s',
+                comment = '// %s',
+                __parent = {
+                    -- if a node has this as the parent, use the `//` commentstring
+                    jsx_expression = '// %s',
+                },
+            },
+        },
+    },
     matchup = {enable = true},
     incremental_selection = {
         enable = true,
