@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-count=0
 disconnected=""
 wireless_connected="泌"
 ethernet_connected="ﯱ"
