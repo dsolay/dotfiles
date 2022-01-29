@@ -184,11 +184,12 @@ super + x; {b,w,t,p,k,r}
   {sbgmenu,nbm,stmmenu,dm-maim,dm-kill,dm-record}
 
 # dmenu_run and passmenu using my custom colours.
-super + {d,p,r}
+super + {d,p,r,w}
   { \
     own_script_run_dmenu_xcolors, \
     own_script_run_passmenu_xcolors, \
-    own_script_run_rofi -r \
+    own_script_run_rofi -r, \
+    own_script_run_rofi -w \
   }
 
 # dmenu specifically for flatpaks.  While it is possible to include

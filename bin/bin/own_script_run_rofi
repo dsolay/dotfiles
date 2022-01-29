@@ -20,7 +20,7 @@ Options:
 EOF
 }
 
-ROFI_THEME="material"
+ROFI_THEME="gruvbox-dark-soft"
 
 #  Handle command line arguments
 while getopts ":hvqwcbrl" opt; do
@@ -36,7 +36,7 @@ while getopts ":hvqwcbrl" opt; do
         r)
             rofi -modi run,drun -show drun -line-padding 4 \
             -columns 2 -width 40 -padding 30 -hide-scrollbar \
-            -show-icons -drun-icon-theme "Papirus"
+            -show-icons -drun-icon-theme "Papirus" -theme $ROFI_THEME
             ;;
         w)
             rofi -modi window -show window -hide-scrollbar \
@@ -53,11 +53,11 @@ while getopts ":hvqwcbrl" opt; do
                 -hide-scrollbar -theme $ROFI_THEME
             ;;
         b)
-            surfraw -browser="$BROWSER" $(sr -elvi | awk -F'-' '{print $1}' \
+            surfraw -browser="$BROWSER" "$(sr -elvi | awk -F'-' '{print $1}' \
                 | sed '/:/d' | awk '{$1=$1};1' | rofi -hide-scrollbar \
                 -kb-row-select 'Tab' -kb-row-tab 'Control+space' \
                 -dmenu -mesg 'Tab for Autocomplete' -i -p 'Web Search: ' \
-                -padding 50 -line-padding 4 -theme $ROFI_THEME)
+                -padding 50 -line-padding 4 -theme $ROFI_THEME)"
             ;;
         l)
             MENU="$(rofi -sep "|" -dmenu -i -p 'System' -location 5 -xoffset -14 -yoffset -52 -width 10 \
@@ -65,7 +65,7 @@ while getopts ":hvqwcbrl" opt; do
                     <<< " Lock| Logout| Suspend| Reboot| Shutdown")"
             case "$MENU" in
                 *Lock) i3lock-fancy ;;
-                *Logout) pkill -KILL -U $USER ;;
+                *Logout) pkill -KILL -U "$USER" ;;
                 *Suspend) systemctl suspend ;;
                 *Reboot) systemctl reboot ;;
                 *Shutdown) systemctl -i poweroff
