@@ -36,16 +36,16 @@ EOF
 # Helper functions
 
 terminate() {
-    pkill -x $1
+    pkill -x "$1"
 }
 
 notify() {
-    default_icon="~/Pictures/icons/info-button.svg"
-    notify-send --urgency=low -i ${2:-$default_icon} "Enviroment" "$1"
+    default_icon="$HOME/Pictures/icons/info-button.svg"
+    notify-send --urgency=low -i "${2:-$default_icon}" "Enviroment" "$1"
 }
 
 checkexec() {
-    command -v $1 > /dev/null || { echo "[x] Error: $1 is not installed."; exit 1; }
+    command -v "$1" > /dev/null || { echo "[x] Error: $1 is not installed."; exit 1; }
 }
 
 # Helper functions
