@@ -133,14 +133,17 @@ super + T ; {2-7}
 # b == Toggle spotifyd
 # p == Togle play-pause
 # n == Show notificacion for current status in format {icon} {Album} {Title}
-super + shift + s ; {b,p,n,l}
+super + shift + s ; {b,n,l,p}
   { \
     toggle --spotifyd -t, \
-    sp play, \
     sp notify, \
     spt playback --like > /dev/null && \
       notify-send -i \
-        spotify "You Liked this song" "$(spt playback --status --format "%t")"
+        spotify "You Liked this song" "$(spt playback --status --format "%t")", \
+    spt play \
+      --name "Discover Weekly" \
+      --playlist \
+      --device spotifyd-solay 2>/dev/null \
   }
 
 # I use "my_float_window" as an application name or class for those rare
