@@ -1,0 +1,20 @@
+#! /bin/bash
+
+set -euo pipefail
+
+ROFI_THEME="gruvbox-dark-soft"
+DEVICE="spotifyd-solay"
+
+playlists="$(spt list -p --format %p --limit 50)"
+target="$(\
+  printf '%s\n' "${playlists[@]}" | \
+  rofi -dmenu -i \
+    -theme $ROFI_THEME "$@" \
+)" || exit 1
+
+notify-send -i spotify "Now Playing..." "$target"
+
+spt play \
+  --name "$target" \
+  --playlist \
+  --device "$DEVICE" 2>/dev/null \
