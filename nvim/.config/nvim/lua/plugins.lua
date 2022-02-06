@@ -110,6 +110,14 @@ local function init(use)
     -- Comment
     use {'b3nj5m1n/kommentary', config = [[require('config.kommentary')]]}
 
+    -- Docs
+    use {
+        'kkoomen/vim-doge',
+        config = [[require('config.doge')]],
+        setup = [[require('plugin-setup.doge')]],
+        run = ':call doge#install()',
+    }
+
     use {'JoosepAlviste/nvim-ts-context-commentstring'}
 
     -- Wrapping/delimiters
