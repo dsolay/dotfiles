@@ -183,11 +183,13 @@ function sp-notify {
 
   require dunst
 
+  IFS=/ read -r -a meta <<<"$(spt playback --format "%a/%t")"
+
   notify-send \
     --urgency=normal \
     -i spotify \
-    "$(sp metadata | grep -w album | cut -d "|" -f 2)" \
-    "$(sp metadata | grep title | cut -d "|" -f 2)"
+    "${meta[0]}" \
+    "${meta[1]}"
 }
 
 function sp-status {
