@@ -6,7 +6,10 @@ return {
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
 
-        ts_utils.setup({filter_out_diagnostics_by_code = {80001}})
+        ts_utils.setup({
+            filter_out_diagnostics_by_code = {80001},
+            auto_inlay_hints = false,
+        })
 
         -- required to fix code action ranges and filter diagnostics
         ts_utils.setup_client(client)
