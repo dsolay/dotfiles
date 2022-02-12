@@ -4,6 +4,7 @@ require('nvim-tree').setup {
     auto_close = true,
     diagnostics = {enable = true},
     ignore_ft_on_setup = {'startify', 'dashboard'},
+    auto_reload_on_write = false,
     git = {enable = true, ignore = false, timeout = 500},
 }
 
