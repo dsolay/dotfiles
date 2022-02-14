@@ -1,6 +1,7 @@
 local merge = vim.tbl_extend
 local utils = require('utils')
 local file_exists = utils.file_exists
+local includes = utils.includes
 local serversPath = vim.fn.stdpath('config') .. '/lua/servers/'
 
 local signs = {Error = '✘', Warn = '', Info = '', Hint = ''}
@@ -66,7 +67,10 @@ local function make_config(server)
     local base_config = {
         capabilities = capabilities,
         on_attach = on_attach,
-        flags = {debounce_text_changes = 150},
+        flags = {
+            -- This will be the default in neovim 0.7+
+            debounce_text_changes = 150,
+        },
     }
 
     local server_name = server.name
@@ -79,12 +83,29 @@ local function make_config(server)
 end
 
 -- lsp-install
+local exclude_lsp_install_servers = {'volar'}
 local function setup_servers()
     local lsp_installer = require('nvim-lsp-installer')
 
     lsp_installer.on_server_ready(
-        function(server) server:setup(make_config(server)) end
+        function(server)
+            if not includes(exclude_lsp_install_servers, server.name) then
+                server:setup(make_config(server))
+            end
+        end
     )
 end
 
+local servers = {'volar_multiple'}
+local function setup_manual_servers()
+    -- Use a loop to conveniently call 'setup' on multiple servers and
+    -- map buffer local keybindings when the language server attaches
+    for _, lsp in pairs(servers) do
+        if (file_exists(serversPath .. lsp .. '.lua')) then
+            require('servers.' .. lsp).setup()
+        end
+    end
+end
+
 setup_servers()
+setup_manual_servers()

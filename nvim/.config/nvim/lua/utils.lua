@@ -37,10 +37,17 @@ local function file_exists(path)
     return fn.system('test -f ' .. path .. ' && echo 1') == '1\n'
 end
 
+local function includes(tab, val)
+    for _, value in ipairs(tab) do if value == val then return true end end
+
+    return false
+end
+
 return {
     opt = opt,
     autocmd = autocmd,
     map = map,
     add_hi = add_hi,
     file_exists = file_exists,
+    includes = includes,
 }
