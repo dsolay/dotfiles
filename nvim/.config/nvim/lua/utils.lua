@@ -47,6 +47,12 @@ local function concat(a, b)
     return result
 end
 
+local function includes(tab, val)
+    for _, value in ipairs(tab) do if value == val then return true end end
+
+    return false
+end
+
 return {
     opt = opt,
     autocmd = autocmd,
@@ -54,4 +60,5 @@ return {
     add_hi = add_hi,
     file_exists = file_exists,
     concat = concat,
+    includes = includes,
 }
