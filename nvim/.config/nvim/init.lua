@@ -1,5 +1,2 @@
-require('global')
-require('plugins')
-require('general')
-require('settings')
-require('keymappings')
+require('cheovim')
+require('cheovim.functions')
