@@ -1,4 +1,3 @@
-local merge = vim.tbl_extend
 local utils = require('utils')
 local file_exists = utils.file_exists
 local includes = utils.includes
@@ -11,19 +10,13 @@ for type, icon in pairs(signs) do
 end
 
 local on_attach = function(client, bufnr)
-    local function buf_set_keymap(...)
-        vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-    local function buf_set_option(...)
-        vim.api.nvim_buf_set_option(bufnr, ...)
-    end
-
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc');
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
-    local maps = require('config.lsp_keymaps')
+    local maps = require('config.lspkeymaps')
     for _, map in ipairs(maps) do
-        buf_set_keymap(map[1], map[2], map[3], map[4]);
+        vim.api.nvim_buf_set_keymap(bufnr, map[1], map[2], map[3], map[4]);
     end
 
     -- Set autocommands conditional on server_capabilities
@@ -49,21 +42,14 @@ local on_attach = function(client, bufnr)
 end
 
 -- Config diagnostics
-vim.diagnostic.config(
-    {
-        virtual_text = false,
-        signs = true,
-        underline = true,
-        update_in_insert = false,
-        severity_sort = false,
-    }
-)
+vim.diagnostic.config({virtual_text = false})
 
 -- config that activates keymaps and enables snippet support
 local function make_config(server)
     local capabilities = require('cmp_nvim_lsp').update_capabilities(
                              vim.lsp.protocol.make_client_capabilities()
                          )
+
     local base_config = {
         capabilities = capabilities,
         on_attach = on_attach,
@@ -76,7 +62,9 @@ local function make_config(server)
     local server_name = server.name
 
     if (file_exists(serversPath .. server_name .. '.lua')) then
-        return merge('force', base_config, require('servers.' .. server_name))
+        return vim.tbl_extend(
+                   'force', base_config, require('servers.' .. server_name)
+               )
     else
         return base_config
     end
@@ -98,8 +86,6 @@ end
 
 local servers = {'volar_multiple'}
 local function setup_manual_servers()
-    -- Use a loop to conveniently call 'setup' on multiple servers and
-    -- map buffer local keybindings when the language server attaches
     for _, lsp in pairs(servers) do
         if (file_exists(serversPath .. lsp .. '.lua')) then
             require('servers.' .. lsp).setup()

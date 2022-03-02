@@ -7,7 +7,6 @@ g.mapleader = [[,]]
 -- g.maplocalleader = [[,]]
 
 -- Skip some remote provider loading
-g.loaded_python_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 
@@ -66,6 +65,6 @@ autocmd(
 -- Compile packer when plugins.lua file change
 autocmd(
     'packer_user_config',
-    [[BufWritePost plugins.lua source <afile> | PackerCompile profile=true]], true
+    [[BufWritePost plugins.lua source <afile> | PackerCompile profile=true]],
+    true
 )
-

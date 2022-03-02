@@ -1,1 +1,1 @@
-au BufRead,BufNewFile *Dockerfile*	set filetype=dockerfile
+au BufRead,BufNewFile *Dockerfile*  set filetype=dockerfile

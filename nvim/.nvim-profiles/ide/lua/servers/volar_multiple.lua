@@ -62,16 +62,16 @@ configs.volar_api = {
         root_dir = volar_root_dir,
         on_new_config = on_new_config,
 
-        filetypes = {'vue'},
+        -- filetypes = {'vue'},
         -- If you want to use Volar's Take Over Mode (if you know, you know)
-        --[[ filetypes = {
+        filetypes = {
             'typescript',
             'javascript',
             'javascriptreact',
             'typescriptreact',
             'vue',
             'json',
-        }, ]]
+        },
         init_options = {
             typescript = {serverPath = ''},
             languageFeatures = {
@@ -102,16 +102,16 @@ configs.volar_doc = {
         root_dir = volar_root_dir,
         on_new_config = on_new_config,
 
-        filetypes = {'vue'},
+        -- filetypes = {'vue'},
         -- If you want to use Volar's Take Over Mode (if you know, you know):
-        --[[ filetypes = {
+        filetypes = {
             'typescript',
             'javascript',
             'javascriptreact',
             'typescriptreact',
             'vue',
             'json',
-        }, ]]
+        },
         init_options = {
             typescript = {serverPath = ''},
             languageFeatures = {
@@ -136,15 +136,15 @@ configs.volar_html = {
         root_dir = volar_root_dir,
         on_new_config = on_new_config,
 
-        filetypes = {'vue'},
+        -- filetypes = {'vue'},
         -- If you want to use Volar's Take Over Mode (if you know, you know), intentionally no 'json':
-        --[[ filetypes = {
+        filetypes = {
             'typescript',
             'javascript',
             'javascriptreact',
             'typescriptreact',
             'vue',
-        }, ]]
+        },
         init_options = {
             typescript = {serverPath = ''},
             documentFeatures = {

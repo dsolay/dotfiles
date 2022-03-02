@@ -24,21 +24,31 @@ local function init(use)
     use 'wbthomason/packer.nvim'
 
     -- Dashboard
-    use {'glepnir/dashboard-nvim', config = [[require('config.dashboard')]]}
+    use {
+        'goolord/alpha-nvim',
+        requires = {'kyazdani42/nvim-web-devicons'},
+        config = function() require('config.alpha_conf') end,
+    }
 
     -- File explorer
     use {
         'kyazdani42/nvim-tree.lua',
-        config = [[require('config.nvim-tree')]],
-        setup = [[require('plugin-setup.nvim-tree')]],
+        config = function() require('config.nvimtree_conf') end,
+        setup = function() require('setup.nvimtree_setup') end,
     }
 
     -- terminal
-    use {'numtostr/FTerm.nvim', setup = [[require('plugin-setup.fterm')]]}
+    use {
+        'numtostr/FTerm.nvim',
+        setup = function() require('setup.fterm_setup') end,
+    }
 
     -- LSP
     use {
-        {'neovim/nvim-lspconfig', config = [[require('config.lsp')]]},
+        {
+            'neovim/nvim-lspconfig',
+            config = function() require('config.lsp_conf') end,
+        },
         'williamboman/nvim-lsp-installer',
     }
 
@@ -49,13 +59,17 @@ local function init(use)
     use {
         'kristijanhusak/vim-dadbod-ui',
         cmd = {'DBUI', 'DBUIToggle'},
-        config = [[require('config.dadbod-ui')]],
-        setup = [[require('plugin-setup.dadbod-ui')]],
+        config = function() require('config.dadbodui_conf') end,
+        setup = function() require('setup.dadbodui_setup') end,
     }
 
     -- Pretty symbols
     use 'kyazdani42/nvim-web-devicons'
-    use {'onsails/lspkind-nvim', config = [[require('config.lspkind')]]}
+
+    use {
+        'onsails/lspkind-nvim',
+        config = function() require('config.lspkind_conf') end,
+    }
 
     -- Completion and snnippets
     use {
@@ -65,9 +79,15 @@ local function init(use)
         {'hrsh7th/cmp-path'},
         {'hrsh7th/cmp-cmdline'},
         {'hrsh7th/cmp-nvim-lua'},
-        {'hrsh7th/nvim-cmp', config = [[require('config.compe')]]},
-        {'hrsh7th/cmp-vsnip'},
-        {'hrsh7th/vim-vsnip'},
+        {
+            'hrsh7th/nvim-cmp',
+            config = function() require('config.compe_conf') end,
+        },
+        {
+            'L3MON4D3/LuaSnip',
+            config = function() require('config.luasnip_conf') end,
+        },
+        {'saadparwaiz1/cmp_luasnip'},
         {'rafamadriz/friendly-snippets'},
     }
 
@@ -75,14 +95,14 @@ local function init(use)
     use {
         {
             'mfussenegger/nvim-dap',
-            config = [[require('config.dap')]],
-            setup = [[require('plugin-setup.dap')]],
+            config = function() require('config.dap_conf') end,
+            setup = function() require('setup.dap_setup') end,
         },
         {
             'rcarriga/nvim-dap-ui',
             requires = {'mfussenegger/nvim-dap'},
-            config = [[require('config.dap-ui')]],
-            setup = [[require('plugin-setup.dap-ui')]],
+            config = function() require('config.dapui_conf') end,
+            setup = function() require('setup.dapui_setup') end,
         },
         {
             'Pocco81/DAPInstall.nvim',
@@ -93,41 +113,33 @@ local function init(use)
     -- Indentation tracking
     use {
         'lukas-reineke/indent-blankline.nvim',
-        setup = [[require('plugin-setup.indentline')]],
-        event = [[VimEnter *]],
+        config = function() require('config.indentline_conf') end,
     }
 
     -- Highlights
     use {
         {
             'nvim-treesitter/nvim-treesitter',
-            config = [[require('config.treesitter')]],
+            config = function() require('config.treesitter_conf') end,
             run = ':TSUpdate',
         },
-        {'p00f/nvim-ts-rainbow', requires = {'nvim-treesitter/nvim-treesitter'}},
+        {'p00f/nvim-ts-rainbow'},
     }
 
     -- Comment
-    use {'b3nj5m1n/kommentary', config = [[require('config.kommentary')]]}
-
-    -- Docs
     use {
-        'kkoomen/vim-doge',
-        config = [[require('config.doge')]],
-        setup = [[require('plugin-setup.doge')]],
-        run = ':call doge#install()',
+        'b3nj5m1n/kommentary',
+        config = function() require('config.kommentary_conf') end,
     }
 
     use {'JoosepAlviste/nvim-ts-context-commentstring'}
 
-    -- Wrapping/delimiters
+    -- Docs
     use {
-        {'machakann/vim-sandwich', event = [[BufEnter *]]},
-        {
-            'andymass/vim-matchup',
-            setup = [[require('config.matchup')]],
-            event = [[BufEnter *]],
-        },
+        'kkoomen/vim-doge',
+        config = function() require('config.doge_conf') end,
+        setup = function() require('setup.doge_setup') end,
+        run = ':call doge#install()',
     }
 
     -- Multiline cursor
@@ -142,38 +154,38 @@ local function init(use)
         {
             'nvim-telescope/telescope.nvim',
             requires = {{'nvim-lua/plenary.nvim'}},
-            config = [[require('config.telescope')]],
-            setup = [[require('plugin-setup.telescope')]],
+            config = function() require('config.telescope_conf') end,
+            setup = function() require('setup.telescope_setup') end,
             cmd = {'Telescope'},
         },
         {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
+        {'nvim-telescope/telescope-project.nvim'},
     }
 
     -- Git
     use {
         'kdheepak/lazygit.nvim',
-        setup = [[require('plugin-setup.lazygit')]],
+        setup = function() require('setup.lazygit_setup') end,
         cmd = 'LazyGit',
     }
 
     use {
         'lewis6991/gitsigns.nvim',
         requires = {'nvim-lua/plenary.nvim'},
-        config = [[require('config.gitsigns')]],
-        event = [[VimEnter *]],
+        config = function() require('config.gitsigns_conf') end,
     }
 
     use {
         'pwntester/octo.nvim',
-        config = [[require('config.octo')]],
+        config = function() require('config.octo_conf') end,
         cmd = 'Octo',
     }
 
     -- REPLs
     use {
         'hkupty/iron.nvim',
-        setup = [[vim.g.iron_map_defaults = 0]],
-        config = [[require('config.iron')]],
+        config = function() require('config.iron_conf') end,
+        setup = function() require('setup.iron_setup') end,
         cmd = {'IronRepl', 'IronSend', 'IronReplHere'},
     }
 
@@ -182,22 +194,34 @@ local function init(use)
 
     -- productivity
     use {
+        'echasnovski/mini.nvim',
+        branch = 'stable',
+        config = function() require('config.mini_conf') end,
+    }
+
+    use {
         'folke/todo-comments.nvim',
-        config = [[require('config.todo-comments')]],
+        config = function() require('todo-comments').setup {} end,
     }
 
     use {
         'folke/trouble.nvim',
-        config = [[require('config.trouble')]],
+        config = function() require('config.trouble_conf') end,
+        setup = function() require('setup.trouble_setup') end,
         cmd = {'TroubleToggle', 'Trouble'},
-        setup = [[require('plugin-setup.trouble')]],
+    }
+
+    use {
+        'folke/twilight.nvim',
+        cmd = {'Twilight', 'TwilightEnable'},
+        config = function() require('config.twilight_conf') end,
     }
 
     use {
         'kdav5758/TrueZen.nvim',
         after = 'twilight.nvim',
-        config = [[require('config.true_zen')]],
-        setup = [[require('plugin-setup.truezen')]],
+        config = function() require('config.truezen_conf') end,
+        setup = function() require('setup.truezen_setup') end,
         cmd = {
             'TZMinimalist',
             'TZFocus',
@@ -209,31 +233,19 @@ local function init(use)
     }
 
     use {'tpope/vim-unimpaired'}
+
     use {'tpope/vim-dotenv'}
-    use {
-        'simrat39/symbols-outline.nvim',
-        cmd = 'SymbolsOutline',
-        setup = [[require('plugin-setup.symbols-outline')]],
-    }
-    use {
-        'folke/twilight.nvim',
-        cmd = {'Twilight', 'TwilightEnable'},
-        config = [[require('config.twilight')]],
-    }
 
     -- Highlight colors
     use {
         'norcalli/nvim-colorizer.lua',
         ft = {'css', 'scss', 'javascript', 'vue', 'vim', 'html', 'pug', 'lua'},
-        config = [[require('config.colorizer')]],
+        config = function() require('config.colorizer_conf') end,
     }
 
     -- Color scheme
     use {'sainnhe/gruvbox-material'}
-    use {'folke/lsp-colors.nvim'}
 end
 
 -- init packer
 return require('packer').startup(init)
-
-

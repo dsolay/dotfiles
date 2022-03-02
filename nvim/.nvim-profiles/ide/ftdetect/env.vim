@@ -1,1 +1,1 @@
-au BufRead,BufNewFile *.env*	set filetype=env
+au BufRead,BufNewFile *.env*  set filetype=env

@@ -6,7 +6,7 @@ local source_mapping = {
     nvim_lsp = '[LSP]',
     nvim_lua = '[Lua]',
     path = '[Path]',
-    vsnip = '[VSnip]',
+    luasnip = '[Snip]',
 }
 
 cmp.setup(
@@ -30,7 +30,7 @@ cmp.setup(
         },
         snippet = {
             expand = function(args)
-                vim.fn['vsnip#anonymous'](args.body)
+                require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
             end,
         },
         mapping = {
@@ -76,12 +76,10 @@ cmp.setup(
                 end
             end,
         },
-        sources = {
-            {name = 'nvim_lsp'},
-            {name = 'vsnip'},
-            {name = 'path'},
-            {name = 'buffer'},
-        },
+        sources = cmp.config.sources(
+            {{name = 'nvim_lsp'}, {name = 'luasnip'}},
+            {{name = 'path'}, {name = 'buffer'}}
+        ),
     }
 )
 
