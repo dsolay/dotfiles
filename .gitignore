@@ -40,6 +40,7 @@ qutebrowser/.config/qutebrowser/bookmarks/urls
 qutebrowser/.config/qutebrowser/quickmarks
 qutebrowser/.config/qutebrowser/autoconfig.yml
 qutebrowser/.config/qutebrowser/qsettings/QtProject.conf
+packer_compiled.lua
 
 *-bak
 *.bak
