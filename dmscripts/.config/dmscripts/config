@@ -7,7 +7,7 @@
 
 # Defined variables, modify anything in quotes to your prefered software
 
-DMENU="dmenu"
+DMENU="dmenu -i -l 20 -p"
 # DMENU="rofi -dmenu"
 
 # DMBROWSER="brave"
