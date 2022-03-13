@@ -244,7 +244,11 @@ local function init(use)
     }
 
     -- Color scheme
-    use {'sainnhe/gruvbox-material'}
+    use {
+        'luisiacc/gruvbox-baby',
+        branch = 'main',
+        config = function() require('config.gruvboxbaby_conf') end,
+    }
 end
 
 -- init packer
