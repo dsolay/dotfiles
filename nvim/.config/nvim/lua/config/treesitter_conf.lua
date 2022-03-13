@@ -1,28 +1,32 @@
-local concat = require('utils').concat
-
-local function get_parsers()
-    local common_parsers = {
+local ts_configs = require('nvim-treesitter.configs')
+ts_configs.setup {
+    ensure_installed = {
         'bash',
         'c',
-        'dockerfile',
+        'css',
+        'go',
+        'graphql',
+        'haskell',
+        'html',
+        'java',
+        'javascript',
         'json',
         'jsonc',
+        'kotlin',
+        'latex',
         'lua',
+        'python',
         'regex',
+        'rust',
+        'scss',
         'toml',
+        'typescript',
+        'tsx',
         'yaml',
-        'vim',
-    }
-
-    if os.getenv('PARSERS') then
-        return concat(common_parsers, vim.split(os.getenv('PARSERS'), ';'))
-    end
-
-    return common_parsers
-end
-
-require('nvim-treesitter.configs').setup {
-    ensure_installed = get_parsers(),
+        'php',
+        'vue',
+        'dockerfile',
+    },
     highlight = {
         enable = true,
         use_languagetree = true,

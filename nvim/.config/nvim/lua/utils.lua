@@ -53,6 +53,10 @@ local function includes(tab, val)
     return false
 end
 
+local function get_env_values(env)
+    vim.split(os.getenv(env) or '', ';')
+end
+
 return {
     opt = opt,
     autocmd = autocmd,
@@ -61,4 +65,5 @@ return {
     file_exists = file_exists,
     concat = concat,
     includes = includes,
+    get_env_values = get_env_values,
 }

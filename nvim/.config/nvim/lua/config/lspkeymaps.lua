@@ -40,3 +40,4 @@ return {
     {'n', '[d', [[<cmd>lua Diagnostic_prev()<cr>]], opts},
     {'n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<cr>', opts},
 };
+

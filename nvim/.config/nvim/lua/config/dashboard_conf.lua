@@ -33,7 +33,10 @@ vim.g.dashboard_custom_section = {
         description = {'  Settings           '},
         command = ':e ~/.config/nvim/lua/settings.lua',
     },
-    g = {description = {'  TODO               '}, command = 'TodoTelescope'},
+    g = {
+        description = {'  TODO               '},
+        command = 'TodoTelescope',
+    },
 }
 
 vim.g.dashboard_custom_footer = {'Do one thing, do it well - Unix philosophy'}
@@ -44,4 +47,3 @@ local map = utils.map
 local opts = {noremap = false}
 map('n', '<leader>ss', [[:<C-u>SessionSave<cr>]], opts)
 map('n', '<leader>sl', [[:<C-u>SessionLoad<cr>]], opts)
-

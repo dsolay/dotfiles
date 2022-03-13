@@ -37,10 +37,10 @@ SELECT TABLE_NAME,
 FROM KEY_COLUMN_USAGE
 WHERE TABLE_SCHEMA = `{dbname}`
   AND TABLE_NAME = `{table}`]],
-        Delete = 'DELETE FROM `{table}`',
+        Delete = "DELETE FROM `{table}`",
         ['Delete By Id'] = 'DELETE FROM `{table}` WHERE ID = :id',
-        Explain = 'EXPLAIN ANALYZE {last_query}',
-        Count = 'SELECT COUNT(*) FROM {table}',
+        Explain = "EXPLAIN ANALYZE {last_query}",
+        Count = "SELECT COUNT(*) FROM {table}"
     },
 }
 vim.g.db_ui_auto_execute_table_helpers = 1
