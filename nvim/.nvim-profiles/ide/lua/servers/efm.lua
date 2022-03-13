@@ -113,17 +113,15 @@ return {
         completion = false,
     },
     on_attach = function(bufnr)
-        local function buf_set_keymap(...)
-            vim.api.nvim_buf_set_keymap(bufnr, ...)
-        end
-
         local opts = {noremap = true, silent = true}
-        buf_set_keymap(
-            'n', '<space>f', [[:lua vim.lsp.buf.formatting()<cr>]], opts
+        vim.api.nvim_buf_set_keymap(
+            bufnr, 'n', '<space>f', [[<cmd>lua vim.lsp.buf.formatting()<cr>]],
+            opts
         )
 
-        buf_set_keymap(
-            'n', '<space>e', [[<cmd>lua vim.diagnostic.open_float()<cr>]], opts
+        vim.api.nvim_buf_set_keymap(
+            bufnr, 'n', '<space>e',
+            [[<cmd>lua vim.diagnostic.open_float()<cr>]], opts
         )
     end,
     filetypes = {
@@ -134,12 +132,12 @@ return {
         'css',
         'scss',
         'lua',
+        'env',
         'sh',
         'json',
         'dockerfile',
         'markdown',
         'vue',
-        'env',
         'php',
     },
     settings = {rootMarkers = {'.git/'}, languages = languages},
