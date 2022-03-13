@@ -201,7 +201,7 @@ local function init(use)
 
     use {
         'folke/todo-comments.nvim',
-        config = function() require('todo-comments').setup {} end,
+        config = function() require('config.todocomments_conf') end,
     }
 
     use {
