@@ -139,7 +139,6 @@ local function init(use)
         'kkoomen/vim-doge',
         config = function() require('config.doge_conf') end,
         setup = function() require('setup.doge_setup') end,
-        run = ':call doge#install()',
     }
 
     -- Multiline cursor
