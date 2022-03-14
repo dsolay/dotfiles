@@ -54,7 +54,7 @@ local function includes(tab, val)
 end
 
 local function get_env_values(env)
-    vim.split(os.getenv(env) or '', ';')
+    return vim.split(os.getenv(env) or '', ';')
 end
 
 return {
