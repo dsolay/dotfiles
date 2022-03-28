@@ -34,7 +34,7 @@ end
 local servers_dir = os.getenv('HOME') .. '/.local/share/nvim/lsp_servers'
 
 local volar_cmd = {
-    servers_dir .. '/volar/node_modules/.bin/volar-server',
+    servers_dir .. '/volar/node_modules/.bin/vue-language-server',
     '--stdio',
 }
 local volar_root_dir = util.root_pattern 'package.json'
@@ -75,6 +75,7 @@ configs.volar_api = {
         init_options = {
             typescript = {serverPath = ''},
             languageFeatures = {
+                implementation = true,
                 references = true,
                 definition = true,
                 typeDefinition = true,
@@ -115,6 +116,7 @@ configs.volar_doc = {
         init_options = {
             typescript = {serverPath = ''},
             languageFeatures = {
+                implementation = true,
                 documentHighlight = true,
                 documentLink = true,
                 codeLens = {showReferencesNotification = true},
