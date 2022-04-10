@@ -49,6 +49,7 @@ local config = {
         css = {validate = false},
         less = {validate = false},
         scss = {validate = false},
+        volar = {vueserver = {useSecondServer = false}},
     },
     flags = {
         -- This will be the default in neovim 0.7+
