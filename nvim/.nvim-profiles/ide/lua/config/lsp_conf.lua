@@ -10,7 +10,7 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, {text = icon, texthl = hl, linehl = '', numhl = ''})
 end
 
-local on_attach = function(client, bufnr)
+local on_attach = function(_, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
@@ -18,27 +18,6 @@ local on_attach = function(client, bufnr)
     local maps = require('config.lspkeymaps')
     for _, map in ipairs(maps) do
         vim.api.nvim_buf_set_keymap(bufnr, map[1], map[2], map[3], map[4]);
-    end
-
-    -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight == true then
-        vim.cmd(
-            [[
-                hi LspReferenceText cterm=underline gui=underline
-                hi LspReferenceRead cterm=underline gui=underline
-                hi LspReferenceWrite cterm=underline gui=underline
-            ]]
-        )
-
-        vim.cmd(
-            [[
-            augroup lsp_document_highlight
-                autocmd! * <buffer>
-                autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-                autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-            augroup END
-            ]]
-        )
     end
 end
 
