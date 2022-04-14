@@ -75,6 +75,13 @@ cmp.setup(
                     fallback()
                 end
             end,
+            ['<S-Tab>'] = function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                else
+                    fallback()
+                end
+            end,
         },
         sources = cmp.config.sources(
             {{name = 'nvim_lsp'}, {name = 'luasnip'}},
@@ -90,3 +97,4 @@ cmp.setup.cmdline('/', {sources = {{name = 'buffer'}}})
 cmp.setup.cmdline(
     ':', {sources = cmp.config.sources({{name = 'path'}}, {{name = 'cmdline'}})}
 )
+
