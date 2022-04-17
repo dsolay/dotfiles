@@ -534,6 +534,7 @@ c.downloads.position = 'bottom'
 ## Type: ShellCommand
 # c.editor.command = ['gvim', '-f', '{file}', '-c', 'normal {line}G{column0}l']
 # c.editor.command = ["st", "-e", "vim", "{file}"]
+c.editor.command = ["alacritty", "--class", "Alacritty,my_float_window", "-e", "nvim", "{file}"]
 
 ## Encoding to use for the editor.
 ## Type: Encoding
@@ -1244,7 +1245,7 @@ c.tabs.title.format = '{audio}{index}: {current_title}'
 ## Page to open if :open -t/-b/-w is used without URL. Use `about:blank`
 ## for a blank page.
 ## Type: FuzzyUrl
-c.url.default_page = 'https://google.com/'
+c.url.default_page = 'https://duckduckgo.com'
 
 ## URL segments where `:navigate increment/decrement` will search for a
 ## number.
@@ -1273,7 +1274,8 @@ c.url.open_base_url = True
 ## Type: Dict
 # c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}'}
 c.url.searchengines = {
-    '?': 'https://google.com/search?q={}',
+    '?': 'https://duckduckgo.com/?q={}',
+    '?google': 'https://google.com/search?q={}',
     '?amazon': 'https://www.amazon.com/s?k={}',
     '?aur': 'https://aur.archlinux.org/packages/?SB=p&SO=d&O=0&K={}',
     '?dd': 'https://duckduckgo.com/?q={}',
@@ -1286,12 +1288,12 @@ c.url.searchengines = {
     '?purs': 'https://pursuit.purescript.org/search?q={}',
     '?youtube': 'https://www.youtube.com/results?search_query={}',
     '?yt': 'https://www.youtube.com/results?search_query={}',
-    'DEFAULT': 'https://google.com/search?q={}'
+    'DEFAULT': 'https://duckduckgo.com/?q={}'
 }
 
 ## Page(s) to open at the start.
 ## Type: List of FuzzyUrl, or FuzzyUrl
-c.url.start_pages = ['https://google.com']
+c.url.start_pages = ['https://duckduckgo.com']
 
 ## URL parameters to strip with `:yank url`.
 ## Type: List of String
@@ -1329,6 +1331,10 @@ c.url.start_pages = ['https://google.com']
 c.bindings.commands = {
     'normal': {
         '+': 'zoom-in',
+        '-': 'zoom-out',
+        '=': 'zoom',
+        'F': 'hint links tab-bg',
+        'gi': 'hint inputs',
         'gO': 'bookman',
         ',<Space>': 'search',
         ',C': 'tab-only',
@@ -1355,11 +1361,7 @@ c.bindings.commands = {
         ',gr': 'config-cycle content.user_stylesheets ~/workspace/solarized-everything-css/css/gruvbox/gruvbox-all-sites.css ""',
         ',sd': 'config-cycle content.user_stylesheets ~/workspace/solarized-everything-css/css/solarized-dark/solarized-dark-all-sites.css ""',
         ',sl': 'config-cycle content.user_stylesheets ~/workspace/solarized-everything-css/css/solarized-light/solarized-light-all-sites.css ""',
-        '-': 'zoom-out',
         '<Alt-D>': 'edit-url',
-        '<Ctrl-+>': 'zoom-in',
-        '<Ctrl-->': 'zoom-out',
-        '<Ctrl-0>': 'zoom',
         '<Ctrl-Shift-Tab>': 'tab-prev',
         '<Ctrl-Tab>': 'tab-next',
         '<Ctrl-f>': 'set-cmd-text /',
@@ -1369,15 +1371,12 @@ c.bindings.commands = {
         '<Ctrl-t>': 'spawn --userscript translate -t es',
         '<Ctrl-Shift+T>': 'spawn --userscript translate --text -t es',
         '<Ctrl-c>': 'code',
-        '=': 'zoom',
-        '?': 'set-cmd-text :open -t ?',
-        'F': 'hint links tab-bg',
-        'gi': 'hint inputs'
+        '?': 'set-cmd-text :open -t ?'
     },
     'insert': {
         '<Ctrl-+>': 'zoom-in',
         '<Ctrl-->': 'zoom-out',
-        '<Ctrl-0>': 'zoom',
+        '<Ctrl-=>': 'zoom',
         '<Ctrl-e>': 'edit-text',
         '<Ctrl-i>': 'edit-text',
         '<Ctrl-p>': 'pass',
