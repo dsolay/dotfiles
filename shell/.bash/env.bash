@@ -24,7 +24,7 @@ _checkexec luarocks && {
 # package.
 export EDITOR=nvim
 
-export BROWSER=/usr/bin/xdg-open
+# export BROWSER=/usr/bin/xdg-open
 
 # Pass config
 export PASSWORD_STORE_DIR="/home/ernest/workspace/sypass"
