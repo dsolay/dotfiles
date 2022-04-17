@@ -41,9 +41,16 @@ dashboard.section.footer.val = {'Do one thing, do it well - Unix philosophy'}
 alpha.setup(dashboard.opts)
 
 -- hide tabline and statusline on startup screen
-vim.cmd [[
-augroup alpha_tabline
-  au!
-  au FileType alpha set showtabline=0 laststatus=0 noruler | au BufUnload <buffer> set showtabline=2 ruler laststatus=2
-augroup END
-]]
+vim.api.nvim_create_augroup('alpha_tabline', {})
+
+vim.api.nvim_create_autocmd('FileType', {
+    group = 'alpha_tabline',
+    pattern = 'alpha',
+    command = [[set showtabline=0 laststatus=0 noruler]],
+})
+
+vim.api.nvim_create_autocmd('BufUnload', {
+    group = 'alpha_tabline',
+    pattern = '<buffer>',
+    command = [[set showtabline=2 laststatus=3 ruler]],
+})

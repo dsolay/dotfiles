@@ -112,18 +112,6 @@ return {
         codeAction = false,
         completion = false,
     },
-    on_attach = function(bufnr)
-        local opts = {noremap = true, silent = true}
-        vim.api.nvim_buf_set_keymap(
-            bufnr, 'n', '<space>f', [[<cmd>lua vim.lsp.buf.formatting()<cr>]],
-            opts
-        )
-
-        vim.api.nvim_buf_set_keymap(
-            bufnr, 'n', '<space>e',
-            [[<cmd>lua vim.diagnostic.open_float()<cr>]], opts
-        )
-    end,
     filetypes = {
         'javascript',
         'javascriptreact',

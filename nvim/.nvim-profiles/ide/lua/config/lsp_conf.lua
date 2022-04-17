@@ -10,15 +10,80 @@ for type, icon in pairs(signs) do
     vim.fn.sign_define(hl, {text = icon, texthl = hl, linehl = '', numhl = ''})
 end
 
+local function map(mode, l, r, opts)
+    opts = vim.tbl_extend('force', {noremap = true, silent = true}, opts or {})
+    vim.keymap.set(mode, l, r, opts)
+end
+
+local severity = vim.diagnostic.severity
+map('n', '<space>e', vim.diagnostic.open_float)
+map('n', '<space>q', vim.diagnostic.setloclist)
+map('n', '[d', vim.diagnostic.goto_prev)
+map('n', ']d', vim.diagnostic.goto_next)
+map(
+    'n', '[e', function()
+        vim.diagnostic.goto_prev({severity = severity.ERROR, float = false})
+    end
+)
+map(
+    'n', ']e', function()
+        vim.diagnostic.goto_next({severity = severity.ERROR, float = false})
+    end
+)
+map(
+    'n', '[w', function()
+        vim.diagnostic.goto_prev({severity = severity.WARN, float = false})
+    end
+)
+map(
+    'n', ']w', function()
+        vim.diagnostic.goto_next({severity = severity.WARN, float = false})
+    end
+)
+map(
+    'n', '[i', function()
+        vim.diagnostic.goto_prev({severity = severity.INFO, float = false})
+    end
+)
+map(
+    'n', ']i', function()
+        vim.diagnostic.goto_next({severity = severity.INFO, float = false})
+    end
+)
+map(
+    'n', '[h', function()
+        vim.diagnostic.goto_prev({severity = severity.HINT, float = false})
+    end
+)
+map(
+    'n', ']h', function()
+        vim.diagnostic.goto_next({severity = severity.HINT, float = false})
+    end
+)
+
 local on_attach = function(_, bufnr)
     -- Enable completion triggered by <c-x><c-o>
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
     -- Mappings.
-    local maps = require('config.lspkeymaps')
-    for _, map in ipairs(maps) do
-        vim.api.nvim_buf_set_keymap(bufnr, map[1], map[2], map[3], map[4]);
-    end
+    map('n', 'gD', vim.lsp.buf.declaration, {buffer = bufnr})
+    map('n', 'gd', vim.lsp.buf.definition, {buffer = bufnr})
+    map('n', 'K', vim.lsp.buf.hover, {buffer = bufnr})
+    map('n', 'gi', vim.lsp.buf.implementation, {buffer = bufnr})
+    map('n', '<leader>K', vim.lsp.buf.signature_help, {buffer = bufnr})
+    map('n', '<leader>D', vim.lsp.buf.type_definition, {buffer = bufnr})
+    map('n', '<leader>rn', vim.lsp.buf.rename, {buffer = bufnr})
+    map('n', 'gr', vim.lsp.buf.references, {buffer = bufnr})
+    map('n', '<space>f', vim.lsp.buf.formatting, {buffer = bufnr})
+
+    vim.api.nvim_create_autocmd(
+        'BufWritePre', {
+            pattern = '<buffer>',
+            callback = function()
+                vim.lsp.buf.formatting_seq_sync(nil, 100, {'efm'})
+            end,
+        }
+    )
 end
 
 -- Config diagnostics
@@ -30,14 +95,7 @@ local function make_config(server)
                              vim.lsp.protocol.make_client_capabilities()
                          )
 
-    local base_config = {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        flags = {
-            -- This will be the default in neovim 0.7+
-            debounce_text_changes = 150,
-        },
-    }
+    local base_config = {capabilities = capabilities, on_attach = on_attach}
 
     local server_name = server.name
 

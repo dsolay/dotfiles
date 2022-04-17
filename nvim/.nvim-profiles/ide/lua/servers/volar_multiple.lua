@@ -51,10 +51,6 @@ local config = {
         scss = {validate = false},
         volar = {vueserver = {useSecondServer = false}},
     },
-    flags = {
-        -- This will be the default in neovim 0.7+
-        debounce_text_changes = 150,
-    },
 }
 
 configs.volar_api = {
