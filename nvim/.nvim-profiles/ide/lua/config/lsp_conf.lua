@@ -75,15 +75,6 @@ local on_attach = function(_, bufnr)
     map('n', '<leader>rn', vim.lsp.buf.rename, {buffer = bufnr})
     map('n', 'gr', vim.lsp.buf.references, {buffer = bufnr})
     map('n', '<space>f', vim.lsp.buf.formatting, {buffer = bufnr})
-
-    vim.api.nvim_create_autocmd(
-        'BufWritePre', {
-            pattern = '<buffer>',
-            callback = function()
-                vim.lsp.buf.formatting_seq_sync(nil, 100, {'efm'})
-            end,
-        }
-    )
 end
 
 -- Config diagnostics
