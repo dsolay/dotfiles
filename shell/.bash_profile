@@ -21,4 +21,4 @@ then
    eval "$(cat "$HOME"/.ssh/ssh-agent)"
 fi
 
-_checkexec nmcli && nmcli con up home &
+_checkexec nmcli && nmcli con up static-home &
