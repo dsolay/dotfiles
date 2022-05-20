@@ -75,6 +75,7 @@ local on_attach = function(_, bufnr)
     map('n', '<leader>rn', vim.lsp.buf.rename, {buffer = bufnr})
     map('n', 'gr', vim.lsp.buf.references, {buffer = bufnr})
     map('n', '<space>f', vim.lsp.buf.formatting, {buffer = bufnr})
+    map('n', '<space>ca', vim.lsp.buf.code_action, {buffer = bufnr})
 end
 
 -- Config diagnostics
