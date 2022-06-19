@@ -7,7 +7,7 @@ killall -q polybar
 while pgrep -u "$UID" -x polybar >/dev/null; do sleep 1; done
 
 # Launch polybar
-polybar dvi -c "$HOME"/.config/polybar/config.ini &
+polybar edp1 -c "$HOME"/.config/polybar/config.ini &
 
 external_monitor=$(xrandr --query | grep 'HDMI-A-0')
 if [[ $external_monitor = *connected* ]]; then

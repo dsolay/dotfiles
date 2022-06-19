@@ -52,3 +52,5 @@ export GNUPGHOME="$HOME/.gnupg/"
 # enable docker build kit
 export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
+
+export ROFI_THEME="gruvbox-dark-soft"

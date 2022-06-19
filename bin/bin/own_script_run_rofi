@@ -20,7 +20,7 @@ Options:
 EOF
 }
 
-ROFI_THEME="gruvbox-dark-soft"
+# ROFI_THEME="gruvbox-dark-soft"
 
 #  Handle command line arguments
 while getopts ":hvqwcbrl" opt; do
