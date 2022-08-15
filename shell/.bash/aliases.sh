@@ -57,6 +57,8 @@ if _checkexec docker; then
     alias dcexc='docker-compose exec'
     alias dclog='docker-compose logs'
   fi
+
+  alias sqlcmd='docker exec -it developsy-mssql /opt/mssql-tools/bin/sqlcmd'
 fi
 
 # Common tasks and utilities
