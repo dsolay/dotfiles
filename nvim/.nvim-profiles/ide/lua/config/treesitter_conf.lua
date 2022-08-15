@@ -26,6 +26,7 @@ ts_configs.setup {
         'php',
         'vue',
         'dockerfile',
+        'c_sharp'
     },
     highlight = {
         enable = true,
