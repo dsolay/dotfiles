@@ -102,6 +102,9 @@ local languages = {
         {formatCommand = get_bin('prettier') .. ' --parser typescript'},
     },
     vue = {{formatCommand = get_bin('prettier') .. ' --parser vue'}},
+    cs = {{
+        formatCommand = 'dotnet-csharpier --write-stdout',
+    }}
 }
 
 return {
@@ -127,6 +130,7 @@ return {
         'markdown',
         'vue',
         'php',
+        'cs',
     },
     settings = {rootMarkers = {'.git/'}, languages = languages},
 }
