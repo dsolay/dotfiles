@@ -289,6 +289,8 @@ if _checkexec git; then
   alias gph='git push -u origin HEAD'
 fi
 
+alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
+
 # Open current directory in nvim
 alias ide="nvim"
 
