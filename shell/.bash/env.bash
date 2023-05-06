@@ -3,8 +3,7 @@
 # add anyenv to path
 prependpath "$HOME/.anyenv/bin"
 
-# Include composer bin
-prependpath "$HOME/.config/composer/vendor/bin"
+prependpath "$HOME/.cargo/bin"
 
 # Include my scripts in the PATH.  To avoid conflicts, I always prepend
 # `own_script_` to my files.  There are some exceptions though, where I
@@ -39,6 +38,7 @@ export XDG_CONFIG_DIRS="/etc/xdg"
 
 # Java
 export JAVA_HOME="/usr/lib/jvm/default"
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dsun.java2d.xrender=true"
 
 # go
 export GOPATH="$HOME/go"
@@ -54,3 +54,5 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
 
 export ROFI_THEME="gruvbox-dark-soft"
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
