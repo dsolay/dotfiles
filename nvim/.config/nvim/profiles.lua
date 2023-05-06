@@ -15,11 +15,15 @@
 local profiles = {
     ide = {
         '~/.nvim-profiles/ide',
-        {plugins = 'packer', preconfigure = 'packer'},
+        { plugins = 'packer', preconfigure = 'packer' },
     },
     minimal = {
         '~/.nvim-profiles/minimal',
-        {plugins = 'packer', preconfigure = 'packer'},
+        { plugins = 'packer', preconfigure = 'packer' },
+    },
+    testing = {
+        '~/.nvim-profiles/testing',
+        { plugins = 'packer', preconfigure = 'packer' },
     },
 }
 
@@ -28,4 +32,3 @@ local default_profile = 'ide'
 -- return <name_of_config>, <list_of_profiles>
 
 return default_profile, profiles
-
