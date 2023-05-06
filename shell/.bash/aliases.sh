@@ -109,8 +109,7 @@ if _checkexec reflector; then
 fi
 
 # Record Screen
-alias rec='ffmpeg -video_size 1920x1080 -framerate 60 -f x11grab -i :0.0 -f alsa
--ac 2 -i pulse ~/Videos/records/$(date +%a-%d-%S).mkv'
+alias rec='ffmpeg -video_size 1920x1080 -framerate 60 -f x11grab -i :0.0 -f alsa -ac 2 -i pulse ~/Videos/records/$(date +%a-%d-%S).mkv'
 
 if _checkexec python; then
   alias calc='python -qi -c "from math import *"'
