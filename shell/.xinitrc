@@ -59,11 +59,15 @@ xsetroot -cursor_name left_ptr
 # Do NOT put commands below the exec lines
 exec_session(){
     case $SESSION in
-      bspwm) exec bspwm ;;
-      i3|i3wm) exec i3 --shmlog-size 0 ;;
-      mate) exec mate-session ;;
-      *) exec bspwm ;;
+      bspwm) bspwm ;;
+      i3|i3wm) i3 --shmlog-size 0 ;;
+      mate) mate-session ;;
+      *) bspwm ;;
     esac
 }
 
+/usr/bin/prime-offload
+
 exec_session
+
+sudo /usr/bin/prime-switch

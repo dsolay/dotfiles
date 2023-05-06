@@ -415,9 +415,10 @@ mdf()
 
 mip()
 {
-  ip4=$(ip -4 addr show enp34s0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+  LANIFACE=$(ip route get 1.1.1.1  |grep -oP 'dev\s+\K[^ ]+')
+  ip4=$(ip -4 addr show "$LANIFACE" | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
   ip4_public=$(curl --silent ipinfo.io/ip)
-  ip6=$(ip -6 addr show enp34s0 | grep -oP '(?<=inet6\s)[\da-f:]+')
+  ip6=$(ip -6 addr show "$LANIFACE" | grep -oP '(?<=inet6\s)[\da-f:]+')
 
   printf "%s\n" "IPv4: ${ip4:-Not connected}"
   printf "%s\n" "Public IPv4: ${ip4_public:-Not connected}"
