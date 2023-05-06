@@ -750,7 +750,7 @@ glNoGraph() {
 
 php-install()
 {
-  PHP_BUILD_CONFIGURE_OPTS="--enable-intl --with-pdo-pgsql --with-pgsql" \
+  PHP_BUILD_CONFIGURE_OPTS="--enable-intl --with-pdo-pgsql --with-pgsql --with-pear" \
     phpenv install -f "$1"
 }
 
