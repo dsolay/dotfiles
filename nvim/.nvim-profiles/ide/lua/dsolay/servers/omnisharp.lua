@@ -4,6 +4,8 @@ local function setup(lspconfig, on_attach, capabilities)
 
         capabilities = capabilities,
 
+        cmd = { "/home/ernest/.local/share/nvim/mason/bin/omnisharp" },
+
         -- Enables support for reading code style, naming convention and analyzer
         -- settings from .editorconfig.
         enable_editorconfig_support = true,
