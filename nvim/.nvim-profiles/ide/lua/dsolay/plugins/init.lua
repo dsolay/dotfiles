@@ -43,7 +43,7 @@ local function init(use)
         end,
     })
 
-    use("kyazdani42/nvim-web-devicons")
+    use("nvim-tree/nvim-web-devicons")
 
     -- Dashboard
     use({
@@ -55,7 +55,7 @@ local function init(use)
 
     -- File explorer
     use({
-        "kyazdani42/nvim-tree.lua",
+        "nvim-tree/nvim-tree.lua",
         config = function()
             require("dsolay.plugins.nvim-tree.config")
         end,
