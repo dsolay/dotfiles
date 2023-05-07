@@ -165,7 +165,7 @@ local statusline_format = table.concat({
     "%%#StatuslineLSPErrors#✘ %s ", -- lsp diagnostics errors
     "%%#StatuslineLSPWarns# %s ", -- lsp diagnostics warnings
     "%%#StatuslineLSPInfo# %s ", -- lsp diagnostics info
-    "%%#StatuslineLSPHint# %s", -- lsp diagnostics hints
+    "%%#StatuslineLSPHint#󰌵 %s", -- lsp diagnostics hints
     "%%=",
     "%%#StatuslineFileEncoding#%s", -- encoding
     "%%#StatuslineFiletype#%s ", -- filetype
