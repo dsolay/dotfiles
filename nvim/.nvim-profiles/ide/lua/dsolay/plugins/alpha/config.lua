@@ -27,14 +27,14 @@ dashboard.section.header.val = {
 -- Set menu
 dashboard.section.buttons.val = {
     button("n", "  New file", "<cmd>enew<cr>"),
-    button("r", "  Recently opened files", "<cmd>Telescope oldfiles<cr>"),
-    button("f", "  Find file", "<cmd>Telescope find_files hidden=true<cr>"),
-    button("l", "  Find word", "<cmd>Telescope live_grep<CR>"),
+    button("r", "  Recently opened files", "<cmd>Telescope oldfiles<cr>"),
+    button("f", "󰱼  Find file", "<cmd>Telescope find_files hidden=true<cr>"),
+    button("l", "  Find word", "<cmd>Telescope live_grep<CR>"),
     button("p", "  Find project", "<cmd>Telescope project<cr>"),
     button("s", "  Open session"),
     button("t", "  TODO", "<cmd>TodoTelescope<cr>"),
     button("c", "  Settings", "<cmd>e ~/.nvim-profiles/ide/lua/settings.lua<cr>"),
-    button("q", "  Quit", "<cmd>qa<cr>"),
+    button("q", "󰗼  Quit", "<cmd>qa<cr>"),
 }
 
 dashboard.section.footer.val = "Do one thing, do it well - Unix philosophy"
