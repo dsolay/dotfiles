@@ -23,10 +23,10 @@ keymap.set(
 keymap.set("", "<Leader><Esc>", [[<Cmd>let @/=""<CR>]])
 
 -- Move between windows
-keymap.set("n", "<C-H>", "<C-W>h")
-keymap.set("n", "<C-J>", "<C-W>j")
-keymap.set("n", "<C-K>", "<C-W>k")
-keymap.set("n", "<C-L>", "<C-W>l")
+keymap.set("n", "<C-h>", "<C-W>h")
+keymap.set("n", "<C-j>", "<C-W>j")
+keymap.set("n", "<C-k>", "<C-W>k")
+keymap.set("n", "<C-l>", "<C-W>l")
 
 -- Move between tabs
 keymap.set({ "n", "i" }, "<C-S-Right>", "<Cmd>tabnext<CR>")
