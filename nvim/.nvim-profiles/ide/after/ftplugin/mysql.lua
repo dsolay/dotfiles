@@ -5,3 +5,4 @@ if not status then
 end
 
 cmp.setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
+vim.opt.filetype = "sql"
