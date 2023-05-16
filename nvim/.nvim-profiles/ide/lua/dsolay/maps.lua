@@ -5,10 +5,10 @@ keymap.set("n", "<Leader>h", ":help <C-R><C-W><CR>")
 
 -- Save buffer
 keymap.set("n", "<F2>", "<CMD>update<CR>")
-keymap.set("i", "<C-S>", "<CMD>update<CR>")
+keymap.set("i", "<C-s>", "<CMD>update<CR>")
 
 -- Select all
-keymap.set("n", "<Leader><C-E>", "ggVG")
+keymap.set("n", "<Leader><C-e>", "ggVG")
 
 -- Rewrite all
 keymap.set("n", "<Leader>rw", ":%s/<C-R>=expand('<cword>')<CR>/")
