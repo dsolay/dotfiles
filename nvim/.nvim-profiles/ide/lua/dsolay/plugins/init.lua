@@ -96,6 +96,15 @@ local function init(use)
         end,
     })
 
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function()
+            require("dsolay.plugins.markdown-preview.setup")
+        end,
+        ft = { "markdown" },
+    })
+
     -- terminal
     use({
         "numtostr/FTerm.nvim",
