@@ -300,6 +300,12 @@ alias fup="fc-cache -vf"
 # Print PATH in human readable
 alias path='echo $PATH | tr ":" "\n" | nl'
 
+alias conncet='nmcli con up'
+
+alias disconnect='nmcli con down'
+
+alias chivo_vpn='fortivpn connect chivo_wallet --user=roman.gonzalez --password'
+
 # Emoji
 alias lod='echo "ಠ_ಠ"'
 alias idk='echo "¯\_(ツ)_/¯"'

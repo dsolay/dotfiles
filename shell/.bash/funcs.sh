@@ -762,3 +762,10 @@ run-windows() {
 stop-windows() {
   sudo virsh shutdown win10_21H2
 }
+
+connect-room() {
+ssid=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
+
+nmcli con down "$ssid"
+nmcli con up SolayRoom
+}
