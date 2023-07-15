@@ -7,6 +7,7 @@ vim.filetype.add({
     filename = {
         [".env"] = "env",
         ["Dockerfile"] = "dockerfile",
+        [".dockerignore"] = "dockerignore",
     },
     pattern = {
         [".env.*"] = "env",
