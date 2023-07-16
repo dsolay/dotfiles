@@ -1,2 +1,4 @@
-require('cheovim')
-require('cheovim.functions')
+require("dsolay.settings")
+require("dsolay.base")
+require("dsolay.maps")
+require("dsolay.plugins")

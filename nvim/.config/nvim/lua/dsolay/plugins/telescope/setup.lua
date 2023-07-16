@@ -1,0 +1,23 @@
+local keymap = vim.keymap
+keymap.set("n", "<leader>fb", [[<cmd>Telescope buffers<cr>]])
+keymap.set("n", "<leader>fp", [[<cmd>Telescope git_files<cr>]])
+keymap.set("n", "<leader>ff", [[<cmd>Telescope find_files hidden=true<cr>]])
+keymap.set("n", "<leader>fg", [[<cmd>Telescope live_grep<cr>]])
+keymap.set("n", "<leader>fq", [[<cmd>Telescope quickfix<cr>]])
+keymap.set("n", "<leader>fl", [[<cmd>Telescope localist<cr>]])
+keymap.set("n", "<leader>fo", [[<cmd>Telescope vim_options<cr>]])
+keymap.set("n", "<leader>fr", [[<cmd>Telescope registers<cr>]])
+keymap.set("n", "<leader>fc", [[<cmd>Telescope commands<cr>]])
+keymap.set("n", "<leader>fm", [[<cmd>Telescope man_pages<cr>]])
+keymap.set("n", "<leader>fs", [[<cmd>Telescope spell_suggest<cr>]])
+keymap.set("n", "<leader>fk", [[<cmd>Telescope keymaps<cr>]])
+
+-- lsp pickers
+keymap.set("n", "<leader>lr", [[<cmd>Telescope lsp_references<cr>]])
+keymap.set("n", "<leader>lds", [[<cmd>Telescope lsp_document_symbols<cr>]])
+keymap.set("n", "<leader>lws", [[<cmd>Telescope lsp_workspace_symbols<cr>]])
+keymap.set("n", "<leader>ldws", [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]])
+keymap.set("n", "<leader>lca", [[<cmd>Telescope lsp_code_actions<cr>]])
+keymap.set("n", "<leader>lrca", [[<cmd>Telescope lsp_range_code_actions<cr>]])
+keymap.set("n", "<leader>li", [[<cmd>Telescope lsp_implementations<cr>]])
+keymap.set("n", "<leader>ld", [[<cmd>Telescope lsp_definitions<cr>]])
