@@ -1,0 +1,72 @@
+return {
+    {
+        "nvim-treesitter/nvim-treesitter",
+        version = false,
+        build = ":TSUpdate",
+        event = { "BufReadPost", "BufNewFile" },
+        cmd = { "TSUpdateSync" },
+        keys = {
+            { "<c-space>", desc = "Increment selection" },
+            { "<bs>", desc = "Decrement selection", mode = "x" },
+        },
+        opts = {
+            highlight = {
+                enable = true,
+                use_languagetree = true,
+                additional_vim_regex_highlighting = true,
+            },
+            indent = { enable = false },
+            ensure_installed = {
+                "bash",
+                "c",
+                "c_sharp",
+                "css",
+                "dockerfile",
+                "gitattributes",
+                "gitignore",
+                "go",
+                "graphql",
+                "haskell",
+                "html",
+                "hurl",
+                "java",
+                "javascript",
+                "json",
+                "jsonc",
+                "kotlin",
+                "latex",
+                "lua",
+                "php",
+                "python",
+                "regex",
+                "rust",
+                "scss",
+                "sql",
+                "toml",
+                "tsx",
+                "typescript",
+                "vue",
+                "yaml",
+            },
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    init_selection = "gnn",
+                    node_incremental = "grn",
+                    scope_incremental = "grc",
+                    node_decremental = "grm",
+                },
+            },
+            context_commentstring = {
+                enable = true,
+                enable_autocmd = false,
+                config = {
+                    sql = { __default = "-- %s", __multiline = "/* %s */" },
+                },
+            },
+        },
+        config = function(_, opts)
+            require("nvim-treesitter.configs").setup(opts)
+        end,
+    },
+}

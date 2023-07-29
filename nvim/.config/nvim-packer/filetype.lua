@@ -6,7 +6,6 @@ vim.filetype.add({
     },
     filename = {
         [".env"] = "env",
-        [".cts"] = "typescript",
         ["Dockerfile"] = "dockerfile",
         [".dockerignore"] = "dockerignore",
     },
