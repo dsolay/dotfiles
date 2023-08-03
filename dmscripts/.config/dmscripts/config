@@ -29,6 +29,13 @@ DMEDITOR="${DMTERM} nvim"
 logout_locker='slock'
 # logout_locker='dm-tool lock'
 
+# dmscripts will notify you if your configuration is outdated, to shut it up uncomment this.
+# comment it back out if you want dmscripts to nag at you
+# DM_SHUTUP="something" # NOTICE: This is currently experimental and will not work in (most) programs
+
+# set this variable up to a real file if you want dmscripts to provide a log of when and what has changed
+# in your config (this can be an alternative to the notifications)
+DM_CONFIG_DIFF_LOGFILE="/dev/stderr" # NOTICE: experimental
 
 # This case statement lets you change what the DMENU variable is for different scripts, so if you
 # want a unique variable for each script you can
@@ -247,4 +254,4 @@ weather_locations=""
 # for full details see: https://github.com/chubin/wttr.in
 
 # current revision (do not touch unless you know what you're doing)
-_revision=23
+_revision=24
