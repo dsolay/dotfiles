@@ -11,9 +11,10 @@
 # Also, keep the '--prompt' flag at the end of the FMENU variable.
 # These are needed as we use prompts in the scripts.
 DMENU="dmenu -i -l 20 -p"
-FMENU="fzf --border=rounded --margin=5% --color=dark --height 100% --reverse --header=$(basename "$0") --info=hidden --header-first --prompt"
 RMENU="rofi -dmenu -p"
 
+# the bind must stay, why is this not the default? idk
+FMENU="fzf --bind=enter:replace-query+print-query --border=rounded --margin=5% --color=dark --height 100% --reverse --header=$(basename "$0") --info=hidden --header-first --prompt"
 PDF_VIEWER="zathura"
 
 # DMBROWSER="brave"
@@ -83,7 +84,28 @@ maim_file_prefix="maim"
 note_dir="${HOME}/.config/dmscripts/dmnote"
 
 # dm-confedit
-declare -A confedit_list
+# no means it will use only static entries 
+confedit_isdynamic="yes"
+
+# a list of directories to exclude in conf edit
+# as an example: to exclude anything from the folder .config/foo and .config/bar, put "foo|bar"
+# It takes any regexp and is case insensitive
+confedit_exclude_dirs="BraveSoftware"
+
+
+# If this variable is blank or is defined as "find", then it uses find
+# Examples:
+# locate: locate
+# fd: fd .
+# find: find
+# etc
+# Note that there is no need to include any arguments excluding directories, that is handled autmatically
+confedit_find_prog="find"
+
+# We must declare all lists with the -g option
+
+# a list of static config files that may not be in the expected places
+declare -Ag confedit_list
 confedit_list[confedit]="$HOME/.config/dmscripts/config"
 confedit_list[alacritty]="$HOME/.config/alacritty/alacritty.yml"
 confedit_list[awesome]="$HOME/.config/awesome/rc.lua"
@@ -101,7 +123,8 @@ confedit_list[fish]="$HOME/.config/fish/config.fish"
 confedit_list[herbstluftwm]="$HOME/.config/herbstluftwm/autostart"
 confedit_list[i3]="$HOME/.config/i3/config"
 confedit_list[ncmpcpp]="$HOME/.config/ncmpcpp/config"
-confedit_list[neovim]="$HOME/.config/nvim/init.vim"
+confedit_list[neovim init.vim]="$HOME/.config/nvim/init.vim"
+confedit_list[neovim init.lua]="$HOME/.config/nvim/init.lua"
 confedit_list[picom]="$HOME/.config/picom/picom.conf"
 confedit_list[polybar]="$HOME/.config/polybar/config"
 confedit_list[qtile]="$HOME/.config/qtile/config.py"
@@ -117,16 +140,13 @@ confedit_list[sxhkd]="$HOME/.config/sxhkd/sxhkdrc"
 confedit_list[tabbed]="$HOME/tabbed-distrotube/config.def.h"
 confedit_list[vifm]="$HOME/.config/vifm/vifmrc"
 confedit_list[vim]="$HOME/.vimrc"
-confedit_list[xmobar mon1]="$HOME/.config/xmobar/xmobarrc0"
-confedit_list[xmobar mon2]="$HOME/.config/xmobar/xmobarrc1"
-confedit_list[xmobar mon3]="$HOME/.config/xmobar/xmobarrc2"
 confedit_list[xmonad]="$HOME/.xmonad/README.org"
 confedit_list[xinitrc]="$HOME/.xinitrc"
 confedit_list[xresources]="$HOME/.Xresources"
 confedit_list[zsh]="$HOME/.zshrc"
 
 # dm-reddit config
-declare -a reddit_list=(
+declare -ag reddit_list=(
 "r/archlinux"
 "r/bash"
 "r/commandline"
@@ -143,7 +163,7 @@ declare -a reddit_list=(
 )
 
 # Search engine config 
-declare -A websearch
+declare -Ag websearch
 # Syntax:
 # websearch[name]="https://www.example.com/search?q="
 
@@ -188,7 +208,7 @@ websearch[stackoverflow]="https://stackoverflow.com/search?q="
 # Think of these as your "subscribed channels", name the channel in the square brackets then put the channel URL in the quotation marks
 # Syntax: youtube_channels[name]="https://www.youtube.com/link/to/channel"
 
-declare -A youtube_channels
+declare -Ag youtube_channels
 youtube_channels[distrotube]="https://www.youtube.com/c/DistroTube/featured"
 
 # dm-radio config
@@ -197,7 +217,7 @@ youtube_channels[distrotube]="https://www.youtube.com/c/DistroTube/featured"
 # dmradio-volume ranges between -1 and 100 (for mplayer) or 0-100 (for mpv)
 
 DMRADIOVOLUME="100"
-declare -A radio_stations
+declare -Ag radio_stations
 radio_stations[Oldies Radio 50s-60s]="https://zeno.fm/radio/oldies-radio-50s-60s/"
 radio_stations[Oldies Radio 70s]="https://zeno.fm/radio/oldies-radio-70s/"
 radio_stations[Unlimited 80s]="https://zeno.fm/radio/unlimited80s/"
@@ -218,7 +238,7 @@ radio_stations[RadioMetal]="https://zeno.fm/radio/radio-metal/"
 radio_stations[RocknRoll Radio]="https://zeno.fm/radio/rocknroll-radio994c7517qs8uv/"
 
 # dm-colpick config
-declare -A colpick_list
+declare -Ag colpick_list
 colpick_list[black]="#282a36"
 colpick_list[red]="#ff5555"
 colpick_list[green]="#5af78e"
@@ -229,16 +249,6 @@ colpick_list[cyan]="#8be9fd"
 colpick_list[white]="#f1f1f0"
 colpick_list[orange]="#ffb86c"
 colpick_list[purple]="#bd9cf9"
-
-# dm-translate config
-# Uncomment to manually set the languages dm-translate will show
-# Get language codes from here: https://github.com/TheDavidDelta/lingva-translate/blob/main/utils/languages.json
-
-# translate_list="manual"
-# declare -A lang_map
-# lang_map[Swedish]=sv
-# lang_map[English]=en
-# lang_map[Automatic]=auto
 
 # dm-weather config
 
@@ -254,4 +264,4 @@ weather_locations=""
 # for full details see: https://github.com/chubin/wttr.in
 
 # current revision (do not touch unless you know what you're doing)
-_revision=24
+_revision=26
