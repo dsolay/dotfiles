@@ -309,8 +309,9 @@ c.content.blocking.whitelist = ['www.googleadservices.com']
 ## Allow JavaScript to read from or write to the clipboard. With
 ## QtWebEngine, writing the clipboard as response to a user interaction
 ## is always allowed.
-## Type: Bool
-c.content.javascript.can_access_clipboard = True
+## Type: string(none, access, access-paste)
+#c.content.javascript.can_access_clipboard = True
+c.content.javascript.clipboard = 'access'
 
 ## Allow JavaScript to close tabs.
 ## Type: Bool
@@ -1371,7 +1372,7 @@ c.bindings.commands = {
         '<Ctrl-t>': 'spawn --userscript translate -t es',
         '<Ctrl-Shift+T>': 'spawn --userscript translate --text -t es',
         '<Ctrl-c>': 'code',
-        '?': 'set-cmd-text :open -t ?'
+        '?': 'cmd-set-text :open -t ?'
     },
     'insert': {
         '<Ctrl-+>': 'zoom-in',
