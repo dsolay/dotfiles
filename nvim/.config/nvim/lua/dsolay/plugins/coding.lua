@@ -197,7 +197,12 @@ return {
             { "<leader>sum", "<cmd>ChatGPTRun summarize<CR>", "Summarize", mode = { "n", "v" } },
             { "<leader>fix", "<cmd>ChatGPTRun fix_bugs<CR>", "Fix Bugs", mode = { "n", "v" } },
             { "<leader>expl", "<cmd>ChatGPTRun explain_code<CR>", "Explain Code", mode = { "n", "v" } },
-            { "<leader>grea", "<cmd>ChatGPTRun code_readability_analysis<CR>", "Code Readability Analysis", mode = { "n", "v" } },
+            {
+                "<leader>grea",
+                "<cmd>ChatGPTRun code_readability_analysis<CR>",
+                "Code Readability Analysis",
+                mode = { "n", "v" },
+            },
         },
         dependencies = {
             "MunifTanjim/nui.nvim",
@@ -219,5 +224,31 @@ return {
             },
         },
         config = true,
+    },
+
+    {
+        "piersolenski/wtf.nvim",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+        },
+        opts = {},
+        keys = {
+            {
+                "gw",
+                mode = { "n", "x" },
+                function()
+                    require("wtf").ai()
+                end,
+                desc = "Debug diagnostic with AI",
+            },
+            {
+                mode = { "n" },
+                "gW",
+                function()
+                    require("wtf").search("duck_duck_go")
+                end,
+                desc = "Search diagnostic with Google",
+            },
+        },
     },
 }
