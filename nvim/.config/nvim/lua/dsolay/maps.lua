@@ -54,7 +54,7 @@ keymap.set("n", "<C-w><Up>", "<Cmd>resize -5<CR>")
 keymap.set("n", "<C-w><Down>", "<Cmd>resize +5<CR>")
 
 -- Current path
-keymap.set("n", "<Leader>pwd", "<Cmd>echo expand(\'%\')<CR>")
+keymap.set("n", "<Leader>pwd", "<Cmd>echo expand('%')<CR>")
 
 -- Back to last position
 keymap.set("n", "<BS>", "g`'")
