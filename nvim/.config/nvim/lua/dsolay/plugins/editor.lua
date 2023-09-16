@@ -362,33 +362,4 @@ return {
             vim.g.mkdp_echo_preview_url = 1
         end,
     },
-
-    {
-        "potamides/pantran.nvim",
-        cmd = "Pantran",
-        config = true,
-        keys = {
-            {
-                "<leader>tr",
-                function()
-                    local pantran = require("pantran")
-
-                    return pantran.motion_translate
-                end,
-                silent = true,
-                expr = true,
-                mode = { "n", "x" },
-            },
-            {
-                "<leader>trr",
-                function()
-                    local pantran = require("pantran")
-
-                    return pantran.motion_translate() .. "_"
-                end,
-                silent = true,
-                expr = true,
-            },
-        },
-    },
 }
