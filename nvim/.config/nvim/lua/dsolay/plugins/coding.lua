@@ -205,4 +205,19 @@ return {
             "nvim-telescope/telescope.nvim",
         },
     },
+
+    {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        keys = {
+            {
+                "<leader>tco",
+                function()
+                    require("copilot.suggestion").toggle_auto_trigger()
+                end,
+            },
+        },
+        config = true,
+    },
 }
