@@ -362,4 +362,113 @@ return {
             vim.g.mkdp_echo_preview_url = 1
         end,
     },
+
+    {
+        "harrisoncramer/gitlab.nvim",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "stevearc/dressing.nvim", -- Recommended but not required. Better UI for pickers.
+            enabled = true,
+        },
+        keys = {
+            {
+                "n",
+                "<leader>glr",
+                function()
+                    require("gitlab").review()
+                end,
+            },
+            {
+                "n",
+                "<leader>gls",
+                function()
+                    require("gitlab").summary()
+                end,
+            },
+            {
+                "n",
+                "<leader>glA",
+                function()
+                    require("gitlab").approve()
+                end,
+            },
+            {
+                "n",
+                "<leader>glR",
+                function()
+                    require("gitlab").revoke()
+                end,
+            },
+            {
+                "n",
+                "<leader>glc",
+                function()
+                    require("gitlab").create_comment()
+                end,
+            },
+            {
+                "n",
+                "<leader>gln",
+                function()
+                    require("gitlab").create_note()
+                end,
+            },
+            {
+                "n",
+                "<leader>gld",
+                function()
+                    require("gitlab").toggle_discussions()
+                end,
+            },
+            {
+                "n",
+                "<leader>glaa",
+                function()
+                    require("gitlab").add_assignee()
+                end,
+            },
+            {
+                "n",
+                "<leader>glad",
+                function()
+                    require("gitlab").delete_assignee()
+                end,
+            },
+            {
+                "n",
+                "<leader>glra",
+                function()
+                    require("gitlab").add_reviewer()
+                end,
+            },
+            {
+                "n",
+                "<leader>glrd",
+                function()
+                    require("gitlab").delete_reviewer()
+                end,
+            },
+            {
+                "n",
+                "<leader>glp",
+                function()
+                    require("gitlab").pipeline()
+                end,
+            },
+            {
+                "n",
+                "<leader>glo",
+                function()
+                    require("gitlab").open_in_browser()
+                end,
+            },
+        },
+        build = function()
+            require("gitlab.server").build(true)
+        end, -- Builds the Go binary
+        config = function()
+            require("gitlab").setup() -- Uses delta reviewer by default
+        end,
+    },
 }
