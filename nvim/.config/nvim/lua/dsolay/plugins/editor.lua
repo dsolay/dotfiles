@@ -364,6 +364,19 @@ return {
     },
 
     {
+        "sindrets/diffview.nvim",
+        cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+        keys = {
+            { "<leader>dfo", [[<cmd>DiffviewOpen<cr>]] },
+            { "<leader>dfc", [[<cmd>DiffviewClose<cr>]] },
+            { "<leader>dfl", [[<cmd>DiffviewLog<cr>]] },
+            { "<leader>dfl", [[<cmd>DiffviewRefresh<cr>]] },
+            { "<leader>dfh", [[<cmd>DiffviewFileHistory<cr>]], mode = { "n", "v" } },
+        },
+        config = true,
+    },
+
+    {
         "harrisoncramer/gitlab.nvim",
         dependencies = {
             "MunifTanjim/nui.nvim",
@@ -371,93 +384,81 @@ return {
             "stevearc/dressing.nvim", -- Recommended but not required. Better UI for pickers.
             enabled = true,
         },
+        event = "BufWinEnter",
         keys = {
             {
-                "n",
                 "<leader>glr",
                 function()
                     require("gitlab").review()
                 end,
             },
             {
-                "n",
                 "<leader>gls",
                 function()
                     require("gitlab").summary()
                 end,
             },
             {
-                "n",
                 "<leader>glA",
                 function()
                     require("gitlab").approve()
                 end,
             },
             {
-                "n",
                 "<leader>glR",
                 function()
                     require("gitlab").revoke()
                 end,
             },
             {
-                "n",
                 "<leader>glc",
                 function()
                     require("gitlab").create_comment()
                 end,
             },
             {
-                "n",
                 "<leader>gln",
                 function()
                     require("gitlab").create_note()
                 end,
             },
             {
-                "n",
                 "<leader>gld",
                 function()
                     require("gitlab").toggle_discussions()
                 end,
             },
             {
-                "n",
                 "<leader>glaa",
                 function()
                     require("gitlab").add_assignee()
                 end,
             },
             {
-                "n",
                 "<leader>glad",
                 function()
                     require("gitlab").delete_assignee()
                 end,
             },
             {
-                "n",
                 "<leader>glra",
                 function()
                     require("gitlab").add_reviewer()
                 end,
             },
             {
-                "n",
                 "<leader>glrd",
                 function()
                     require("gitlab").delete_reviewer()
                 end,
             },
             {
-                "n",
                 "<leader>glp",
                 function()
                     require("gitlab").pipeline()
                 end,
             },
             {
-                "n",
                 "<leader>glo",
                 function()
                     require("gitlab").open_in_browser()
@@ -467,8 +468,8 @@ return {
         build = function()
             require("gitlab.server").build(true)
         end, -- Builds the Go binary
-        config = function()
-            require("gitlab").setup() -- Uses delta reviewer by default
-        end,
+        opts = {
+            reviewer = "diffview",
+        },
     },
 }
