@@ -56,5 +56,3 @@ export DOCKER_BUILDKIT=1
 export ROFI_THEME="gruvbox-dark-soft"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-
-export OPENAI_API_KEY=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
