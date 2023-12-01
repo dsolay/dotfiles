@@ -5,38 +5,10 @@ return {
             {
                 "mfussenegger/nvim-dap",
                 config = function()
-                    local status, dap = pcall(require, "dap")
-
-                    if not status then
-                        return
-                    end
-
                     vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "RedSign", linehl = "", numhl = "" })
 
-                    local php_debug_path = table.concat({
-                        vim.fn.stdpath("data"),
-                        "mason",
-                        "packages",
-                        "php-debug-adapter",
-                        "extension",
-                        "out",
-                        "phpDebug.js",
-                    }, "/")
-
-                    dap.adapters.php = {
-                        type = "executable",
-                        command = "node",
-                        args = { php_debug_path },
-                    }
-
-                    dap.configurations.php = {
-                        {
-                            type = "php",
-                            request = "launch",
-                            name = "Listen for Xdebug",
-                            port = 9003,
-                        },
-                    }
+                    require("dsolay.adapters.php")()
+                    require("dsolay.adapters.js")()
                 end,
                 keys = {
                     {
@@ -112,10 +84,4 @@ return {
     },
 
     { "mxsdev/nvim-dap-vscode-js" },
-
-    {
-        "microsoft/vscode-js-debug",
-        lazy = true,
-        build = "npm install --legacy-peer-deps && npx gulp dapDebugServer && mv dist out",
-    },
 }
