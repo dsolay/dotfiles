@@ -476,4 +476,10 @@ return {
             reviewer = "diffview",
         },
     },
+
+    {
+        "ray-x/web-tools.nvim",
+        cmd = { "BrowserSync", "BrowserOpen", "BrowserPreview", "HurlRun" },
+        config = true,
+    },
 }

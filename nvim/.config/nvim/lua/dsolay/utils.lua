@@ -30,9 +30,25 @@ local function get_env_values(env)
     return vim.split(os.getenv(env) or "", ";")
 end
 
+local function merge_tables(dest, src)
+    for key, value in pairs(src) do
+        if type(value) == "table" then
+            if type(dest[key] or false) == "table" then
+                merge_tables(dest[key], value)
+            else
+                dest[key] = value
+            end
+        else
+            dest[key] = value
+        end
+    end
+    return dest
+end
+
 return {
     add_hi = add_hi,
     file_exists = file_exists,
     includes = includes,
     get_env_values = get_env_values,
+    merge_tables = merge_tables,
 }
