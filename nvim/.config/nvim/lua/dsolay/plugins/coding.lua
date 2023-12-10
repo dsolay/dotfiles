@@ -1,5 +1,19 @@
 return {
-    { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
+    {
+        "JoosepAlviste/nvim-ts-context-commentstring",
+        lazy = true,
+        opts = {
+            enable_autocmd = false,
+            -- config = {
+            --     sql = { __default = "-- %s", __multiline = "/* %s */" },
+            -- },
+        },
+        config = function(_, opts)
+            vim.g.skip_ts_context_commentstring_module = true
+
+            require("ts_context_commentstring").setup(opts)
+        end,
+    },
 
     {
         "echasnovski/mini.comment",

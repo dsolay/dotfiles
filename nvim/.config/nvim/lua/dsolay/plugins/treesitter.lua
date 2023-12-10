@@ -57,13 +57,6 @@ return {
                     node_decremental = "grm",
                 },
             },
-            context_commentstring = {
-                enable = true,
-                enable_autocmd = false,
-                config = {
-                    sql = { __default = "-- %s", __multiline = "/* %s */" },
-                },
-            },
         },
         config = function(_, opts)
             require("nvim-treesitter.configs").setup(opts)
