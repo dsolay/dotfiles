@@ -244,6 +244,10 @@ if _checkexec flatpak; then
   alias flu="flatpak update"
 fi
 
+if _checkexec ntpdate; then
+  alias sync-clock="sudo ntpdate ntp.ubuntu.com"
+fi
+
 # Git commands
 # ------------
 
