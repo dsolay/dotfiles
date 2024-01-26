@@ -131,7 +131,6 @@ return {
                 ensure_installed = {
                     "lua_ls",
                     "intelephense",
-                    "omnisharp",
                     "tsserver",
                     "volar",
                     "jsonls",
@@ -173,7 +172,6 @@ return {
                 ensure_installed = {
                     "stylua",
                     "hadolint",
-                    "csharpier",
                     "markdownlint",
                     "phpstan",
                     "phpcsfixer",
