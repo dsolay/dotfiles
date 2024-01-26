@@ -1,5 +1,5 @@
 [package]
-symbol = " "
+symbol = "󰏗 "
 
 [docker_context]
 symbol = " "
@@ -7,10 +7,13 @@ only_with_files = true
 disabled = false
 
 [nodejs]
-symbol = " "
+symbol = "󰎙 "
 
 [php]
 symbol = " "
 
 [python]
 symbol = " "
+
+[aws]
+symbol = "󰸏 "
