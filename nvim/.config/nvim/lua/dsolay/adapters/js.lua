@@ -55,6 +55,16 @@ local function setup()
             skipFiles = { "<node_internals>/**" },
         },
         {
+            name = "Debug cli",
+            type = "pwa-node",
+            request = "launch",
+            program = "${file}",
+            cwd = "${workspaceFolder}",
+            runtimeExecutable = "yarn",
+            runtimeArgs = { "debug" },
+            skipFiles = { "<node_internals>/**", "node_modules/**" },
+        },
+        {
             type = "pwa-node",
             request = "launch",
             name = "Debug local strapi",
