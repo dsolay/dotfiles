@@ -17,6 +17,7 @@ return {
             },
             indent = { enable = false },
             ensure_installed = {
+                "astro",
                 "bash",
                 "c",
                 "c_sharp",

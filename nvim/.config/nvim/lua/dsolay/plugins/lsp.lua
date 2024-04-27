@@ -116,19 +116,25 @@ return {
                 vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
                 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                -- vim.keymap.set("n", "<space>f", function()
+                --     vim.lsp.buf.format({
+                --         filter = function(client)
+                --             return client.name == "null-ls"
+                --         end,
+                --         bufnr = bufnr,
+                --     })
+                -- end, opts)
+
                 vim.keymap.set("n", "<space>f", function()
-                    vim.lsp.buf.format({
-                        filter = function(client)
-                            return client.name == "null-ls"
-                        end,
-                        bufnr = bufnr,
-                    })
+                    vim.lsp.buf.format({ bufnr = bufnr })
                 end, opts)
+
                 vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
             end
 
             return {
                 ensure_installed = {
+                    "astro",
                     "lua_ls",
                     "intelephense",
                     "omnisharp",
@@ -208,6 +214,44 @@ return {
             })
 
             null_ls.setup()
+        end,
+    },
+
+    {
+        "schrieveslaach/sonarlint.nvim",
+        enabled = true,
+        url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
+        event = "BufReadPost",
+        config = function()
+            require("sonarlint").setup({
+                server = {
+                    cmd = {
+                        "sonarlint-language-server",
+                        -- Ensure that sonarlint-language-server uses stdio channel
+                        "-stdio",
+                        "-analyzers",
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarhtml.jar"),
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjs.jar"),
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarphp.jar"),
+                    },
+                    settings = {
+                        sonarlint = {
+                            rules = {
+                                ["typescript:S6578"] = { level = "off" },
+                                ["typescript:S6606"] = { level = "off" },
+                            },
+                        },
+                    },
+                },
+                filetypes = {
+                    "php",
+                    "html",
+                    "typescriptreact",
+                    "javascriptreact",
+                    "typescript",
+                    "javascript",
+                },
+            })
         end,
     },
 }
