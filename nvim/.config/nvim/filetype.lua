@@ -5,6 +5,7 @@ vim.filetype.add({
         dockerignore = "dockerignore",
         hurl = "hurl",
         cts = "typescript",
+        mdx = "markdown.mdx",
     },
     filename = {
         [".env"] = "env",
