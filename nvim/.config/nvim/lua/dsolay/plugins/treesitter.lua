@@ -39,6 +39,7 @@ return {
                 "lua",
                 "php",
                 "python",
+                "prisma",
                 "regex",
                 "rust",
                 "scss",
