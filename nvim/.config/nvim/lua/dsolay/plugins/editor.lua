@@ -325,6 +325,7 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         version = false,
+        branch = '0.1.x',
         cmd = "Telescope",
         opts = function()
             local status, telescope = pcall(require, "telescope")
