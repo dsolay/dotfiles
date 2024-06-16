@@ -11,9 +11,12 @@ return {
     {
         "aPeoplesCalendar/apc.nvim",
         dependencies = {
-            { "rcarriga/nvim-notify", opts = {
-                background_colour = "#000000",
-            } },
+            {
+                "rcarriga/nvim-notify",
+                opts = {
+                    background_colour = "#000000",
+                },
+            },
         },
         cmd = "APeoplesCalendar",
         opts = {
@@ -143,7 +146,6 @@ return {
 
     {
         "folke/todo-comments.nvim",
-        cmd = { "TodoTrouble", "TodoTelescope" },
         config = true,
         keys = {
             {
@@ -174,12 +176,36 @@ return {
             use_diagnostic_signs = true,
         },
         keys = {
-            { "<leader>tod", "<cmd>TroubleToggle document_diagnostics<cr>" },
-            { "<leader>tow", "<cmd>TroubleToggle workspace_diagnostics<cr>" },
-            { "<leader>tol", "<cmd>TroubleToggle loclist<cr>" },
-            { "<leader>toq", "<cmd>TroubleToggle quickfix<cr>" },
-            { "<leader>tgr", "<cmd>TroubleToggle lsp_references<cr>" },
-            { "<leader>tgd", "<cmd>TroubleToggle lsp_definitions<cr>" },
+            {
+                "<leader>xx",
+                "<cmd>Trouble diagnostics toggle<cr>",
+                desc = "Diagnostics (Trouble)",
+            },
+            {
+                "<leader>xX",
+                "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+                desc = "Buffer Diagnostics (Trouble)",
+            },
+            {
+                "<leader>cs",
+                "<cmd>Trouble symbols toggle focus=false<cr>",
+                desc = "Symbols (Trouble)",
+            },
+            {
+                "<leader>cl",
+                "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+                desc = "LSP Definitions / references / ... (Trouble)",
+            },
+            {
+                "<leader>xL",
+                "<cmd>Trouble loclist toggle<cr>",
+                desc = "Location List (Trouble)",
+            },
+            {
+                "<leader>xQ",
+                "<cmd>Trouble qflist toggle<cr>",
+                desc = "Quickfix List (Trouble)",
+            },
         },
     },
 
