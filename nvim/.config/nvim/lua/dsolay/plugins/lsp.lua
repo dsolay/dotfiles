@@ -116,15 +116,14 @@ return {
                 vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
                 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                -- vim.keymap.set("n", "<space>f", function()
-                --     vim.lsp.buf.format({
-                --         filter = function(client)
-                --             return client.name == "null-ls"
-                --         end,
-                --         bufnr = bufnr,
-                --     })
-                -- end, opts)
-
+                vim.keymap.set("n", "<space>null", function()
+                    vim.lsp.buf.format({
+                        filter = function(client)
+                            return client.name == "null-ls"
+                        end,
+                        bufnr = bufnr,
+                    })
+                end, opts)
                 vim.keymap.set("n", "<space>f", function()
                     vim.lsp.buf.format({ bufnr = bufnr })
                 end, opts)
@@ -144,6 +143,7 @@ return {
                     "eslint",
                     "stylelint_lsp",
                     "dockerls",
+                    "prismals",
                 },
                 automatic_setup = true,
                 handlers = {
@@ -165,7 +165,7 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "williamboman/mason.nvim",
-            { "jose-elias-alvarez/null-ls.nvim" },
+            { "nvimtools/none-ls.nvim" },
         },
         config = function()
             local nulll_ls_status, null_ls = pcall(require, "null-ls")
@@ -183,7 +183,6 @@ return {
                     "markdownlint",
                     "phpstan",
                     "phpcsfixer",
-                    "shellcheck",
                     "fixjson",
                     "prettier",
                 },
