@@ -329,7 +329,7 @@ return {
         cmd = "Telescope",
         opts = function()
             local status, telescope = pcall(require, "telescope")
-            local troubleStatus, trouble = pcall(require, "trouble.providers.telescope")
+            local troubleStatus, trouble = pcall(require, "trouble.sources.telescope")
 
             if not status or not troubleStatus then
                 return
@@ -341,8 +341,8 @@ return {
                 defaults = {
                     layout_strategy = "flex",
                     mappings = {
-                        i = { ["<c-j>"] = trouble.open_with_trouble },
-                        n = { ["<c-j>"] = trouble.open_with_trouble },
+                        i = { ["<c-j>"] = trouble.open },
+                        n = { ["<c-j>"] = trouble.open },
                     },
                 },
                 extensions = {
