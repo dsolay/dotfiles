@@ -102,6 +102,36 @@ local function setup()
             console = "externalTerminal",
             skipFiles = { "<node_internals>/**", "node_modules/**" },
         },
+        {
+            type = "pwa-node",
+            request = "attach",
+            name = "Attach to Process",
+            processId = require("dap.utils").pick_process,
+            cwd = vim.fn.getcwd(),
+            sourceMaps = true,
+            protocol = "inspector",
+            skipFiles = { "<node_internals>/**", "node_modules/**" },
+        },
+        {
+            type = "pwa-node",
+            request = "launch",
+            name = "Launch Current File (pwa-node with ts-node)",
+            cwd = vim.fn.getcwd(),
+            runtimeExecutable = "npm",
+            runtimeArgs = { "run", "dev" },
+            args = { "${file}" },
+            sourceMaps = true,
+            protocol = "inspector",
+            skipFiles = { "<node_internals>/**", "node_modules/**" },
+            resolveSourceMapLocations = {
+                "${workspaceFolder}/**",
+                "!**/node_modules/**",
+            },
+            env = {
+                NODE_OPTIONS = "--inspect",
+                NODE_ENV = "development",
+            },
+        },
     }
 end
 

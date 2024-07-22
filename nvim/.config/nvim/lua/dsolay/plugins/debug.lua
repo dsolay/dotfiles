@@ -67,6 +67,7 @@ return {
                     },
                 },
             },
+            "nvim-neotest/nvim-nio",
         },
         config = true,
         keys = {
