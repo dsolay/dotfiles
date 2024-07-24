@@ -144,6 +144,7 @@ return {
                     "stylelint_lsp",
                     "dockerls",
                     "prismals",
+                    "pyright",
                 },
                 automatic_setup = true,
                 handlers = {
@@ -185,6 +186,7 @@ return {
                     "phpcsfixer",
                     "fixjson",
                     "prettier",
+                    "black",
                 },
                 automatic_setup = true,
                 handlers = {
@@ -232,6 +234,9 @@ return {
                         vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarhtml.jar"),
                         vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjs.jar"),
                         vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarphp.jar"),
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarpython.jar"),
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarcfamily.jar"),
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjava.jar"),
                     },
                     settings = {
                         sonarlint = {
@@ -249,6 +254,7 @@ return {
                     "javascriptreact",
                     "typescript",
                     "javascript",
+                    "python",
                 },
             })
         end,
