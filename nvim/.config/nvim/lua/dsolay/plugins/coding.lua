@@ -202,22 +202,72 @@ return {
 
     {
         "jackMort/ChatGPT.nvim",
+        event = "VimEnter",
         cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions", "ChatGPTRun" },
-        config = true,
         keys = {
-            { "<leader>gpt", "<cmd>ChatGPT<CR>", "ChatGPT" },
-            { "<leader>gpti", "<cmd>ChatGPTEditWithInstruction<CR>", "Edit with instruction", mode = { "n", "v" } },
-            { "<leader>gram", "<cmd>ChatGPTRun grammar_correction<CR>", "Grammar Correction", mode = { "n", "v" } },
-            { "<leader>tran", "<cmd>ChatGPTRun translate<CR>", "Translate", mode = { "n", "v" } },
-            { "<leader>gkey", "<cmd>ChatGPTRun keywords<CR>", "Keywords", mode = { "n", "v" } },
-            { "<leader>gdoc", "<cmd>ChatGPTRun docstring<CR>", "Docstring", mode = { "n", "v" } },
-            { "<leader>test", "<cmd>ChatGPTRun add_tests<CR>", "Add Tests", mode = { "n", "v" } },
-            { "<leader>opt", "<cmd>ChatGPTRun optimize_code<CR>", "Optimize Code", mode = { "n", "v" } },
-            { "<leader>sum", "<cmd>ChatGPTRun summarize<CR>", "Summarize", mode = { "n", "v" } },
-            { "<leader>fix", "<cmd>ChatGPTRun fix_bugs<CR>", "Fix Bugs", mode = { "n", "v" } },
-            { "<leader>expl", "<cmd>ChatGPTRun explain_code<CR>", "Explain Code", mode = { "n", "v" } },
+            { "<leader>cg", "<cmd>ChatGPT<CR>", "ChatGPT" },
             {
-                "<leader>grea",
+                "<leader>cei",
+                "<cmd>ChatGPTEditWithInstruction<CR>",
+                "Edit with instruction",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>cgc",
+                "<cmd>ChatGPTRun grammar_correction<CR>",
+                "Grammar Correction",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ct",
+                "<cmd>ChatGPTRun translate<CR>",
+                "Translate",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ck",
+                "<cmd>ChatGPTRun keywords<CR>",
+                "Keywords",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>cd",
+                "<cmd>ChatGPTRun docstring<CR>",
+                "Docstring",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ctt",
+                "<cmd>ChatGPTRun add_tests<CR>",
+                "Add Tests",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>co",
+                "<cmd>ChatGPTRun optimize_code<CR>",
+                "Optimize Code",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>csm",
+                "<cmd>ChatGPTRun summarize<CR>",
+                "Summarize",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>cf",
+                "<cmd>ChatGPTRun fix_bugs<CR>",
+                "Fix Bugs",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ce",
+                "<cmd>ChatGPTRun explain_code<CR>",
+                "Explain Code",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>cra",
                 "<cmd>ChatGPTRun code_readability_analysis<CR>",
                 "Code Readability Analysis",
                 mode = { "n", "v" },
@@ -226,14 +276,52 @@ return {
         dependencies = {
             "MunifTanjim/nui.nvim",
             "nvim-lua/plenary.nvim",
+            "folke/trouble.nvim",
             "nvim-telescope/telescope.nvim",
         },
+        config = function()
+            local function get_api_key()
+                local handle = io.popen("pass show openai.com/roman | head -n 1 | tr -d '\n'")
+                local api_key = handle:read("*a")
+                handle:close()
+                return api_key:gsub("%s+", "") -- trim any extra whitespace
+            end
+
+            local api_key = get_api_key()
+
+            require("chatgpt").setup({
+                api_key_cmd = "echo " .. api_key,
+                openai_params = {
+                    model = "gpt-4o",
+                },
+            })
+        end,
+    },
+
+    {
+        "github/copilot.vim",
+        cmd = "Copilot",
+        event = "InsertEnter",
+        keys = {
+            {
+                "<C-x>",
+                'copilot#Accept("\\<CR>")',
+                mode = "i",
+                expr = true,
+                replace_keycodes = false,
+            },
+        },
+        config = function()
+            vim.g.copilot_no_tab_map = true
+            vim.g.copilot_workspace_folders = { "~/workspace" }
+        end,
     },
 
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
         event = "InsertEnter",
+        enabled = false,
         keys = {
             {
                 "<leader>tco",
@@ -250,6 +338,7 @@ return {
         dependencies = {
             "MunifTanjim/nui.nvim",
         },
+        enabled = false,
         opts = {},
         keys = {
             {
