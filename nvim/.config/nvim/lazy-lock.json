@@ -20,6 +20,7 @@
   "gitlab.nvim": { "branch": "main", "commit": "1eb1046e520a0cd25afed02788fc82d24ce84beb" },
   "gitsigns.nvim": { "branch": "main", "commit": "58bd9e98d8e3c5a1c98af312e85247ee1afd3ed2" },
   "gruvbox-baby": { "branch": "main", "commit": "bd52e62d8134647090108189e69c8b3cd18bdbbf" },
+  "gruvbox.nvim": { "branch": "main", "commit": "7a1b23e4edf73a39642e77508ee6b9cbb8c60f9e" },
   "indent-blankline.nvim": { "branch": "master", "commit": "3fe94b8034dd5241cb882bb73847303b58857ecf" },
   "lazy.nvim": { "branch": "main", "commit": "077102c5bfc578693f12377846d427f49bc50076" },
   "lazygit.nvim": { "branch": "main", "commit": "dc56df433bfbf107fee0139e187eb9750878fa84" },

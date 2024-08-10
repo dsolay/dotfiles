@@ -63,3 +63,8 @@ keymap.set("n", "<BS>", "g`'")
 keymap.set("n", "<Leader>tw", function()
     vim.opt.wrap = not vim.opt.wrap:get()
 end)
+
+vim.keymap.set('n', '<leader>bg', function()
+  vim.o.background = (vim.o.background == "dark") and "light" or "dark"
+end, { noremap = true, silent = true })
+
