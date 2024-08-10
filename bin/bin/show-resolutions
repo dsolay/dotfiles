@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Verificar si se ha proporcionado un directorio como argumento
+if [ -z "$1" ]; then
+  echo "Uso: $0 /ruta/a/tu/directorio"
+  exit 1
+fi
+
+# Directorio que contiene las imágenes
+DIRECTORIO="$1"
+# Verificar si el directorio existe
+if [ ! -d "$DIRECTORIO" ]; then
+  echo "El directorio $DIRECTORIO no existe."
+  exit 1
+fi
+# Iterar sobre cada archivo en el directorio
+for archivo in "$DIRECTORIO"/*; do
+  # Verificar si el archivo es una imagen
+  if identify "$archivo" &> /dev/null; then
+    # Obtener la resolución de la imagen
+    resolucion=$(identify -format "%wx%h" "$archivo")
+    echo "Archivo: $archivo - Resolución: $resolucion"
+  else
+    echo "Archivo: $archivo no es una imagen válida"
+  fi
+done
