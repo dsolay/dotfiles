@@ -326,7 +326,7 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         version = false,
-        branch = '0.1.x',
+        branch = "0.1.x",
         cmd = "Telescope",
         opts = function()
             local status, telescope = pcall(require, "telescope")
@@ -509,5 +509,51 @@ return {
         "ray-x/web-tools.nvim",
         cmd = { "BrowserSync", "BrowserOpen", "BrowserPreview", "HurlRun" },
         config = true,
+    },
+
+    {
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            options = {
+                disabled_filetypes = {
+                    statusline = {
+                        "NvimTree",
+                        "lazy",
+                        "mason",
+                        "help",
+                        "checkhealth",
+                        "lspinfo",
+                        "noice",
+                        "Trouble",
+                        "fish",
+                        "zsh",
+                        "text",
+                        "alpha",
+                    },
+                    winbar = {},
+                },
+            },
+        },
+    },
+
+    {
+        "m4xshen/smartcolumn.nvim",
+        opts = {
+            disabled_filetypes = {
+                "NvimTree",
+                "lazy",
+                "mason",
+                "help",
+                "checkhealth",
+                "lspinfo",
+                "noice",
+                "Trouble",
+                "fish",
+                "zsh",
+                "text",
+                "alpha",
+            },
+        },
     },
 }
