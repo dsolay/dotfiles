@@ -292,7 +292,7 @@ return {
             require("chatgpt").setup({
                 api_key_cmd = "echo " .. api_key,
                 openai_params = {
-                    model = "gpt-4o",
+                    model = "gpt-4o-mini",
                     frequency_penalty = 0,
                     presence_penalty = 0,
                     max_tokens = 4096,
