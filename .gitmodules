@@ -30,3 +30,7 @@
   path = tmux/.tmux/plugins/tmux-yank
   url = https://git::@github.com/tmux-plugins/tmux-yank
   ignore = dirty
+[submodule "alacritty/.config/alacritty/themes"]
+  path = alacritty/.config/alacritty/themes
+  url = https://github.com/alacritty/alacritty-theme
+  ignore = dirty
