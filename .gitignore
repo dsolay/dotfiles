@@ -45,3 +45,5 @@ packer_compiled.lua
 *-bak
 *.bak
 nvim/.nvim-profiles/ide/.luarc.json
+
+tmux/.tmux/plugins/
