@@ -132,6 +132,21 @@ local function setup()
                 NODE_ENV = "development",
             },
         },
+        {
+            type = "pwa-node",
+            request = "launch",
+            name = "Debug cli app",
+            runtimeExecutable = "npm",
+            runtimeArgs = { "run", "debug" },
+            cwd = vim.fn.getcwd(),
+            skipFiles = { "<node_internals>/**", "node_modules/**" },
+            console = 'integratedTerminal',
+            env = {
+                NODE_OPTIONS = "--inspect",
+                DATABASE_SSL = "false",
+                NODE_ENV = "development",
+        },
+            },
     }
 end
 

@@ -137,7 +137,7 @@ return {
                     "lua_ls",
                     "intelephense",
                     "omnisharp",
-                    "tsserver",
+                    "ts_ls",
                     "volar",
                     "jsonls",
                     "eslint",
