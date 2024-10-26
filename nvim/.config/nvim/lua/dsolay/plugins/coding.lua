@@ -204,6 +204,7 @@ return {
         "jackMort/ChatGPT.nvim",
         event = "VimEnter",
         cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions", "ChatGPTRun" },
+        enabled = false,
         keys = {
             { "<leader>cg", "<cmd>ChatGPT<CR>", "ChatGPT" },
             {
@@ -308,6 +309,7 @@ return {
         "github/copilot.vim",
         cmd = "Copilot",
         event = "InsertEnter",
+        enabled = false,
         keys = {
             {
                 "<C-x>",
