@@ -14,5 +14,5 @@ x = 5
 
 [general]
 import = [
-    "~/.config/alacritty/themes/themes/gruvbox_light.toml"
+    "~/.config/alacritty/themes/theme.toml"
 ]
