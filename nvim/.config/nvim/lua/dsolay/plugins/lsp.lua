@@ -4,6 +4,11 @@ if not utils_status then
     return
 end
 
+local allowed_lsp_servers = {
+    { name = "null-ls", priority = 2, filetypes = {} },
+    { name = "jsonls", priority = 1, filetypes = { "json" } },
+}
+
 return {
     {
         "neovim/nvim-lspconfig",
@@ -116,16 +121,31 @@ return {
                 vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
                 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                vim.keymap.set("n", "<space>null", function()
+                vim.keymap.set("n", "<space>f", function()
                     vim.lsp.buf.format({
                         filter = function(client)
-                            return client.name == "null-ls"
+                            local filetype = vim.bo.filetype
+
+                            local best_server = nil
+                            local highest_priority = math.huge
+
+                            for _, server in ipairs(allowed_lsp_servers) do
+                                if vim.tbl_contains(server.filetypes, filetype) or #server.filetypes == 0 then
+                                    if server.priority < highest_priority then
+                                        highest_priority = server.priority
+                                        best_server = server
+                                    end
+                                end
+                            end
+
+                            if best_server then
+                                return client.name == best_server.name
+                            end
+
+                            return false
                         end,
                         bufnr = bufnr,
                     })
-                end, opts)
-                vim.keymap.set("n", "<space>f", function()
-                    vim.lsp.buf.format({ bufnr = bufnr })
                 end, opts)
 
                 vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
