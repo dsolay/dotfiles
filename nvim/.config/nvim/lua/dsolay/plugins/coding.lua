@@ -46,6 +46,7 @@ return {
                 nvim_lua = "[Lua]",
                 path = "[Path]",
                 luasnip = "[Snip]",
+                Supermaven = "[Supermaven]",
             }
 
             cmp.setup({
@@ -67,50 +68,18 @@ return {
                         require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
                     end,
                 },
-                mapping = {
-                    ["<C-n>"] = cmp.mapping(
-                        cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-                        { "i", "c" }
-                    ),
-                    ["<C-p>"] = cmp.mapping(
-                        cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-                        { "i", "c" }
-                    ),
-                    ["<Down>"] = cmp.mapping(
-                        cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                        { "i", "c" }
-                    ),
-                    ["<Up>"] = cmp.mapping(
-                        cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                        { "i", "c" }
-                    ),
-                    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-                    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-                    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-                    ["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-                    ["<CR>"] = cmp.mapping({
-                        i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-                        c = cmp.mapping.confirm({ select = false }),
-                    }),
-                    ["<Tab>"] = function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback()
-                        end
-                    end,
-                    ["<S-Tab>"] = function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        else
-                            fallback()
-                        end
-                    end,
-                },
-                sources = cmp.config.sources(
-                    { { name = "nvim_lsp" }, { name = "luasnip" } },
-                    { { name = "buffer" }, { name = "path" } }
-                ),
+                mapping = cmp.mapping.preset.insert({
+                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                    ["<C-e>"] = cmp.mapping.abort(),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                }),
+                sources = cmp.config.sources({
+                    { name = "nvim_lsp", priority = 1 },
+                    { name = "luasnip", priority = 3 },
+                    { name = "path", priority = 5 },
+                }, { { name = "buffer" } }),
             })
 
             -- Use buffer source for `/`.
@@ -133,6 +102,7 @@ return {
     {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
+        version = "v2.*",
         opts = {
             history = true,
             delete_check_events = "TextChanged",
@@ -147,31 +117,6 @@ return {
 
                 require("luasnip.loaders.from_vscode").lazy_load()
             end,
-        },
-        keys = {
-            {
-                "<tab>",
-                function()
-                    return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-                end,
-                expr = true,
-                silent = true,
-                mode = "i",
-            },
-            {
-                "<tab>",
-                function()
-                    require("luasnip").jump(1)
-                end,
-                mode = "s",
-            },
-            {
-                "<s-tab>",
-                function()
-                    require("luasnip").jump(-1)
-                end,
-                mode = { "i", "s" },
-            },
         },
     },
 
@@ -366,5 +311,16 @@ return {
                 desc = "Search diagnostic with Google",
             },
         },
+    },
+
+    {
+        "supermaven-inc/supermaven-nvim",
+        config = function()
+            require("supermaven-nvim").setup({})
+        end,
+        -- opts = {
+        --     disable_inline_completion = true, -- disables inline completion for use with cmp
+        --     disable_keymaps = true, -- disables built in keymaps for more manual control
+        -- },
     },
 }
