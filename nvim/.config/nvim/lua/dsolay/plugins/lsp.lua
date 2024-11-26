@@ -6,6 +6,9 @@ end
 
 local allowed_lsp_servers = {
     { name = "null-ls", priority = 2, filetypes = {} },
+    { name = "eslint", priority = 1, filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" } },
+    { name = "dockerls", priority = 1, filetypes = { "dockerfile" } },
+    { name = "prismals", priority = 1, filetypes = { "prisma" } },
     { name = "jsonls", priority = 1, filetypes = { "json" } },
 }
 
