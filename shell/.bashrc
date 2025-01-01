@@ -83,3 +83,5 @@ _checkexec lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Use prompt startship
 _checkexec starship && eval "$(starship init bash)"
+
+eval "$(mise activate bash)"
