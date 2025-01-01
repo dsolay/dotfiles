@@ -352,6 +352,7 @@ arc() {
       *.zip) unzip "$1" ;;
       *.bz2) bunzip2 "$1" ;;
       *.7zip) 7za e "$1" ;;
+      *.7z) 7z x "$1" ;;
       *.rar) unrar x "$1" ;;
       *) printf "'%s' cannot be extracted" "$1" ;;
       esac
