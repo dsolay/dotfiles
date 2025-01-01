@@ -6,6 +6,7 @@ vim.filetype.add({
         hurl = "hurl",
         cts = "typescript",
         mdx = "markdown.mdx",
+        tf = "terraform",
     },
     filename = {
         [".env"] = "env",

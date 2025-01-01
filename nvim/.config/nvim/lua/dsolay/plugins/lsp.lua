@@ -9,7 +9,8 @@ local allowed_lsp_servers = {
     { name = "eslint", priority = 1, filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" } },
     { name = "dockerls", priority = 1, filetypes = { "dockerfile" } },
     { name = "prismals", priority = 1, filetypes = { "prisma" } },
-    { name = "jsonls", priority = 1, filetypes = { "json" } },
+    { name = "jsonls", priority = 1, filetypes = { "json", "jsonc" } },
+    { name = "terraformls", priority = 1, filetypes = { "tf", "terraform", "hcl" } },
 }
 
 return {
@@ -168,6 +169,7 @@ return {
                     "dockerls",
                     "prismals",
                     "pyright",
+                    "terraformls",
                 },
                 automatic_setup = true,
                 handlers = {
