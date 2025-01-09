@@ -788,3 +788,74 @@ toggle_alacritty_theme() {
   # Cerrar la instancia de Alacritty
   pkill -USR1 alacritty
 }
+
+iamlive-exec() {
+  # https://github.com/iann0036/iamlive
+  action=$1
+  shift
+  extra_args="$@" # Remaining arguments
+
+  export IAMLIVE_HOME="${HOME}/.iamlive" ;
+  export IAMLIVE_PROXY_PORT="10080" ;
+  export IAMLIVE_OUTPUT_POLICY_FILE="iamlive_policy.json";
+  export IAMLIVE_CA_KEY="${HOME}/.iamlive/ca.key" ;
+  export IAMLIVE_CA_PEM="${HOME}/.iamlive/ca.pem" ;
+
+  if [ -z "${action}" ]; then
+    echo -e "[INFO] - Parameter action is missing: [create, terraform, listen, unset]" 
+  else
+    if [ "${action}" = 'create' ]; then
+      echo -e "[INFO] - Creating IAMLIVE files"
+      mkdir -p "$IAMLIVE_HOME" ;
+      echo -e "[INFO] - IAMLIVE_HOME: $IAMLIVE_HOME"
+
+      echo -e "[INFO] - Creating CA .key file. IAMLIVE_CA_KEY: $IAMLIVE_CA_KEY"
+      openssl genrsa -out "$IAMLIVE_CA_KEY" 2048 ;
+
+      echo -e "[INFO] - Creating CA .pem self-signed file. IAMLIVE_CA_PEM: $IAMLIVE_CA_PEM"
+      openssl req -new \
+      -x509 \
+      -days "3650" \
+      -key "$IAMLIVE_CA_KEY" \
+      -out "$IAMLIVE_CA_PEM" \
+      -subj "/C=IL/O=rootCaOrg" ;
+    fi
+
+    if [ "${action}" = 'terraform' ]; then
+      echo -e "[INFO] - Exporting env vars" ;
+
+      echo -e "[INFO] - export NO_PROXY=registry.terraform.io,www.gstatic.com"
+      export NO_PROXY="registry.terraform.io,www.gstatic.com"
+ 
+      echo -e "[INFO] - export HTTP_PROXY=http://127.0.0.1:$IAMLIVE_PROXY_PORT"
+      export HTTP_PROXY="http://127.0.0.1:$IAMLIVE_PROXY_PORT" ;
+
+      echo -e "[INFO] - export HTTPS_PROXY=http://127.0.0.1:$IAMLIVE_PROXY_PORT"
+      export HTTPS_PROXY="http://127.0.0.1:$IAMLIVE_PROXY_PORT" ;
+
+      echo -e "[INFO] - export IAMLIVE_CA_KEY="$IAMLIVE_HOME/ca.key""
+      export IAMLIVE_CA_KEY="$IAMLIVE_HOME/ca.key" ;
+
+      echo -e "[INFO] - export IAMLIVE_CA_PEM=$IAMLIVE_HOME/ca.pem"
+      export IAMLIVE_CA_PEM="$IAMLIVE_HOME/ca.pem" ;
+
+      echo -e "[INFO] - export AWS_CA_BUNDLE=$IAMLIVE_HOME/ca.pem"
+      export AWS_CA_BUNDLE="$IAMLIVE_HOME/ca.pem" ;
+    fi
+
+    if [ "${action}" = 'listen' ]; then
+      # --force-wildcard-resource
+      command="iamlive --set-ini --mode proxy --output-file $IAMLIVE_OUTPUT_POLICY_FILE --refresh-rate 1 --sort-alphabetical --bind-addr 127.0.0.1:$IAMLIVE_PROXY_PORT --ca-bundle $IAMLIVE_CA_PEM --ca-key $IAMLIVE_CA_KEY $extra_args" ;
+      echo -e "[INFO] - Starting iamlive in PROXY mode\n$command" ;
+      eval $command
+    fi
+
+    if [ "${action}" = 'unset' ]; then
+      for envvar in NO_PROXY HTTP_PROXY HTTPS_PROXY IAMLIVE_PROXY_PORT IAMLIVE_HOME IAMLIVE_CA_KEY IAMLIVE_CA_PEM IAMLIVE_OUTPUT_POLICY_FILE AWS_CA_BUNDLE
+      do
+        echo -e "[INFO] - Un-setting $envvar env var" ;
+        unset $envvar ;
+      done
+    fi
+  fi
+}
