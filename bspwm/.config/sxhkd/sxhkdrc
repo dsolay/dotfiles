@@ -223,7 +223,7 @@ super + shift + d
 
 # Control the laptop's screen brightness (requires `xbacklight`).
 XF86MonBrightness{Down,Up}
-  xbacklight {-dec 15,-inc 15}
+  brightnessctl s {10%-,+10%}
 
 # Screen locker (requires `slock`, which in Debian is provided by the
 # package `suckless-tools`).
