@@ -125,6 +125,12 @@ return {
                 vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
                 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                vim.keymap.set("n", "<space>z", function()
+                    vim.lsp.buf.format({
+                        bufnr = bufnr,
+                        filter = function(client) return client.name == "null-ls" end
+                    })
+                end)
                 vim.keymap.set("n", "<space>f", function()
                     vim.lsp.buf.format({
                         filter = function(client)
