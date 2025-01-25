@@ -53,10 +53,18 @@ return {
                 formatting = {
                     format = lspkind.cmp_format({
                         mode = "symbol",
-                        maxwidth = 50,
+                        maxwidth = {
+                            -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                            -- can also be a function to dynamically calculate max width such as
+                            -- menu = function() return math.floor(0.45 * vim.o.columns) end,
+                            menu = 50, -- leading text (labelDetails)
+                            abbr = 50, -- actual suggestion item
+                        },
+                        ellipsis_char = "...",
+                        show_labelDetails = true,
 
                         before = function(entry, vim_item)
-                            vim_item.kind = lspkind.presets.default[vim_item.kind]
+                            -- vim_item.kind = lspkind.presets.default[vim_item.kind]
                             local menu = source_mapping[entry.source.name]
                             vim_item.menu = menu
                             return vim_item
@@ -348,7 +356,7 @@ return {
             vendors = {
                 deepseek = {
                     __inherited_from = "openai",
-                    api_key_name = {"pass", "show", "deepseek.com/api-keys/roman-pc"},
+                    api_key_name = { "pass", "show", "deepseek.com/api-keys/roman-pc" },
                     endpoint = "https://api.deepseek.com",
                     model = "deepseek-chat",
                 },
