@@ -8,22 +8,6 @@ return {
         end,
     },
 
-    {
-        "aPeoplesCalendar/apc.nvim",
-        dependencies = {
-            {
-                "rcarriga/nvim-notify",
-                opts = {
-                    background_colour = "#000000",
-                },
-            },
-        },
-        cmd = "APeoplesCalendar",
-        opts = {
-            auto_teaser_filetypes = {},
-        },
-    },
-
     { "nvim-tree/nvim-web-devicons" },
 
     {
@@ -309,18 +293,6 @@ return {
                 map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
             end,
         },
-    },
-
-    {
-        "kkoomen/vim-doge",
-        config = function()
-            vim.g.doge_enable_mappings = 0
-        end,
-        cmd = { "DogeGenerate" },
-        keys = {
-            { "<leader>doc", "<cmd>DogeGenerate<cr>" },
-        },
-        build = ":call doge#install()",
     },
 
     {
