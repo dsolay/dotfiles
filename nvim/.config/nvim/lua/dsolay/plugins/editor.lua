@@ -10,10 +10,14 @@ return {
 
     {
         "aPeoplesCalendar/apc.nvim",
+        enabled = false,
         dependencies = {
-            { "rcarriga/nvim-notify", opts = {
-                background_colour = "#000000",
-            } },
+            {
+                "rcarriga/nvim-notify",
+                opts = {
+                    background_colour = "#000000",
+                },
+            },
         },
         cmd = "APeoplesCalendar",
         opts = {
@@ -143,7 +147,7 @@ return {
 
     {
         "folke/todo-comments.nvim",
-        cmd = { "TodoTrouble", "TodoTelescope" },
+        lazy = false,
         config = true,
         keys = {
             {
@@ -174,12 +178,36 @@ return {
             use_diagnostic_signs = true,
         },
         keys = {
-            { "<leader>tod", "<cmd>TroubleToggle document_diagnostics<cr>" },
-            { "<leader>tow", "<cmd>TroubleToggle workspace_diagnostics<cr>" },
-            { "<leader>tol", "<cmd>TroubleToggle loclist<cr>" },
-            { "<leader>toq", "<cmd>TroubleToggle quickfix<cr>" },
-            { "<leader>tgr", "<cmd>TroubleToggle lsp_references<cr>" },
-            { "<leader>tgd", "<cmd>TroubleToggle lsp_definitions<cr>" },
+            {
+                "<leader>xx",
+                "<cmd>Trouble diagnostics toggle<cr>",
+                desc = "Diagnostics (Trouble)",
+            },
+            {
+                "<leader>xX",
+                "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+                desc = "Buffer Diagnostics (Trouble)",
+            },
+            {
+                "<leader>cs",
+                "<cmd>Trouble symbols toggle focus=false<cr>",
+                desc = "Symbols (Trouble)",
+            },
+            {
+                "<leader>cl",
+                "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+                desc = "LSP Definitions / references / ... (Trouble)",
+            },
+            {
+                "<leader>xL",
+                "<cmd>Trouble loclist toggle<cr>",
+                desc = "Location List (Trouble)",
+            },
+            {
+                "<leader>xQ",
+                "<cmd>Trouble qflist toggle<cr>",
+                desc = "Quickfix List (Trouble)",
+            },
         },
     },
 
@@ -299,10 +327,11 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         version = false,
+        branch = "0.1.x",
         cmd = "Telescope",
         opts = function()
             local status, telescope = pcall(require, "telescope")
-            local troubleStatus, trouble = pcall(require, "trouble.providers.telescope")
+            local troubleStatus, trouble = pcall(require, "trouble.sources.telescope")
 
             if not status or not troubleStatus then
                 return
@@ -314,8 +343,8 @@ return {
                 defaults = {
                     layout_strategy = "flex",
                     mappings = {
-                        i = { ["<c-j>"] = trouble.open_with_trouble },
-                        n = { ["<c-j>"] = trouble.open_with_trouble },
+                        i = { ["<c-j>"] = trouble.open },
+                        n = { ["<c-j>"] = trouble.open },
                     },
                 },
                 extensions = {
@@ -355,6 +384,7 @@ return {
 
     {
         "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         build = "cd app && npm install",
         ft = { "markdown" },
         keys = {
@@ -481,5 +511,51 @@ return {
         "ray-x/web-tools.nvim",
         cmd = { "BrowserSync", "BrowserOpen", "BrowserPreview", "HurlRun" },
         config = true,
+    },
+
+    {
+        "nvim-lualine/lualine.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            options = {
+                disabled_filetypes = {
+                    statusline = {
+                        "NvimTree",
+                        "lazy",
+                        "mason",
+                        "help",
+                        "checkhealth",
+                        "lspinfo",
+                        "noice",
+                        "Trouble",
+                        "fish",
+                        "zsh",
+                        "text",
+                        "alpha",
+                    },
+                    winbar = {},
+                },
+            },
+        },
+    },
+
+    {
+        "m4xshen/smartcolumn.nvim",
+        opts = {
+            disabled_filetypes = {
+                "NvimTree",
+                "lazy",
+                "mason",
+                "help",
+                "checkhealth",
+                "lspinfo",
+                "noice",
+                "Trouble",
+                "fish",
+                "zsh",
+                "text",
+                "alpha",
+            },
+        },
     },
 }

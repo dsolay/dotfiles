@@ -1,5 +1,6 @@
 return {
     "luisiacc/gruvbox-baby",
+    enabled = false,
     branch = "main",
     lazy = false,
     priority = 1000,
@@ -8,7 +9,18 @@ return {
 
         -- Load the colorscheme
         vim.cmd([[colorscheme gruvbox-baby]])
-
-        vim.cmd([[highlight ColorColumn ctermbg=0 guibg=#32302F]])
     end,
+
+    {
+        "ellisonleao/gruvbox.nvim",
+        priority = 1000,
+        config = function()
+            require("gruvbox").setup({
+                transparent_mode = true,
+            })
+
+            vim.o.background = "dark"
+            vim.cmd("colorscheme gruvbox")
+        end,
+    },
 }

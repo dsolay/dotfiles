@@ -5,6 +5,7 @@ vim.filetype.add({
         dockerignore = "dockerignore",
         hurl = "hurl",
         cts = "typescript",
+        tf = "terraform",
     },
     filename = {
         [".env"] = "env",

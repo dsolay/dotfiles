@@ -67,57 +67,37 @@ return {
                         require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
                     end,
                 },
-                mapping = {
-                    ["<C-n>"] = cmp.mapping(
-                        cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-                        { "i", "c" }
-                    ),
-                    ["<C-p>"] = cmp.mapping(
-                        cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-                        { "i", "c" }
-                    ),
-                    ["<Down>"] = cmp.mapping(
-                        cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
-                        { "i", "c" }
-                    ),
-                    ["<Up>"] = cmp.mapping(
-                        cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-                        { "i", "c" }
-                    ),
-                    ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-                    ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-                    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-                    ["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-                    ["<CR>"] = cmp.mapping({
-                        i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-                        c = cmp.mapping.confirm({ select = false }),
-                    }),
-                    ["<Tab>"] = function(fallback)
-                        if cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback()
-                        end
-                    end,
-                    ["<S-Tab>"] = function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        else
-                            fallback()
-                        end
-                    end,
-                },
+                mapping = cmp.mapping.preset.insert({
+                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                    ["<C-e>"] = cmp.mapping.abort(),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                }),
                 sources = cmp.config.sources(
                     { { name = "nvim_lsp" }, { name = "luasnip" } },
                     { { name = "buffer" }, { name = "path" } }
                 ),
             })
 
-            -- Use buffer source for `/`.
-            cmp.setup.cmdline("/", { sources = { { name = "buffer" } } })
+            -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+            cmp.setup.cmdline({ "/", "?" }, {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = "buffer" },
+                },
+            })
 
-            -- Use cmdline & path source for ':'.
-            cmp.setup.cmdline(":", { sources = cmp.config.sources({ { name = "path" } }, { { name = "cmdline" } }) })
+            -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+            cmp.setup.cmdline(":", {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    { name = "path" },
+                }, {
+                    { name = "cmdline" },
+                }),
+                matching = { disallow_symbol_nonprefix_matching = false },
+            })
         end,
         dependencies = {
             "hrsh7th/cmp-nvim-lsp",
@@ -148,31 +128,6 @@ return {
                 require("luasnip.loaders.from_vscode").lazy_load()
             end,
         },
-        keys = {
-            {
-                "<tab>",
-                function()
-                    return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-                end,
-                expr = true,
-                silent = true,
-                mode = "i",
-            },
-            {
-                "<tab>",
-                function()
-                    require("luasnip").jump(1)
-                end,
-                mode = "s",
-            },
-            {
-                "<s-tab>",
-                function()
-                    require("luasnip").jump(-1)
-                end,
-                mode = { "i", "s" },
-            },
-        },
     },
 
     { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" } },
@@ -202,22 +157,72 @@ return {
 
     {
         "jackMort/ChatGPT.nvim",
+        event = "VimEnter",
         cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions", "ChatGPTRun" },
-        config = true,
         keys = {
-            { "<leader>gpt", "<cmd>ChatGPT<CR>", "ChatGPT" },
-            { "<leader>gpti", "<cmd>ChatGPTEditWithInstruction<CR>", "Edit with instruction", mode = { "n", "v" } },
-            { "<leader>gram", "<cmd>ChatGPTRun grammar_correction<CR>", "Grammar Correction", mode = { "n", "v" } },
-            { "<leader>tran", "<cmd>ChatGPTRun translate<CR>", "Translate", mode = { "n", "v" } },
-            { "<leader>gkey", "<cmd>ChatGPTRun keywords<CR>", "Keywords", mode = { "n", "v" } },
-            { "<leader>gdoc", "<cmd>ChatGPTRun docstring<CR>", "Docstring", mode = { "n", "v" } },
-            { "<leader>test", "<cmd>ChatGPTRun add_tests<CR>", "Add Tests", mode = { "n", "v" } },
-            { "<leader>opt", "<cmd>ChatGPTRun optimize_code<CR>", "Optimize Code", mode = { "n", "v" } },
-            { "<leader>sum", "<cmd>ChatGPTRun summarize<CR>", "Summarize", mode = { "n", "v" } },
-            { "<leader>fix", "<cmd>ChatGPTRun fix_bugs<CR>", "Fix Bugs", mode = { "n", "v" } },
-            { "<leader>expl", "<cmd>ChatGPTRun explain_code<CR>", "Explain Code", mode = { "n", "v" } },
+            { "<leader>cg", "<cmd>ChatGPT<CR>", "ChatGPT" },
             {
-                "<leader>grea",
+                "<leader>cei",
+                "<cmd>ChatGPTEditWithInstruction<CR>",
+                "Edit with instruction",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>cgc",
+                "<cmd>ChatGPTRun grammar_correction<CR>",
+                "Grammar Correction",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ct",
+                "<cmd>ChatGPTRun translate<CR>",
+                "Translate",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ck",
+                "<cmd>ChatGPTRun keywords<CR>",
+                "Keywords",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>cd",
+                "<cmd>ChatGPTRun docstring<CR>",
+                "Docstring",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ctt",
+                "<cmd>ChatGPTRun add_tests<CR>",
+                "Add Tests",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>co",
+                "<cmd>ChatGPTRun optimize_code<CR>",
+                "Optimize Code",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>csm",
+                "<cmd>ChatGPTRun summarize<CR>",
+                "Summarize",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>cf",
+                "<cmd>ChatGPTRun fix_bugs<CR>",
+                "Fix Bugs",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>ce",
+                "<cmd>ChatGPTRun explain_code<CR>",
+                "Explain Code",
+                mode = { "n", "v" },
+            },
+            {
+                "<leader>cra",
                 "<cmd>ChatGPTRun code_readability_analysis<CR>",
                 "Code Readability Analysis",
                 mode = { "n", "v" },
@@ -226,8 +231,52 @@ return {
         dependencies = {
             "MunifTanjim/nui.nvim",
             "nvim-lua/plenary.nvim",
+            "folke/trouble.nvim",
             "nvim-telescope/telescope.nvim",
         },
+        config = function()
+            local function get_api_key()
+                local handle = io.popen("pass show api/keys/openai | head -n 1 | tr -d '\n'")
+                local api_key = handle:read("*a")
+                handle:close()
+                return api_key:gsub("%s+", "") -- trim any extra whitespace
+            end
+
+            local api_key = get_api_key()
+
+            require("chatgpt").setup({
+                api_key_cmd = "echo " .. api_key,
+                openai_params = {
+                    model = "gpt-4o-mini",
+                    frequency_penalty = 0,
+                    presence_penalty = 0,
+                    max_tokens = 4096,
+                    temperature = 0.2,
+                    top_p = 0.1,
+                    n = 1,
+                },
+            })
+        end,
+    },
+
+    {
+        "github/copilot.vim",
+        enabled = false,
+        cmd = "Copilot",
+        event = "InsertEnter",
+        keys = {
+            {
+                "<C-x>",
+                'copilot#Accept("\\<CR>")',
+                mode = "i",
+                expr = true,
+                replace_keycodes = false,
+            },
+        },
+        config = function()
+            vim.g.copilot_no_tab_map = true
+            vim.g.copilot_workspace_folders = { "~/workspace" }
+        end,
     },
 
     {
@@ -248,6 +297,7 @@ return {
 
     {
         "piersolenski/wtf.nvim",
+        enabled = false,
         dependencies = {
             "MunifTanjim/nui.nvim",
         },
@@ -270,5 +320,12 @@ return {
                 desc = "Search diagnostic with Google",
             },
         },
+    },
+
+    {
+        "supermaven-inc/supermaven-nvim",
+        config = function()
+            require("supermaven-nvim").setup({})
+        end,
     },
 }

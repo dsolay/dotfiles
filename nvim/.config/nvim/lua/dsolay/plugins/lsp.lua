@@ -4,6 +4,15 @@ if not utils_status then
     return
 end
 
+local allowed_lsp_servers = {
+    { name = "null-ls", priority = 2, filetypes = {} },
+    { name = "eslint", priority = 1, filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" } },
+    { name = "prismals", priority = 1, filetypes = { "prisma" } },
+    { name = "dockerls", priority = 1, filetypes = { "dockerfile" } },
+    { name = "jsonls", priority = 1, filetypes = { "json", "jsonc" } },
+    { name = "terraformls", priority = 1, filetypes = { "tf", "terraform", "hcl" } },
+}
+
 return {
     {
         "neovim/nvim-lspconfig",
@@ -116,8 +125,37 @@ return {
                 vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
                 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
                 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+                vim.keymap.set("n", "<space>z", function()
+                    vim.lsp.buf.format({
+                        filter = function(client) return client.name == "null-ls" end,
+                        bufnr = bufnr,
+                    })
+                end, opts)
                 vim.keymap.set("n", "<space>f", function()
-                    vim.lsp.buf.format({ bufnr = bufnr })
+                    vim.lsp.buf.format({
+                        filter = function(client)
+                            local filetype = vim.bo.filetype
+
+                            local best_server = nil
+                            local highest_priority = math.huge
+
+                            for _, server in ipairs(allowed_lsp_servers) do
+                                if vim.tbl_contains(server.filetypes, filetype) or #server.filetypes == 0 then
+                                    if server.priority < highest_priority then
+                                        highest_priority = server.priority
+                                        best_server = server
+                                    end
+                                end
+                            end
+
+                            if best_server then
+                                return client.name == best_server.name
+                            end
+
+                            return false
+                        end,
+                        bufnr = bufnr,
+                    })
                 end, opts)
 
                 vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
@@ -128,12 +166,13 @@ return {
                     "astro",
                     "lua_ls",
                     "intelephense",
-                    "tsserver",
+                    "ts_ls",
                     "volar",
                     "jsonls",
                     "eslint",
                     "stylelint_lsp",
                     "dockerls",
+                    "terraformls",
                 },
                 automatic_setup = true,
                 handlers = {
@@ -155,7 +194,7 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "williamboman/mason.nvim",
-            { "jose-elias-alvarez/null-ls.nvim" },
+            "nvimtools/none-ls.nvim",
         },
         config = function()
             local nulll_ls_status, null_ls = pcall(require, "null-ls")
@@ -222,6 +261,9 @@ return {
                         vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarhtml.jar"),
                         vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjs.jar"),
                         vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarphp.jar"),
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarpython.jar"),
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarcfamily.jar"),
+                        vim.fn.expand("$MASON/share/sonarlint-analyzers/sonarjava.jar"),
                     },
                     settings = {
                         sonarlint = {
@@ -239,6 +281,7 @@ return {
                     "javascriptreact",
                     "typescript",
                     "javascript",
+                    "python",
                 },
             })
         end,
