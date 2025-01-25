@@ -37,8 +37,8 @@ keymap.set({ "n", "i" }, "<C-Right>", "<Cmd>bnext<CR>")
 keymap.set({ "n", "i" }, "<C-Left>", "<Cmd>bprev<CR>")
 
 -- Move lines
-keymap.set({ "n", "i" }, "<S-Up>", "<Cmd>m-2<CR>")
-keymap.set({ "n", "i" }, "<S-Down>", "<Cmd>m+<CR>")
+-- keymap.set({ "n", "i" }, "<S-Up>", "<Cmd>m-2<CR>")
+-- keymap.set({ "n", "i" }, "<S-Down>", "<Cmd>m+<CR>")
 
 -- Close current buffer
 keymap.set({ "n", "i" }, "<A-q>", "<Cmd>bd<CR>")
