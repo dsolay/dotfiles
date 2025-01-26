@@ -34,33 +34,30 @@ return {
         event = "InsertEnter",
         config = function()
             local cmp_status, cmp = pcall(require, "cmp")
-            local lspkind_status, lspkind = pcall(require, "lspkind")
 
-            if not cmp_status or not lspkind_status then
+            if not cmp_status then
                 return
             end
 
-            local source_mapping = {
-                buffer = "[Buffer]",
-                nvim_lsp = "[LSP]",
-                nvim_lua = "[Lua]",
-                path = "[Path]",
-                luasnip = "[Snip]",
-            }
-
             cmp.setup({
+                window = {
+                    completion = {
+                        winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+                        col_offset = -3,
+                        side_padding = 0,
+                    },
+                },
                 formatting = {
-                    format = lspkind.cmp_format({
-                        mode = "symbol",
-                        maxwidth = 50,
+                    fields = { "kind", "abbr", "menu" },
+                    format = function(entry, vim_item)
+                        local kind =
+                            require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+                        local strings = vim.split(kind.kind, "%s", { trimempty = true })
+                        kind.kind = " " .. (strings[1] or "") .. " "
+                        kind.menu = "    (" .. (strings[2] or "") .. ")"
 
-                        before = function(entry, vim_item)
-                            vim_item.kind = lspkind.presets.default[vim_item.kind]
-                            local menu = source_mapping[entry.source.name]
-                            vim_item.menu = menu
-                            return vim_item
-                        end,
-                    }),
+                        return kind
+                    end,
                 },
                 snippet = {
                     expand = function(args)
