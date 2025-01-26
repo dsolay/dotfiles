@@ -156,176 +156,63 @@ return {
     },
 
     {
-        "jackMort/ChatGPT.nvim",
-        event = "VimEnter",
-        cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions", "ChatGPTRun" },
-        keys = {
-            { "<leader>cg", "<cmd>ChatGPT<CR>", "ChatGPT" },
-            {
-                "<leader>cei",
-                "<cmd>ChatGPTEditWithInstruction<CR>",
-                "Edit with instruction",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>cgc",
-                "<cmd>ChatGPTRun grammar_correction<CR>",
-                "Grammar Correction",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>ct",
-                "<cmd>ChatGPTRun translate<CR>",
-                "Translate",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>ck",
-                "<cmd>ChatGPTRun keywords<CR>",
-                "Keywords",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>cd",
-                "<cmd>ChatGPTRun docstring<CR>",
-                "Docstring",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>ctt",
-                "<cmd>ChatGPTRun add_tests<CR>",
-                "Add Tests",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>co",
-                "<cmd>ChatGPTRun optimize_code<CR>",
-                "Optimize Code",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>csm",
-                "<cmd>ChatGPTRun summarize<CR>",
-                "Summarize",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>cf",
-                "<cmd>ChatGPTRun fix_bugs<CR>",
-                "Fix Bugs",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>ce",
-                "<cmd>ChatGPTRun explain_code<CR>",
-                "Explain Code",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>cra",
-                "<cmd>ChatGPTRun code_readability_analysis<CR>",
-                "Code Readability Analysis",
-                mode = { "n", "v" },
-            },
-        },
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "nvim-lua/plenary.nvim",
-            "folke/trouble.nvim",
-            "nvim-telescope/telescope.nvim",
-        },
-        config = function()
-            local function get_api_key()
-                local handle = io.popen("pass show api/keys/openai | head -n 1 | tr -d '\n'")
-                local api_key = handle:read("*a")
-                handle:close()
-                return api_key:gsub("%s+", "") -- trim any extra whitespace
-            end
-
-            local api_key = get_api_key()
-
-            require("chatgpt").setup({
-                api_key_cmd = "echo " .. api_key,
-                openai_params = {
-                    model = "gpt-4o-mini",
-                    frequency_penalty = 0,
-                    presence_penalty = 0,
-                    max_tokens = 4096,
-                    temperature = 0.2,
-                    top_p = 0.1,
-                    n = 1,
+        "yetone/avante.nvim",
+        event = "VeryLazy",
+        lazy = false,
+        version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+        opts = {
+            provider = "deepseek",
+            vendors = {
+                deepseek = {
+                    __inherited_from = "openai",
+                    api_key_name = { "pass", "show", "api/keys/deepseek" },
+                    endpoint = "https://api.deepseek.com",
+                    model = "deepseek-chat",
                 },
-            })
-        end,
-    },
-
-    {
-        "github/copilot.vim",
-        enabled = false,
-        cmd = "Copilot",
-        event = "InsertEnter",
-        keys = {
-            {
-                "<C-x>",
-                'copilot#Accept("\\<CR>")',
-                mode = "i",
-                expr = true,
-                replace_keycodes = false,
+            },
+            behaviour = {
+                auto_suggestions = false,
+                auto_set_highlight_group = true,
+                auto_set_keymaps = true,
+                auto_apply_diff_after_generation = false,
+                support_paste_from_clipboard = false,
+                minimize_diff = true,
             },
         },
-        config = function()
-            vim.g.copilot_no_tab_map = true
-            vim.g.copilot_workspace_folders = { "~/workspace" }
-        end,
-    },
-
-    {
-        "zbirenbaum/copilot.lua",
-        enabled = false,
-        cmd = "Copilot",
-        event = "InsertEnter",
-        keys = {
-            {
-                "<leader>tco",
-                function()
-                    require("copilot.suggestion").toggle_auto_trigger()
-                end,
-            },
-        },
-        config = true,
-    },
-
-    {
-        "piersolenski/wtf.nvim",
-        enabled = false,
+        -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+        build = "make",
         dependencies = {
+            "stevearc/dressing.nvim",
+            "nvim-lua/plenary.nvim",
             "MunifTanjim/nui.nvim",
-        },
-        opts = {},
-        keys = {
+            --- The below dependencies are optional,
+            "echasnovski/mini.pick", -- for file_selector provider mini.pick
+            "ibhagwan/fzf-lua", -- for file_selector provider fzf
             {
-                "gw",
-                mode = { "n", "x" },
-                function()
-                    require("wtf").ai()
-                end,
-                desc = "Debug diagnostic with AI",
+                -- support for image pasting
+                "HakonHarnes/img-clip.nvim",
+                event = "VeryLazy",
+                opts = {
+                    -- recommended settings
+                    default = {
+                        embed_image_as_base64 = false,
+                        prompt_for_file_name = false,
+                        drag_and_drop = {
+                            insert_mode = true,
+                        },
+                        -- required for Windows users
+                        use_absolute_path = true,
+                    },
+                },
             },
             {
-                mode = { "n" },
-                "gW",
-                function()
-                    require("wtf").search("duck_duck_go")
-                end,
-                desc = "Search diagnostic with Google",
+                -- Make sure to set this up properly if you have lazy=true
+                "MeanderingProgrammer/render-markdown.nvim",
+                opts = {
+                    file_types = { "markdown", "Avante" },
+                },
+                ft = { "markdown", "Avante" },
             },
         },
-    },
-
-    {
-        "supermaven-inc/supermaven-nvim",
-        config = function()
-            require("supermaven-nvim").setup({})
-        end,
     },
 }
