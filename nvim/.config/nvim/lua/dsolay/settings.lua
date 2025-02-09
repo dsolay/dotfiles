@@ -34,6 +34,7 @@ vim.opt.modeline = false
 vim.opt.autoindent = true
 
 -- vim.opt.syntax = 'off'
+vim.opt.scroll = 10
 vim.opt.scrolloff = 1
 vim.opt.sidescroll = 5
 vim.opt.listchars = { tab = [[→\ ]], eol = "¬", nbsp = "␣", trail = "•", precedes = "«", extends = "»" }
@@ -78,6 +79,7 @@ vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.opt.lazyredraw = true
 vim.opt.previewheight = 10
+vim.opt.conceallevel = 1
 
 -- vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

@@ -15,7 +15,7 @@ keymap.set("n", "<Leader>rw", ":%s/<C-R>=expand('<cword>')<CR>/")
 
 keymap.set(
     "n",
-    "<C-f>",
+    "<leader>ss",
     [[<cmd>execute "grep " . "\"". expand("<cword>") . "\" " . finddir('.git/..', expand('%:p:h').';') <Bar> TroubleToggle quickfix<cr>]]
 )
 
@@ -68,3 +68,6 @@ vim.keymap.set('n', '<leader>bg', function()
   vim.o.background = (vim.o.background == "dark") and "light" or "dark"
 end, { noremap = true, silent = true })
 
+-- Centrar pantalla al hacer scroll
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
