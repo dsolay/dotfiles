@@ -572,4 +572,51 @@ return {
         dependencies = { "MunifTanjim/nui.nvim" },
         opts = {},
     },
+
+    {
+        "echasnovski/mini.animate",
+        version = "*",
+        opts = {
+            open = {
+                enable = false,
+            },
+            close = {
+                enable = false,
+            },
+        },
+    },
+
+    {
+        "hedyhli/outline.nvim",
+        lazy = true,
+        cmd = { "Outline", "OutlineOpen" },
+        keys = { -- Example mapping to toggle outline
+            { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+        },
+        opts = {
+            -- Your setup opts here
+        },
+    },
+
+    {
+        "epwalsh/obsidian.nvim",
+        version = "*", -- recommended, use latest release instead of latest commit
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        opts = {
+            workspaces = {
+                {
+                    name = "Nebula",
+                    path = "~/vaults/nebula",
+                },
+                {
+                    name = "Work",
+                    path = "~/vaults/work",
+                },
+            },
+
+            notes_subdir = "notes",
+        },
+    },
 }
