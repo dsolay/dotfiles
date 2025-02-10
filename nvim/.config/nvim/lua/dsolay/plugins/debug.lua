@@ -72,7 +72,7 @@ return {
         config = true,
         keys = {
             {
-                "<C-d>",
+                "<C-z>",
                 function()
                     require("dapui").toggle({})
                 end,

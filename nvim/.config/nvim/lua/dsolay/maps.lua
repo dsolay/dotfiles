@@ -15,7 +15,7 @@ keymap.set("n", "<Leader>rw", ":%s/<C-R>=expand('<cword>')<CR>/")
 
 keymap.set(
     "n",
-    "<C-f>",
+    "<leader>ss",
     [[<cmd>execute "grep " . "\"". expand("<cword>") . "\" " . finddir('.git/..', expand('%:p:h').';') <Bar> TroubleToggle quickfix<cr>]]
 )
 
@@ -59,3 +59,6 @@ keymap.set("n", "<BS>", "g`'")
 keymap.set("n", "<Leader>tw", function()
     vim.opt.wrap = not vim.opt.wrap:get()
 end)
+
+keymap.set("n", "<C-d>", "<C-d>zz")
+keymap.set("n", "<C-u>", "<C-u>zz")
