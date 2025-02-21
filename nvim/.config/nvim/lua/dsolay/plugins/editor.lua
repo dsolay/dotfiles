@@ -80,7 +80,7 @@ return {
         },
         keys = {
             {
-                "<leader>tt",
+                "<C-b>",
                 function()
                     require("nvim-tree.api").tree.toggle()
                 end,
