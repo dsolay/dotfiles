@@ -209,6 +209,7 @@ return {
                 "MeanderingProgrammer/render-markdown.nvim",
                 opts = {
                     file_types = { "markdown", "Avante" },
+                    bullet = { left_pad = 2, right_pad = 1 },
                 },
                 ft = { "markdown", "Avante" },
             },
