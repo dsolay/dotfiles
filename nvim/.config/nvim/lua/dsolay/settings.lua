@@ -10,7 +10,7 @@ vim.opt.fileencoding = "utf-8"
 
 vim.wo.number = true
 vim.wo.relativenumber = true
-vim.wo.conceallevel = 0
+vim.wo.conceallevel = 2
 vim.wo.concealcursor = "nc"
 vim.wo.list = true
 vim.wo.signcolumn = "yes:1"
@@ -76,7 +76,6 @@ vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.opt.lazyredraw = true
 vim.opt.previewheight = 10
-vim.opt.conceallevel = 1
 
 -- vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
