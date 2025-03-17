@@ -607,12 +607,12 @@ return {
         opts = {
             workspaces = {
                 {
-                    name = "Nebula",
-                    path = "~/vaults/nebula",
-                },
-                {
                     name = "Work",
                     path = "~/vaults/work",
+                },
+                {
+                    name = "Nebula",
+                    path = "~/vaults/nebula",
                 },
             },
 
