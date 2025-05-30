@@ -162,9 +162,12 @@ return {
             vendors = {
                 deepseek = {
                     __inherited_from = "openai",
-                    api_key_name = { "pass", "show", "api/keys/deepseek" },
+                    api_key_name = "cmd:pass show api/keys/deepseek",
                     endpoint = "https://api.deepseek.com",
                     model = "deepseek-chat",
+                    timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+                    temperature = 0,
+                    max_tokens = 8192,
                 },
                 ollama = {
                     __inherited_from = "openai",
@@ -219,6 +222,18 @@ return {
                     },
                 },
                 ft = { "markdown", "Avante" },
+            },
+        },
+    },
+
+    {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
             },
         },
     },
