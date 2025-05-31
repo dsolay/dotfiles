@@ -6,13 +6,19 @@ return {
             "hrsh7th/cmp-nvim-lsp",
         },
         config = function()
-            local signs = { Error = "✘ ", Warn = " ", Info = " ", Hint = "󰌵 " }
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, linehl = "", numhl = "" })
-            end
-
-            vim.diagnostic.config({ virtual_text = false })
+            vim.diagnostic.config({
+                virtual_text = false,
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "✘ ",
+                        [vim.diagnostic.severity.WARN] = " ",
+                        [vim.diagnostic.severity.INFO] = " ",
+                        [vim.diagnostic.severity.HINT] = "󰌵 ",
+                    },
+                    linehl = {},
+                    numhl = {},
+                },
+            })
         end,
         keys = {
             { "<space>e", vim.diagnostic.open_float },
