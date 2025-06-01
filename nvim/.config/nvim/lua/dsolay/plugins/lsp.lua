@@ -155,6 +155,7 @@ return {
                             return false
                         end,
                         bufnr = bufnr,
+                        timeout_ms = 600000,
                     })
                 end, opts)
 
