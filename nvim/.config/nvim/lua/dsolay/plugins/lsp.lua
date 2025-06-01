@@ -1,37 +1,24 @@
-local utils_status, utils = pcall(require, "dsolay.utils")
-
-if not utils_status then
-    return
-end
-
-local allowed_lsp_servers = {
-    { name = "null-ls", priority = 2, filetypes = {} },
-    { name = "eslint", priority = 1, filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" } },
-    { name = "dockerls", priority = 1, filetypes = { "dockerfile" } },
-    { name = "prismals", priority = 1, filetypes = { "prisma" } },
-    { name = "jsonls", priority = 1, filetypes = { "json", "jsonc" } },
-    { name = "terraformls", priority = 1, filetypes = { "tf", "terraform", "hcl" } },
-}
-
 return {
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-            { "folke/neodev.nvim", opts = {} },
-            "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
             "hrsh7th/cmp-nvim-lsp",
         },
         config = function()
-            local signs = { Error = "✘ ", Warn = " ", Info = " ", Hint = "󰌵 " }
-            for type, icon in pairs(signs) do
-                local hl = "DiagnosticSign" .. type
-                vim.fn.sign_define(hl, { text = icon, texthl = hl, linehl = "", numhl = "" })
-            end
-
-            vim.diagnostic.config({ virtual_text = false })
+            vim.diagnostic.config({
+                virtual_text = false,
+                signs = {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "✘ ",
+                        [vim.diagnostic.severity.WARN] = " ",
+                        [vim.diagnostic.severity.INFO] = " ",
+                        [vim.diagnostic.severity.HINT] = "󰌵 ",
+                    },
+                    linehl = {},
+                    numhl = {},
+                },
+            })
         end,
         keys = {
             { "<space>e", vim.diagnostic.open_float },
@@ -39,158 +26,64 @@ return {
             {
                 "]e",
                 function()
-                    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR, float = false })
+                    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR, float = false })
                 end,
             },
             {
                 "[e",
                 function()
-                    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR, float = false })
+                    vim.diagnostic.jum({ count = -1, severity = vim.diagnostic.severity.ERROR, float = false })
                 end,
             },
             {
                 "]w",
                 function()
-                    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN, float = false })
+                    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN, float = false })
                 end,
             },
             {
                 "[w",
                 function()
-                    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN, float = false })
+                    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN, float = false })
                 end,
             },
             {
                 "]i",
                 function()
-                    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.INFO, float = false })
+                    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.INFO, float = false })
                 end,
             },
             {
                 "[i",
                 function()
-                    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.INFO, float = false })
+                    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.INFO, float = false })
                 end,
             },
             {
                 "]h",
                 function()
-                    vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.HINT, float = false })
+                    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.HINT, float = false })
                 end,
             },
             {
                 "[h",
                 function()
-                    vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.HINT, float = false })
+                    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.HINT, float = false })
                 end,
             },
         },
-    },
-
-    {
-        "williamboman/mason.nvim",
-        cmd = "Mason",
-        keys = { { "<leader>cm", "<cmd>Mason<cr>" } },
-        build = ":MasonUpdate",
-        config = true,
     },
 
     {
         "williamboman/mason-lspconfig.nvim",
         dependencies = {
             "williamboman/mason.nvim",
+            opts = {},
+            cmd = "Mason",
+            keys = { { "<leader>cm", "<cmd>Mason<cr>" } },
+            build = ":MasonUpdate",
         },
-        opts = function()
-            local lspconfig_status, lspconfig = pcall(require, "lspconfig")
-
-            if not lspconfig_status then
-                return
-            end
-
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            local serversPath = vim.fn.stdpath("config") .. "/lua/dsolay/servers/"
-
-            local on_attach = function(_, bufnr)
-                -- Enable completion triggered by <c-x><c-o>
-                -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-                vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
-
-                -- Mappings.
-                local opts = { buffer = bufnr }
-                vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-                vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-                vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-                vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-                vim.keymap.set("n", "<leader>K", vim.lsp.buf.signature_help, opts)
-                vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
-                vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-                vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-                vim.keymap.set("n", "<space>z", function()
-                    vim.lsp.buf.format({
-                        bufnr = bufnr,
-                        filter = function(client) return client.name == "null-ls" end
-                    })
-                end)
-                vim.keymap.set("n", "<space>f", function()
-                    vim.lsp.buf.format({
-                        filter = function(client)
-                            local filetype = vim.bo.filetype
-
-                            local best_server = nil
-                            local highest_priority = math.huge
-
-                            for _, server in ipairs(allowed_lsp_servers) do
-                                if vim.tbl_contains(server.filetypes, filetype) or #server.filetypes == 0 then
-                                    if server.priority < highest_priority then
-                                        highest_priority = server.priority
-                                        best_server = server
-                                    end
-                                end
-                            end
-
-                            if best_server then
-                                return client.name == best_server.name
-                            end
-
-                            return false
-                        end,
-                        bufnr = bufnr,
-                        timeout_ms = 600000,
-                    })
-                end, opts)
-
-                vim.keymap.set("n", "<space>ca", vim.lsp.buf.code_action, opts)
-            end
-
-            return {
-                ensure_installed = {
-                    "astro",
-                    "lua_ls",
-                    "intelephense",
-                    "omnisharp",
-                    "ts_ls",
-                    "volar",
-                    "jsonls",
-                    "eslint",
-                    "stylelint_lsp",
-                    "dockerls",
-                    "prismals",
-                    "pyright",
-                    "terraformls",
-                },
-                automatic_setup = true,
-                handlers = {
-                    function(server_name)
-                        local path = serversPath .. server_name .. ".lua"
-                        if utils.file_exists(path) then
-                            require("dsolay.servers." .. server_name)(lspconfig, on_attach, capabilities)
-                        else
-                            lspconfig[server_name].setup({ capabilities = capabilities, on_attach = on_attach })
-                        end
-                    end,
-                },
-            }
-        end,
+        opts = {},
     },
 
     {
@@ -198,7 +91,7 @@ return {
         event = { "BufReadPre", "BufNewFile" },
         dependencies = {
             "williamboman/mason.nvim",
-            { "nvimtools/none-ls.nvim" },
+            "nvimtools/none-ls.nvim",
         },
         config = function()
             local nulll_ls_status, null_ls = pcall(require, "null-ls")
@@ -212,13 +105,12 @@ return {
                 ensure_installed = {
                     "stylua",
                     "hadolint",
-                    "csharpier",
                     "markdownlint",
                     "phpstan",
                     "phpcsfixer",
+                    "shellcheck",
                     "fixjson",
                     "prettier",
-                    "black",
                 },
                 automatic_setup = true,
                 handlers = {
@@ -246,7 +138,7 @@ return {
                 },
             })
 
-            null_ls.setup()
+            null_ls.setup({ debug = true })
         end,
     },
 

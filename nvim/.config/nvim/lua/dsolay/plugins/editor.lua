@@ -605,7 +605,7 @@ return {
         opts = {
             workspaces = {
                 {
-                    name = "personal",
+                    name = "Nebula",
                     path = "~/vaults/nebula",
                 },
             },

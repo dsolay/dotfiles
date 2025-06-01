@@ -69,13 +69,12 @@ return {
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
                     ["<C-Space>"] = cmp.mapping.complete(),
                     ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 }),
-                sources = cmp.config.sources({
-                    { name = "nvim_lsp", priority = 1 },
-                    { name = "luasnip", priority = 3 },
-                    { name = "path", priority = 5 },
-                }, { { name = "buffer" } }),
+                sources = cmp.config.sources(
+                    { { name = "nvim_lsp" }, { name = "luasnip" } },
+                    { { name = "buffer" }, { name = "path" } }
+                ),
             })
 
             -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -111,7 +110,6 @@ return {
     {
         "L3MON4D3/LuaSnip",
         build = "make install_jsregexp",
-        version = "v2.*",
         opts = {
             history = true,
             delete_check_events = "TextChanged",
@@ -164,7 +162,7 @@ return {
             vendors = {
                 deepseek = {
                     __inherited_from = "openai",
-                    api_key_name = "DEEPSEEK_API_KEY",
+                    api_key_name = "cmd:pass show deepseek.com/api-keys/roman-pc",
                     endpoint = "https://api.deepseek.com",
                     model = "deepseek-chat",
                     temperature = 0,
@@ -211,7 +209,10 @@ return {
                 "MeanderingProgrammer/render-markdown.nvim",
                 opts = {
                     file_types = { "markdown", "Avante" },
-                    bullet = { left_pad = 2, right_pad = 1 },
+                    bullet = {
+                        left_pad = 0,
+                        right_pad = 1,
+                    },
                 },
                 ft = { "markdown", "Avante" },
             },
