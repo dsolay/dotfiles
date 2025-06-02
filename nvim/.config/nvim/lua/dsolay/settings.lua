@@ -76,6 +76,7 @@ vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.opt.lazyredraw = true
 vim.opt.previewheight = 10
+vim.opt.laststatus = 3
 
 -- vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
