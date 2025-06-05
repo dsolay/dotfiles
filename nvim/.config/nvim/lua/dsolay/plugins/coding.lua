@@ -159,15 +159,17 @@ return {
         version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
         opts = {
             provider = "deepseek",
-            vendors = {
+            providers = {
                 deepseek = {
                     __inherited_from = "openai",
                     api_key_name = "cmd:pass show api/keys/deepseek",
                     endpoint = "https://api.deepseek.com",
                     model = "deepseek-chat",
-                    timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
-                    temperature = 0,
-                    max_tokens = 8192,
+                    timeout = 30000,
+                    extra_request_body = {
+                        temperature = 0,
+                        max_tokens = 8192,
+                    },
                 },
                 ollama = {
                     __inherited_from = "openai",
