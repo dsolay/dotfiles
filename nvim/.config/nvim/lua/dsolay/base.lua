@@ -69,7 +69,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end
 
         if client:supports_method("textDocument/typeDefinition") then
-            vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+            vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
         end
 
         if client:supports_method("textDocument/references") then
