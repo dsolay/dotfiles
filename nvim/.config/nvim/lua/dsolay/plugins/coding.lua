@@ -159,14 +159,16 @@ return {
         version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
         opts = {
             provider = "deepseek",
-            vendors = {
+            providers = {
                 deepseek = {
                     __inherited_from = "openai",
-                    api_key_name = "cmd:pass show deepseek.com/api-keys/roman-pc",
                     endpoint = "https://api.deepseek.com",
                     model = "deepseek-chat",
-                    temperature = 0,
-                    max_tokens = 8192,
+                    timeout = 30000,
+                    extra_request_body = {
+                        temperature = 0,
+                        max_tokens = 8192,
+                    },
                 },
             },
             behaviour = {
@@ -176,6 +178,7 @@ return {
                 auto_apply_diff_after_generation = false,
                 support_paste_from_clipboard = false,
                 minimize_diff = true,
+                auto_approve_tool_permissions = { "bash", "replace_in_file" },
             },
         },
         -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
@@ -215,6 +218,18 @@ return {
                     },
                 },
                 ft = { "markdown", "Avante" },
+            },
+        },
+    },
+
+    {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
             },
         },
     },
