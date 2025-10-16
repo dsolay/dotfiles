@@ -7,6 +7,8 @@
 # load anyenv config
 _checkexec anyenv && eval "$(anyenv init -)"
 
+_checkexec mise && eval "$($HOME/.local/bin/mise activate bash --shims)"
+
 # Start SSH AGENT
 if [ -z "$SSH_AUTH_SOCK" ]
 then
