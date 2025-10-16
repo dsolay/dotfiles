@@ -11,7 +11,7 @@
 # Also, keep the '--prompt' flag at the end of the FMENU variable.
 # These are needed as we use prompts in the scripts.
 DMENU="dmenu -i -l 20 -p"
-RMENU="rofi -dmenu -p"
+RMENU="rofi -dmenu -i -p"
 
 # the bind must stay, why is this not the default? idk
 FMENU="fzf --bind=enter:replace-query+print-query --border=rounded --margin=5% --color=dark --height 100% --reverse --header=$(basename "$0") --info=hidden --header-first --prompt"
@@ -264,4 +264,4 @@ weather_locations=""
 # for full details see: https://github.com/chubin/wttr.in
 
 # current revision (do not touch unless you know what you're doing)
-_revision=26
+_revision=27
