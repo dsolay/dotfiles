@@ -1,3 +1,12 @@
+local function is_in_start_tag()
+    local node = vim.treesitter.get_node()
+    if not node then
+        return false
+    end
+    local node_to_check = { "start_tag", "self_closing_tag", "directive_attribute" }
+    return vim.tbl_contains(node_to_check, node:type())
+end
+
 return {
     {
         "JoosepAlviste/nvim-ts-context-commentstring",
@@ -39,6 +48,11 @@ return {
                 return
             end
 
+            cmp.event:on("menu_closed", function()
+                local bufnr = vim.api.nvim_get_current_buf()
+                vim.b[bufnr]._vue_ts_cached_is_in_start_tag = nil
+            end)
+
             cmp.setup({
                 window = {
                     completion = {
@@ -71,10 +85,42 @@ return {
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 }),
-                sources = cmp.config.sources(
-                    { { name = "nvim_lsp" }, { name = "luasnip" } },
-                    { { name = "buffer" }, { name = "path" } }
-                ),
+                sources = cmp.config.sources({
+                    {
+                        name = "nvim_lsp",
+                        entry_filter = function(entry, ctx)
+                            -- Use a buffer-local variable to cache the result of the Treesitter check
+                            local bufnr = ctx.bufnr
+                            local cached_is_in_start_tag = vim.b[bufnr]._vue_ts_cached_is_in_start_tag
+                            if cached_is_in_start_tag == nil then
+                                vim.b[bufnr]._vue_ts_cached_is_in_start_tag = is_in_start_tag()
+                            end
+
+                            -- If not in start tag, return true
+                            if vim.b[bufnr]._vue_ts_cached_is_in_start_tag == false then
+                                return true
+                            end
+
+                            -- rest of the code
+                            if ctx.filetype ~= "vue" then
+                                return true
+                            end
+
+                            local cursor_before_line = ctx.cursor_before_line
+                            -- For events
+                            if cursor_before_line:sub(-1) == "@" then
+                                return entry.completion_item.label:match("^@")
+                            -- For props also exclude events with `:on-` prefix
+                            elseif cursor_before_line:sub(-1) == ":" then
+                                return entry.completion_item.label:match("^:")
+                                    and not entry.completion_item.label:match("^:on%-")
+                            else
+                                return true
+                            end
+                        end,
+                    },
+                    { name = "luasnip" },
+                }, { { name = "buffer" }, { name = "path" } }),
             })
 
             -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).

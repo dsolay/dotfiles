@@ -3,7 +3,7 @@ local allowed_lsp_servers = {
     {
         name = "eslint",
         priority = 1,
-        filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact" },
+        filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact", "vue" },
     },
     { name = "prismals", priority = 1, filetypes = { "prisma" } },
     { name = "dockerls", priority = 1, filetypes = { "dockerfile" } },
