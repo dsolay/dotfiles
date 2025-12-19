@@ -9,18 +9,18 @@
 
 _checkexec mise && eval "$(mise activate bash --shims)"
 
+export SSH_AUTH_SOCK=~/.1password/agent.sock
+
 # Start SSH AGENT
-if [ -z "$SSH_AUTH_SOCK" ]
-then
-   # Check for a currently running instance of the agent
-   RUNNING_AGENT="$(pgrep -c ssh-agent | tr -d '[:space:]')"
-   if [ "$RUNNING_AGENT" = "0" ]
-   then
-      # Launch a new instance of the agent
-      [[ -S "$HOME"/.ssh-agent.sock ]] && \rm "$HOME"/.ssh-agent.sock
-      ssh-agent -a "$HOME"/.ssh-agent.sock -s &> "$HOME"/.ssh/ssh-agent
-   fi
-   eval "$(cat "$HOME"/.ssh/ssh-agent)"
-fi
+# if [ -z "$SSH_AUTH_SOCK" ]
+# then
+#    RUNNING_AGENT="$(pgrep -c ssh-agent | tr -d '[:space:]')"
+#    if [ "$RUNNING_AGENT" = "0" ]
+#    then
+#       [[ -S "$HOME"/.ssh-agent.sock ]] && \rm "$HOME"/.ssh-agent.sock
+#       ssh-agent -a "$HOME"/.ssh-agent.sock -s &> "$HOME"/.ssh/ssh-agent
+#    fi
+#    eval "$(cat "$HOME"/.ssh/ssh-agent)"
+# fi
 
 # _checkexec nmcli && nmcli con up static-home &
