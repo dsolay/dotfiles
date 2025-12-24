@@ -311,3 +311,9 @@ alias lod='echo "ಠ_ಠ"'
 alias idk='echo "¯\_(ツ)_/¯"'
 alias wtf='echo "❨╯°□°❩╯ ︵ ┻━┻"'
 alias wat='echo "⚆_⚆"'
+
+## SSH Servers
+alias ga='ssh ec2-user@20.0.0.73'
+alias pets-bastion='ssh ec2-user@52.203.108.78'
+alias entidades-bastion='ssh ubuntu@44.221.24.251'
+alias backups='xfreerdp3 /v:20.0.0.44 /u:CORP\\oscar.grande /dynamic-resolution /f'
