@@ -62,7 +62,7 @@ window_title="$(xwininfo -id "$window_id" | sed ' /^xwininfo/!d ; s,.*"\(.*\)".*
 
 case "$window_class" in
   [Mm]pv|[Pp]avucontrol|[Vv]lc|[Ee]o[mg]|[Ff]eh|[Rr]istretto|[Ss]xiv|[Aa]tril|[Ee]vince|[Zz]athura|my_float_window|[Pp]inentry-gtk-2|\
-  [Mm]ate-control-center|[Mm]ate-appearance-properties|[Gg]cr-prompter)
+  [Mm]ate-control-center|[Mm]ate-appearance-properties|[Gg]cr-prompter|1Password)
     echo "state=floating"
     echo "center=on"
     ;;
@@ -77,6 +77,7 @@ case "$window_class" in
     case "$(xprop -id "$window_id" _NET_WM_WINDOW_TYPE)" in
       *_NET_WM_WINDOW_TYPE_DIALOG*)
         echo "state=floating"
+        echo "center=on"
         ;;
       *)
         echo "state=tiled"
@@ -88,7 +89,11 @@ esac
 # FIXME the "file operations" applies to the `caja` file manager.
 # TODO There should be a better way of handling this.
 case "$window_title" in
-  'File Operations'*)
+  'File Operations')
+    echo "state=floating"
+    echo "center=on"
+    ;;
+  '1password')
     echo "state=floating"
     echo "center=on"
     ;;
