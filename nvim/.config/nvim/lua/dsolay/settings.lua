@@ -88,3 +88,6 @@ if vim.fn.executable("rg") == 1 then
     vim.opt.grepprg = "rg --vimgrep --smart-case --follow --no-heading"
     vim.opt.grepformat:append({ "%f:%l:%c:%m", "%f:%l:%m" })
 end
+
+vim.opt.exrc = true
+--vim.opt.secure = true
