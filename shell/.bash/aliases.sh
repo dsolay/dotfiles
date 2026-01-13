@@ -317,3 +317,7 @@ alias ga='ssh ec2-user@20.0.0.73'
 alias pets-bastion='ssh ec2-user@52.203.108.78'
 alias entidades-bastion='ssh ubuntu@44.221.24.251'
 alias backups='xfreerdp3 /v:20.0.0.44 /u:CORP\\oscar.grande /dynamic-resolution /f'
+
+# themes
+alias dark='ln -s -f /home/ernest/.config/alacritty/themes/themes/gruvbox_dark.toml /home/ernest/.config/alacritty/themes/theme.toml'
+alias light='ln -s -f /home/ernest/.config/alacritty/themes/themes/gruvbox_light.toml /home/ernest/.config/alacritty/themes/theme.toml'
