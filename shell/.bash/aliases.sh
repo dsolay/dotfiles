@@ -316,7 +316,9 @@ alias wat='echo "⚆_⚆"'
 alias ga='ssh ec2-user@20.0.0.73'
 alias pets-bastion='ssh ec2-user@52.203.108.78'
 alias entidades-bastion='ssh ubuntu@44.221.24.251'
-alias backups='xfreerdp3 /v:20.0.0.44 /u:CORP\\oscar.grande /dynamic-resolution /f'
+alias aplin-db='cloud-sql-proxy staging-472916:us-central1:db-staging --port 5433'
+alias pets-dev-db='ssh -N -L 3306:pets-portal-dev-instance-1.cq4oc32vghjg.us-east-1.rds.amazonaws.com:3306 ec2-user@52.203.108.78'
+alias pets-prod-db='ssh -N -L 3306:pets-portal-instance-1.cq4oc32vghjg.us-east-1.rds.amazonaws.com:3306 ec2-user@54.91.35.233'
 
 # themes
 alias dark='ln -s -f /home/ernest/.config/alacritty/themes/themes/gruvbox_dark.toml /home/ernest/.config/alacritty/themes/theme.toml'
