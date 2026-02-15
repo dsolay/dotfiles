@@ -18,19 +18,19 @@ return {
                         end,
                     },
                     {
-                        "<F10>",
+                        "<F9>",
                         function()
                             require("dap").step_over()
                         end,
                     },
                     {
-                        "<F11>",
+                        "<F10>",
                         function()
                             require("dap").step_into()
                         end,
                     },
                     {
-                        "<F12>",
+                        "<F11>",
                         function()
                             require("dap").step_out()
                         end,
