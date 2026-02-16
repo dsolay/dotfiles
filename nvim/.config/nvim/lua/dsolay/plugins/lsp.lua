@@ -112,11 +112,8 @@ return {
                     "fixjson",
                     "prettier",
                 },
-                automatic_setup = true,
+                automatic_installation = true,
                 handlers = {
-                    function(source_name, methods)
-                        require("mason-null-ls.automatic_setup")(source_name, methods)
-                    end,
                     prettier = function()
                         null_ls.register(null_ls.builtins.formatting.prettier.with({
                             prefer_local = "node_modules/.bin",
@@ -133,6 +130,13 @@ return {
                             prefer_local = "vendor/bin",
                             extra_args = { "--memory-limit=2G" },
                             timeout = 15000,
+                        }))
+                    end,
+                    dotenv_linter = function()
+                        null_ls.register(null_ls.builtins.diagnostics.dotenv_linter.with({
+                            filetypes = { "env" },
+                            extra_args = { "check" },
+                            prepend_extra_args = true,
                         }))
                     end,
                 },
