@@ -366,7 +366,13 @@ return {
             { "<leader>li", [[<cmd>Telescope lsp_implementations<cr>]] },
             { "<leader>ld", [[<cmd>Telescope lsp_definitions<cr>]] },
         },
-        dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+        dependencies = {
+            { "nvim-lua/plenary.nvim" },
+            {
+                "nvim-telescope/telescope-fzf-native.nvim",
+                build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
+            },
+        },
     },
 
     {
