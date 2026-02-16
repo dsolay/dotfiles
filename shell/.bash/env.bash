@@ -5,6 +5,8 @@ prependpath "$HOME/.anyenv/bin"
 
 prependpath "$HOME/.cargo/bin"
 
+prependpath "$HOME/.opencode/bin"
+
 # Include my scripts in the PATH.  To avoid conflicts, I always prepend
 # `own_script_` to my files.  There are some exceptions though, where I
 # am confident that no conflicts will arrise.  See the 'bin' directory
