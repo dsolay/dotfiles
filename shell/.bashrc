@@ -83,4 +83,10 @@ _checkexec lesspipe && eval "$(SHELL=/bin/sh lesspipe)"
 
 # Use prompt startship
 _checkexec starship && eval "$(starship init bash)"
-eval "$(mise activate bash)"
+eval "$($HOME/.local/bin/mise activate bash)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/tmp/google-cloud-sdk/path.bash.inc' ]; then . '/tmp/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/tmp/google-cloud-sdk/completion.bash.inc' ]; then . '/tmp/google-cloud-sdk/completion.bash.inc'; fi
