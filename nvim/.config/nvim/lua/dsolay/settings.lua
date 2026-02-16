@@ -68,7 +68,7 @@ vim.opt.writebackup = false
 vim.opt.fixendofline = false
 vim.opt.foldlevelstart = 99
 vim.opt.foldmethod = "expr"
-vim.opt.clipboard:append({ "unnamed", "unnamedplus" })
+vim.opt.clipboard:append({ "unnamedplus" })
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.shiftround = true
@@ -86,3 +86,6 @@ if vim.fn.executable("rg") == 1 then
     vim.opt.grepprg = "rg --vimgrep --smart-case --follow --no-heading"
     vim.opt.grepformat:append({ "%f:%l:%c:%m", "%f:%l:%m" })
 end
+
+vim.opt.exrc = true
+vim.o.secure = true
