@@ -1,3 +1,12 @@
+local function is_in_start_tag()
+    local node = vim.treesitter.get_node()
+    if not node then
+        return false
+    end
+    local node_to_check = { "start_tag", "self_closing_tag", "directive_attribute" }
+    return vim.tbl_contains(node_to_check, node:type())
+end
+
 return {
     {
         "JoosepAlviste/nvim-ts-context-commentstring",
@@ -71,10 +80,42 @@ return {
                     ["<C-e>"] = cmp.mapping.abort(),
                     ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 }),
-                sources = cmp.config.sources(
-                    { { name = "nvim_lsp" }, { name = "luasnip" } },
-                    { { name = "buffer" }, { name = "path" } }
-                ),
+                sources = cmp.config.sources({
+                    {
+                        name = "nvim_lsp",
+                        entry_filter = function(entry, ctx)
+                            -- Use a buffer-local variable to cache the result of the Treesitter check
+                            local bufnr = ctx.bufnr
+                            local cached_is_in_start_tag = vim.b[bufnr]._vue_ts_cached_is_in_start_tag
+                            if cached_is_in_start_tag == nil then
+                                vim.b[bufnr]._vue_ts_cached_is_in_start_tag = is_in_start_tag()
+                            end
+
+                            -- If not in start tag, return true
+                            if vim.b[bufnr]._vue_ts_cached_is_in_start_tag == false then
+                                return true
+                            end
+
+                            -- rest of the code
+                            if ctx.filetype ~= "vue" then
+                                return true
+                            end
+
+                            local cursor_before_line = ctx.cursor_before_line
+                            -- For events
+                            if cursor_before_line:sub(-1) == "@" then
+                                return entry.completion_item.label:match("^@")
+                            -- For props also exclude events with `:on-` prefix
+                            elseif cursor_before_line:sub(-1) == ":" then
+                                return entry.completion_item.label:match("^:")
+                                    and not entry.completion_item.label:match("^:on%-")
+                            else
+                                return true
+                            end
+                        end,
+                    },
+                    { name = "luasnip" },
+                }, { { name = "buffer" }, { name = "path" } }),
             })
 
             -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
@@ -158,11 +199,10 @@ return {
         lazy = false,
         version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
         opts = {
-            provider = "deepseek",
+            provider = "opencode",
             providers = {
                 deepseek = {
                     __inherited_from = "openai",
-                    api_key_name = "cmd:pass show api/keys/deepseek",
                     endpoint = "https://api.deepseek.com",
                     model = "deepseek-chat",
                     timeout = 30000,
@@ -176,6 +216,12 @@ return {
                     api_key_name = "",
                     endpoint = "http://127.0.0.1:11434/v1",
                     model = "deepseek-r1:8b",
+                },
+            },
+            acp_providers = {
+                ["opencode"] = {
+                    command = "opencode",
+                    args = { "acp" },
                 },
             },
             behaviour = {
@@ -238,5 +284,31 @@ return {
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
             },
         },
+    },
+
+    {
+        "HakonHarnes/img-clip.nvim",
+        opts = {
+            filetypes = {
+                codecompanion = {
+                    prompt_for_file_name = false,
+                    template = "[Image]($FILE_PATH)",
+                    use_absolute_path = true,
+                },
+            },
+        },
+    },
+
+    {
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+            {
+                "MeanderingProgrammer/render-markdown.nvim",
+                ft = { "markdown", "codecompanion" },
+            },
+        },
+        opts = {},
     },
 }
