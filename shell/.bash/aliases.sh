@@ -296,7 +296,7 @@ fi
 alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'
 
 # Open current directory in nvim
-alias ide="nvim"
+alias ide="/opt/nvim/AppRun"
 
 # Update fonts
 alias fup="fc-cache -vf"
@@ -315,3 +315,10 @@ alias lod='echo "ಠ_ಠ"'
 alias idk='echo "¯\_(ツ)_/¯"'
 alias wtf='echo "❨╯°□°❩╯ ︵ ┻━┻"'
 alias wat='echo "⚆_⚆"'
+
+# SSH Servers
+alias pets-dev-bastion='ssh -N -L 3306:pets-portal-dev-instance-1.cq4oc32vghjg.us-east-1.rds.amazonaws.com:3306 ec2-user@52.203.108.78 -i ~/.ssh/pets-cms-bastion.pem'
+alias pets-prod-bastion='ssh -N -L 3306:pets-portal-instance-1.cq4oc32vghjg.us-east-1.rds.amazonaws.com:3306 ec2-user@54.91.35.233 -i ~/.ssh/pets-cms-production-bastion-key.pem'
+
+# aplin
+alias aplin-db='cloud-sql-proxy  staging-472916:us-central1:db-staging --port 5433'
