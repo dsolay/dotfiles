@@ -2,9 +2,6 @@ return {
     {
         "neovim/nvim-lspconfig",
         event = { "BufReadPre", "BufNewFile" },
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-        },
         config = function()
             vim.diagnostic.config({
                 virtual_text = false,
