@@ -319,6 +319,7 @@ alias entidades-bastion='ssh ubuntu@44.221.24.251'
 alias aplin-db='cloud-sql-proxy staging-472916:us-central1:db-staging --port 5433'
 alias pets-dev-db='ssh -N -L 3306:pets-portal-dev-instance-1.cq4oc32vghjg.us-east-1.rds.amazonaws.com:3306 ec2-user@52.203.108.78'
 alias pets-prod-db='ssh -N -L 3306:pets-portal-instance-1.cq4oc32vghjg.us-east-1.rds.amazonaws.com:3306 ec2-user@54.91.35.233'
+alias atlas-db='gcloud compute ssh atlas-bastion-dev --tunnel-through-iap --zone=us-central1-c --ssh-flag="-L 5432:localhost:5432"'
 
 # themes
 alias dark='ln -s -f /home/ernest/.config/alacritty/themes/themes/gruvbox_dark.toml /home/ernest/.config/alacritty/themes/theme.toml'
