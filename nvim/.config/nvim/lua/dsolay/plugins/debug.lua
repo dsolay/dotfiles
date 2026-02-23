@@ -16,54 +16,63 @@ return {
                         function()
                             require("dap").continue()
                         end,
+                        desc = "DAP Continue",
                     },
                     {
                         "<F9>",
                         function()
                             require("dap").step_over()
                         end,
+                        desc = "DAP Step Over",
                     },
                     {
                         "<F10>",
                         function()
                             require("dap").step_into()
                         end,
+                        desc = "DAP Step Into",
                     },
                     {
                         "<F11>",
                         function()
                             require("dap").step_out()
                         end,
+                        desc = "DAP Step Out",
                     },
                     {
-                        "<Leader>b",
+                        "<leader>b",
                         function()
                             require("dap").toggle_breakpoint()
                         end,
+                        desc = "Toggle Breakpoint",
                     },
                     {
-                        "<Leader>B",
+                        "<leader>B",
                         function()
                             require("dap").set_breakpoint()
                         end,
+                        desc = "Set Breakpoint",
                     },
                     {
-                        "<Leader>lp",
+                        "<leader>lp",
                         function()
                             require("dap").set_breakpoint(nil, nil, vim.fn.input("Log point message: "))
                         end,
+                        desc = "Set Log Point",
                     },
                     {
-                        "<Leader>dr",
+                        "<leader>dr",
                         function()
                             require("dap").repl.open()
                         end,
+                        desc = "REPL Open",
                     },
                     {
-                        "<Leader>dl",
+                        "<leader>dl",
                         function()
                             require("dap").run_last()
                         end,
+                        desc = "Run Last",
                     },
                 },
             },
@@ -76,6 +85,7 @@ return {
                 function()
                     require("dapui").toggle({})
                 end,
+                desc = "Toggle DAP UI",
             },
         },
     },

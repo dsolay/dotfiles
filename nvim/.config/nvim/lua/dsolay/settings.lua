@@ -66,8 +66,11 @@ vim.opt.display = "msgsep"
 vim.opt.mouse = "nivh"
 vim.opt.writebackup = false
 vim.opt.fixendofline = false
-vim.opt.foldlevelstart = 99
 vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
+vim.opt.foldtext = "v:lua.vim.lsp.foldtext()"
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
 vim.opt.clipboard:append({ "unnamedplus" })
 vim.opt.splitbelow = true
 vim.opt.splitright = true
@@ -77,9 +80,6 @@ vim.opt.background = "dark"
 vim.opt.lazyredraw = true
 vim.opt.previewheight = 10
 vim.opt.laststatus = 3
-
--- vim.cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- Use rigrep if installed
 if vim.fn.executable("rg") == 1 then
