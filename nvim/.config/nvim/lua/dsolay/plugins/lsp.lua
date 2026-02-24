@@ -30,7 +30,7 @@ return {
             {
                 "[e",
                 function()
-                    vim.diagnostic.jum({ count = -1, severity = vim.diagnostic.severity.ERROR, float = false })
+                    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR, float = false })
                 end,
                 desc = "Prev Error",
             },
