@@ -67,7 +67,7 @@ vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increa
 
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll Down Centered" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll Up Centered" })
-vim.keymap.set("n", "<C-s>", "<cmd>update<CR>", { desc = "Save (Insert)" })
+vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 vim.keymap.set("n", "<A-q>", "<cmd>bd<CR>", { desc = "Close Buffer" })
 
 -- ============================================================================
@@ -86,3 +86,16 @@ vim.keymap.set("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer (Alt)" })
 -- Single keymaps that don't fit other categories
 
 vim.keymap.set("n", "<BS>", "g`'", { desc = "Back to Last Position" })
+
+-- ============================================================================
+-- Tab Management
+-- ============================================================================
+-- Tab navigation and manipulation commands
+
+vim.keymap.set("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
+vim.keymap.set("n", "<leader><tab>o", "<cmd>tabonly<cr>", { desc = "Close Other Tabs" })
+vim.keymap.set("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
+vim.keymap.set("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+vim.keymap.set("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
