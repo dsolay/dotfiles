@@ -58,5 +58,6 @@
   "vim-dotenv": { "branch": "master", "commit": "5c51cfcf8d87280d6414e03cd6b253eb70ecb800" },
   "vim-unimpaired": { "branch": "master", "commit": "db65482581a28e4ccf355be297f1864a4e66985c" },
   "vim-visual-multi": { "branch": "master", "commit": "a6975e7c1ee157615bbc80fc25e4392f71c344d4" },
-  "web-tools.nvim": { "branch": "master", "commit": "2f895049d3b6e3a0b2cedfa18c8733b36fb6cbda" }
+  "web-tools.nvim": { "branch": "master", "commit": "2f895049d3b6e3a0b2cedfa18c8733b36fb6cbda" },
+  "which-key.nvim": { "branch": "main", "commit": "3aab2147e74890957785941f0c1ad87d0a44c15a" }
 }

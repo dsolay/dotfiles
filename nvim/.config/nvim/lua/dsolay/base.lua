@@ -57,39 +57,39 @@ vim.api.nvim_create_autocmd("LspAttach", {
         local opts = { noremap = true, silent = true, buffer = bufnr }
 
         if client:supports_method("textDocument/implementation") then
-            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to Implementation" }))
         end
 
         if client:supports_method("textDocument/declaration") then
-            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "Go to Declaration" }))
         end
 
         if client:supports_method("textDocument/definition") then
-            vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+            vim.keymap.set("n", "gd", vim.lsp.buf.definition, vim.tbl_extend("force", opts, { desc = "Go to Definition" }))
         end
 
         if client:supports_method("textDocument/typeDefinition") then
-            vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
+            vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, vim.tbl_extend("force", opts, { desc = "Go to Type Definition" }))
         end
 
         if client:supports_method("textDocument/references") then
-            vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+            vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "Find References" }))
         end
 
         if client:supports_method("textDocument/signatureHelp") then
-            vim.keymap.set("n", "<leader>K", vim.lsp.buf.signature_help, opts)
+            vim.keymap.set("n", "<leader>K", vim.lsp.buf.signature_help, vim.tbl_extend("force", opts, { desc = "Signature Help" }))
         end
 
         if client:supports_method("textDocument/hover") then
-            vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+            vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "Hover Info" }))
         end
 
         if client:supports_method("textDocument/rename") then
-            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "Rename Symbol" }))
         end
 
         if client:supports_method("textDocument/codeAction") then
-            vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+            vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "Code Action" }))
         end
 
         if client:supports_method("textDocument/formatting") then
@@ -100,7 +100,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
                     end,
                     bufnr = bufnr,
                 })
-            end, opts)
+            end, vim.tbl_extend("force", opts, { desc = "Format (null-ls)" }))
 
             vim.keymap.set("n", "<space>f", function()
                 vim.lsp.buf.format({
@@ -128,10 +128,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
                     bufnr = bufnr,
                     timeout_ms = 60000,
                 })
-            end, opts)
+            end, vim.tbl_extend("force", opts, { desc = "Format (Best Server)" }))
         end
 
-        vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
-        vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+        vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, vim.tbl_extend("force", opts, { desc = "Add Workspace Folder" }))
+        vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, vim.tbl_extend("force", opts, { desc = "Remove Workspace Folder" }))
     end,
 })

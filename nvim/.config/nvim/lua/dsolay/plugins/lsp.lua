@@ -18,55 +18,63 @@ return {
             })
         end,
         keys = {
-            { "<space>e", vim.diagnostic.open_float },
-            { "<space>q", vim.diagnostic.setloclist },
+            { "<space>e", vim.diagnostic.open_float, desc = "Show Diagnostic" },
+            { "<space>q", vim.diagnostic.setloclist, desc = "Set Location List" },
             {
                 "]e",
                 function()
                     vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR, float = false })
                 end,
+                desc = "Next Error",
             },
             {
                 "[e",
                 function()
                     vim.diagnostic.jum({ count = -1, severity = vim.diagnostic.severity.ERROR, float = false })
                 end,
+                desc = "Prev Error",
             },
             {
                 "]w",
                 function()
                     vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN, float = false })
                 end,
+                desc = "Next Warning",
             },
             {
                 "[w",
                 function()
                     vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN, float = false })
                 end,
+                desc = "Prev Warning",
             },
             {
                 "]i",
                 function()
                     vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.INFO, float = false })
                 end,
+                desc = "Next Info",
             },
             {
                 "[i",
                 function()
                     vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.INFO, float = false })
                 end,
+                desc = "Prev Info",
             },
             {
                 "]h",
                 function()
                     vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.HINT, float = false })
                 end,
+                desc = "Next Hint",
             },
             {
                 "[h",
                 function()
                     vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.HINT, float = false })
                 end,
+                desc = "Prev Hint",
             },
         },
     },
@@ -77,7 +85,7 @@ return {
             "williamboman/mason.nvim",
             opts = {},
             cmd = "Mason",
-            keys = { { "<leader>cm", "<cmd>Mason<cr>" } },
+            keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Open Mason" } },
             build = ":MasonUpdate",
         },
         opts = {},

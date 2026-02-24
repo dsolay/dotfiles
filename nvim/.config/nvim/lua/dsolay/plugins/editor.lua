@@ -61,7 +61,7 @@ return {
             vim.g.db_ui_use_nerd_fonts = 1
             vim.g.db_ui_show_database_icon = 1
         end,
-        keys = { { "<leader>db", "<cmd>DBUIToggle<cr>" } },
+        keys = { { "<leader>db", "<cmd>DBUIToggle<cr>", desc = "Toggle Database UI" } },
         dependencies = { { "tpope/vim-dadbod", cmd = "DB" } },
     },
 
@@ -84,18 +84,21 @@ return {
                 function()
                     require("nvim-tree.api").tree.toggle()
                 end,
+                desc = "Toggle File Explorer",
             },
             {
                 "<leader>tr",
                 function()
                     require("nvim-tree.api").tree.reload()
                 end,
+                desc = "Refresh File Explorer",
             },
             {
                 "<leader>tf",
                 function()
                     require("nvim-tree.api").tree.find_file({ open = true, focus = true })
                 end,
+                desc = "Find File in Explorer",
             },
         },
     },
@@ -109,6 +112,7 @@ return {
                     require("FTerm").toggle()
                 end,
                 mode = { "n", "t" },
+                desc = "Toggle Floating Terminal",
             },
         },
     },
@@ -203,10 +207,10 @@ return {
             },
         },
         keys = {
-            { "<leader>zn", "<cmd>TZNarrow<cr>", mode = { "n", "v" } },
-            { "<leader>zf", "<cmd>TZFocus<cr>" },
-            { "<leader>zm", "<cmd>TZMinimalist<cr>" },
-            { "<leader>za", "<cmd>TZAtaraxis<cr>" },
+            { "<leader>zn", "<cmd>TZNarrow<cr>", mode = { "n", "v" }, desc = "Narrow/Focus View" },
+            { "<leader>zf", "<cmd>TZFocus<cr>", desc = "Focus Mode" },
+            { "<leader>zm", "<cmd>TZMinimalist<cr>", desc = "Minimalist Mode" },
+            { "<leader>za", "<cmd>TZAtaraxis<cr>", desc = "Ataraxis Mode (Distraction-free)" },
         },
         cmd = {
             "TZMinimalist",
@@ -225,7 +229,7 @@ return {
             vim.g.lazygit_floating_window_use_plenary = 1
         end,
         keys = {
-            { "<leader>lg", "<cmd>LazyGit<cr>" },
+            { "<leader>lg", "<cmd>LazyGit<cr>", desc = "Open LazyGit" },
         },
         cmd = "LazyGit",
     },
@@ -258,7 +262,7 @@ return {
                     else
                         gitsigns.nav_hunk("next")
                     end
-                end)
+                end, { desc = "Next Git Change" })
 
                 map("n", "[c", function()
                     if vim.wo.diff then
@@ -266,47 +270,47 @@ return {
                     else
                         gitsigns.nav_hunk("prev")
                     end
-                end)
+                end, { desc = "Prev Git Change" })
 
                 -- Actions
-                map("n", "<leader>hs", gitsigns.stage_hunk)
-                map("n", "<leader>hr", gitsigns.reset_hunk)
+                map("n", "<leader>hs", gitsigns.stage_hunk, { desc = "Stage Hunk" })
+                map("n", "<leader>hr", gitsigns.reset_hunk, { desc = "Reset Hunk" })
 
                 map("v", "<leader>hs", function()
                     gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-                end)
+                end, { desc = "Stage Hunk" })
 
                 map("v", "<leader>hr", function()
                     gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-                end)
+                end, { desc = "Reset Hunk" })
 
-                map("n", "<leader>hS", gitsigns.stage_buffer)
-                map("n", "<leader>hR", gitsigns.reset_buffer)
-                map("n", "<leader>hp", gitsigns.preview_hunk)
-                map("n", "<leader>hi", gitsigns.preview_hunk_inline)
+                map("n", "<leader>hS", gitsigns.stage_buffer, { desc = "Stage Buffer" })
+                map("n", "<leader>hR", gitsigns.reset_buffer, { desc = "Reset Buffer" })
+                map("n", "<leader>hp", gitsigns.preview_hunk, { desc = "Preview Hunk" })
+                map("n", "<leader>hi", gitsigns.preview_hunk_inline, { desc = "Preview Hunk Inline" })
 
                 map("n", "<leader>hb", function()
                     gitsigns.blame_line({ full = true })
-                end)
+                end, { desc = "Blame Line" })
 
-                map("n", "<leader>hd", gitsigns.diffthis)
+                map("n", "<leader>hd", gitsigns.diffthis, { desc = "Diff This File" })
 
                 map("n", "<leader>hD", function()
                     gitsigns.diffthis("~")
-                end)
+                end, { desc = "Diff Against Parent" })
 
                 map("n", "<leader>hQ", function()
                     gitsigns.setqflist("all")
-                end)
-                map("n", "<leader>hq", gitsigns.setqflist)
+                end, { desc = "Quickfix (All Hunks)" })
+                map("n", "<leader>hq", gitsigns.setqflist, { desc = "Quickfix (Current Hunk)" })
 
                 -- Toggles
-                map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
-                map("n", "<leader>td", gitsigns.toggle_deleted)
-                map("n", "<leader>tw", gitsigns.toggle_word_diff)
+                map("n", "<leader>tb", gitsigns.toggle_current_line_blame, { desc = "Toggle Line Blame" })
+                map("n", "<leader>td", gitsigns.toggle_deleted, { desc = "Toggle Deleted Hunks" })
+                map("n", "<leader>tw", gitsigns.toggle_word_diff, { desc = "Toggle Word Diff" })
 
                 -- Text object
-                map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+                map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk (Text Object)" })
             end,
         },
     },
@@ -345,26 +349,26 @@ return {
             }
         end,
         keys = {
-            { "<leader>fb", [[<cmd>Telescope buffers<cr>]] },
-            { "<leader>fp", [[<cmd>Telescope git_files<cr>]] },
-            { "<leader>ff", [[<cmd>Telescope find_files hidden=true<cr>]] },
-            { "<leader>fg", [[<cmd>Telescope live_grep<cr>]] },
-            { "<leader>fq", [[<cmd>Telescope quickfix<cr>]] },
-            { "<leader>fl", [[<cmd>Telescope localist<cr>]] },
-            { "<leader>fo", [[<cmd>Telescope vim_options<cr>]] },
-            { "<leader>fr", [[<cmd>Telescope registers<cr>]] },
-            { "<leader>fc", [[<cmd>Telescope commands<cr>]] },
-            { "<leader>fm", [[<cmd>Telescope man_pages<cr>]] },
-            { "<leader>fs", [[<cmd>Telescope spell_suggest<cr>]] },
-            { "<leader>fk", [[<cmd>Telescope keymaps<cr>]] },
-            { "<leader>lr", [[<cmd>Telescope lsp_references<cr>]] },
-            { "<leader>lds", [[<cmd>Telescope lsp_document_symbols<cr>]] },
-            { "<leader>lws", [[<cmd>Telescope lsp_workspace_symbols<cr>]] },
-            { "<leader>ldws", [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]] },
-            { "<leader>lca", [[<cmd>Telescope lsp_code_actions<cr>]] },
-            { "<leader>lrca", [[<cmd>Telescope lsp_range_code_actions<cr>]] },
-            { "<leader>li", [[<cmd>Telescope lsp_implementations<cr>]] },
-            { "<leader>ld", [[<cmd>Telescope lsp_definitions<cr>]] },
+            { "<leader>fb", [[<cmd>Telescope buffers<cr>]], desc = "List Buffers" },
+            { "<leader>fp", [[<cmd>Telescope git_files<cr>]], desc = "Find Git Files" },
+            { "<leader>ff", [[<cmd>Telescope find_files hidden=true<cr>]], desc = "Find Files" },
+            { "<leader>fg", [[<cmd>Telescope live_grep<cr>]], desc = "Live Grep" },
+            { "<leader>fq", [[<cmd>Telescope quickfix<cr>]], desc = "Quickfix List" },
+            { "<leader>fl", [[<cmd>Telescope localist<cr>]], desc = "Location List" },
+            { "<leader>fo", [[<cmd>Telescope vim_options<cr>]], desc = "Vim Options" },
+            { "<leader>fr", [[<cmd>Telescope registers<cr>]], desc = "Registers" },
+            { "<leader>fc", [[<cmd>Telescope commands<cr>]], desc = "Commands" },
+            { "<leader>fm", [[<cmd>Telescope man_pages<cr>]], desc = "Man Pages" },
+            { "<leader>fs", [[<cmd>Telescope spell_suggest<cr>]], desc = "Spell Suggestions" },
+            { "<leader>fk", [[<cmd>Telescope keymaps<cr>]], desc = "Keymaps" },
+            { "<leader>lr", [[<cmd>Telescope lsp_references<cr>]], desc = "LSP References" },
+            { "<leader>lds", [[<cmd>Telescope lsp_document_symbols<cr>]], desc = "LSP Document Symbols" },
+            { "<leader>lws", [[<cmd>Telescope lsp_workspace_symbols<cr>]], desc = "LSP Workspace Symbols" },
+            { "<leader>ldws", [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]], desc = "LSP Dynamic Workspace Symbols" },
+            { "<leader>lca", [[<cmd>Telescope lsp_code_actions<cr>]], desc = "LSP Code Actions" },
+            { "<leader>lrca", [[<cmd>Telescope lsp_range_code_actions<cr>]], desc = "LSP Range Code Actions" },
+            { "<leader>li", [[<cmd>Telescope lsp_implementations<cr>]], desc = "LSP Implementations" },
+            { "<leader>ld", [[<cmd>Telescope lsp_definitions<cr>]], desc = "LSP Definitions" },
         },
         dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
     },
@@ -374,7 +378,7 @@ return {
         build = "cd app && npm install",
         ft = { "markdown" },
         keys = {
-            { "<leader>md", [[<cmd>MarkdownPreviewToggle<cr>]] },
+            { "<leader>md", [[<cmd>MarkdownPreviewToggle<cr>]], desc = "Toggle Markdown Preview" },
         },
         config = function()
             vim.g.mkdp_filetypes = { "markdown" }
@@ -387,11 +391,11 @@ return {
         "sindrets/diffview.nvim",
         cmd = { "DiffviewOpen", "DiffviewFileHistory" },
         keys = {
-            { "<leader>dfo", [[<cmd>DiffviewOpen<cr>]] },
-            { "<leader>dfc", [[<cmd>DiffviewClose<cr>]] },
-            { "<leader>dfl", [[<cmd>DiffviewLog<cr>]] },
-            { "<leader>dfl", [[<cmd>DiffviewRefresh<cr>]] },
-            { "<leader>dfh", [[<cmd>DiffviewFileHistory<cr>]], mode = { "n", "v" } },
+            { "<leader>dfo", [[<cmd>DiffviewOpen<cr>]], desc = "Open Diff View" },
+            { "<leader>dfc", [[<cmd>DiffviewClose<cr>]], desc = "Close Diff View" },
+            { "<leader>dfl", [[<cmd>DiffviewLog<cr>]], desc = "Diff View Log" },
+            { "<leader>dfr", [[<cmd>DiffviewRefresh<cr>]], desc = "Refresh Diff View" },
+            { "<leader>dfh", [[<cmd>DiffviewFileHistory<cr>]], mode = { "n", "v" }, desc = "File History Diff" },
         },
         config = true,
     },
@@ -411,78 +415,91 @@ return {
                 function()
                     require("gitlab").review()
                 end,
+                desc = "GitLab: Review",
             },
             {
                 "<leader>gls",
                 function()
                     require("gitlab").summary()
                 end,
+                desc = "GitLab: Summary",
             },
             {
                 "<leader>glA",
                 function()
                     require("gitlab").approve()
                 end,
+                desc = "GitLab: Approve",
             },
             {
                 "<leader>glR",
                 function()
                     require("gitlab").revoke()
                 end,
+                desc = "GitLab: Revoke",
             },
             {
                 "<leader>glc",
                 function()
                     require("gitlab").create_comment()
                 end,
+                desc = "GitLab: Create Comment",
             },
             {
                 "<leader>gln",
                 function()
                     require("gitlab").create_note()
                 end,
+                desc = "GitLab: Create Note",
             },
             {
                 "<leader>gld",
                 function()
                     require("gitlab").toggle_discussions()
                 end,
+                desc = "GitLab: Toggle Discussions",
             },
             {
                 "<leader>glaa",
                 function()
                     require("gitlab").add_assignee()
                 end,
+                desc = "GitLab: Add Assignee",
             },
             {
                 "<leader>glad",
                 function()
                     require("gitlab").delete_assignee()
                 end,
+                desc = "GitLab: Delete Assignee",
             },
             {
                 "<leader>glra",
                 function()
                     require("gitlab").add_reviewer()
                 end,
+                desc = "GitLab: Add Reviewer",
             },
             {
                 "<leader>glrd",
                 function()
                     require("gitlab").delete_reviewer()
                 end,
+                desc = "GitLab: Delete Reviewer",
             },
             {
                 "<leader>glp",
                 function()
                     require("gitlab").pipeline()
                 end,
+                desc = "GitLab: Pipeline",
             },
             {
                 "<leader>glo",
                 function()
                     require("gitlab").open_in_browser()
                 end,
+                desc = "GitLab: Open in Browser",
             },
         },
         build = function()
