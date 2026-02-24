@@ -364,7 +364,11 @@ return {
             { "<leader>lr", [[<cmd>Telescope lsp_references<cr>]], desc = "LSP References" },
             { "<leader>lds", [[<cmd>Telescope lsp_document_symbols<cr>]], desc = "LSP Document Symbols" },
             { "<leader>lws", [[<cmd>Telescope lsp_workspace_symbols<cr>]], desc = "LSP Workspace Symbols" },
-            { "<leader>ldws", [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]], desc = "LSP Dynamic Workspace Symbols" },
+            {
+                "<leader>ldws",
+                [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]],
+                desc = "LSP Dynamic Workspace Symbols",
+            },
             { "<leader>lca", [[<cmd>Telescope lsp_code_actions<cr>]], desc = "LSP Code Actions" },
             { "<leader>lrca", [[<cmd>Telescope lsp_range_code_actions<cr>]], desc = "LSP Range Code Actions" },
             { "<leader>li", [[<cmd>Telescope lsp_implementations<cr>]], desc = "LSP Implementations" },
@@ -682,5 +686,26 @@ return {
             },
         },
         cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+    },
+
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+        opts = {
+            preset = "modern",
+        },
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
     },
 }
