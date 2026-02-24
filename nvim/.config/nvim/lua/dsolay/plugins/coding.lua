@@ -1,3 +1,48 @@
+-- ============================================================================
+-- Completion Plugin Configuration
+-- ============================================================================
+-- Table defining buffers/filetypes where completion should not be loaded
+-- This is used by the blink.cmp `cond` function to control lazy loading
+-- and by the `enabled` function to disable at runtime
+--
+-- Filetypes:
+--   - NvimTree: File explorer (main target)
+--   - help: Vim help buffers (:h command)
+--   - fugitive: Git plugin buffers (git status, commits, etc)
+--   - qf: Quickfix/Location list windows
+--   - dap-repl: Debugger REPL
+-- Buftypes:
+--   - nofile: Temporary/virtual buffers (scratch, etc)
+--   - terminal: Terminal buffers
+--   - prompt: Input prompt buffers
+--
+local completion_excluded = {
+    filetypes = {
+        "NvimTree",  -- nvim-tree file explorer
+        "help",      -- Vim help buffers
+        "fugitive",  -- Git buffers (vim-fugitive)
+        "qf",        -- Quickfix windows
+        "dap-repl",  -- Debugger REPL
+    },
+    buftypes = {
+        "nofile",    -- Temporary/virtual buffers
+        "terminal",  -- Terminal buffers
+        "prompt",    -- Prompt/input buffers
+    },
+}
+
+-- Helper function to check if completion should be enabled
+-- Returns false if current buffer matches exclusion criteria
+-- This is used by:
+--   1. blink.cmp's `cond` to decide whether to load the plugin (lazy loading)
+--   2. blink.cmp's `enabled` to disable at runtime (dynamic disabling)
+local function should_enable_completion()
+    if vim.tbl_contains(completion_excluded.buftypes, vim.bo.buftype) then
+        return false
+    end
+    return not vim.tbl_contains(completion_excluded.filetypes, vim.bo.filetype)
+end
+
 return {
     {
         "JoosepAlviste/nvim-ts-context-commentstring",
@@ -36,7 +81,15 @@ return {
         -- use a release tag to download pre-built binaries
         version = "1.*",
 
+        -- Only load this plugin if completion should be enabled in the current buffer
+        -- This prevents loading blink.cmp entirely in excluded buffers (lazy loading optimization)
+        cond = should_enable_completion,
+
         opts = {
+            -- Runtime safety: Disable completion dynamically if the plugin loads
+            -- This allows enabling/disabling completion when switching between buffers
+            enabled = should_enable_completion,
+
             -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
             -- 'super-tab' for mappings similar to vscode (tab to accept)
             -- 'enter' for enter to accept
