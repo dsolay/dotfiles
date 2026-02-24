@@ -64,7 +64,6 @@ vim.opt.completeopt:append({ "menu", "menuone", "noselect" })
 vim.opt.joinspaces = false
 vim.opt.guicursor = { "n-v-c:block", "i-ci-ve:ver25", "r-cr:hor20", "o:hor50" }
 vim.opt.updatetime = 300
-vim.opt.previewheight = 5
 vim.opt.display = "msgsep"
 vim.opt.mouse = "nivh"
 vim.opt.writebackup = false
