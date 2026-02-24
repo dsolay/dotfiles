@@ -49,7 +49,20 @@ return {
 
     {
         "kristijanhusak/vim-dadbod-ui",
-        cmd = { "DBUI", "DBUIToggle" },
+        dependencies = {
+            { "tpope/vim-dadbod", lazy = true },
+            { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+        },
+        cmd = {
+            "DBUI",
+            "DBUIToggle",
+            "DBUIAddConnection",
+            "DBUIFindBuffer",
+        },
+        init = function()
+            -- Your DBUI configuration
+            vim.g.db_ui_use_nerd_fonts = 1
+        end,
         config = function()
             local helpers = require("dsolay.config.dadbod-ui")
             vim.g.db_ui_table_helpers = helpers
@@ -62,7 +75,6 @@ return {
             vim.g.db_ui_show_database_icon = 1
         end,
         keys = { { "<leader>db", "<cmd>DBUIToggle<cr>", desc = "Toggle Database UI" } },
-        dependencies = { { "tpope/vim-dadbod", cmd = "DB" } },
     },
 
     {

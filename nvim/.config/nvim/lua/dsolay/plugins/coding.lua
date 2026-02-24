@@ -18,16 +18,16 @@
 --
 local completion_excluded = {
     filetypes = {
-        "NvimTree",  -- nvim-tree file explorer
-        "help",      -- Vim help buffers
-        "fugitive",  -- Git buffers (vim-fugitive)
-        "qf",        -- Quickfix windows
-        "dap-repl",  -- Debugger REPL
+        "NvimTree", -- nvim-tree file explorer
+        "help", -- Vim help buffers
+        "fugitive", -- Git buffers (vim-fugitive)
+        "qf", -- Quickfix windows
+        "dap-repl", -- Debugger REPL
     },
     buftypes = {
-        "nofile",    -- Temporary/virtual buffers
-        "terminal",  -- Terminal buffers
-        "prompt",    -- Prompt/input buffers
+        "nofile", -- Temporary/virtual buffers
+        "terminal", -- Terminal buffers
+        "prompt", -- Prompt/input buffers
     },
 }
 
@@ -117,6 +117,19 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 default = { "lsp", "path", "snippets", "buffer" },
+                per_filetype = {
+                    sql = { 'snippets', 'dadbod', 'buffer' },
+                    lua = { inherit_defaults = true, "lazydev" },
+                },
+                providers = {
+                    dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        -- make lazydev completions top priority (see `:h blink.cmp`)
+                        score_offset = 100,
+                    },
+                },
             },
 
             -- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
@@ -128,144 +141,6 @@ return {
         },
         opts_extend = { "sources.default" },
     },
-
-    -- {
-    --     "hrsh7th/nvim-cmp",
-    --     version = false,
-    --     event = "InsertEnter",
-    --     config = function()
-    --         local cmp_status, cmp = pcall(require, "cmp")
-    --
-    --         if not cmp_status then
-    --             return
-    --         end
-    --
-    --         cmp.event:on("menu_closed", function()
-    --             local bufnr = vim.api.nvim_get_current_buf()
-    --             vim.b[bufnr]._vue_ts_cached_is_in_start_tag = nil
-    --         end)
-    --
-    --         cmp.setup({
-    --             window = {
-    --                 completion = {
-    --                     winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
-    --                     col_offset = -3,
-    --                     side_padding = 0,
-    --                 },
-    --             },
-    --             formatting = {
-    --                 fields = { "kind", "abbr", "menu" },
-    --                 format = function(entry, vim_item)
-    --                     local kind =
-    --                         require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
-    --                     local strings = vim.split(kind.kind, "%s", { trimempty = true })
-    --                     kind.kind = " " .. (strings[1] or "") .. " "
-    --                     kind.menu = "    (" .. (strings[2] or "") .. ")"
-    --
-    --                     return kind
-    --                 end,
-    --             },
-    --             snippet = {
-    --                 expand = function(args)
-    --                     require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-    --                 end,
-    --             },
-    --             mapping = cmp.mapping.preset.insert({
-    --                 ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-    --                 ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    --                 ["<C-Space>"] = cmp.mapping.complete(),
-    --                 ["<C-e>"] = cmp.mapping.abort(),
-    --                 ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    --             }),
-    --             sources = cmp.config.sources({
-    --                 {
-    --                     name = "nvim_lsp",
-    --                     entry_filter = function(entry, ctx)
-    --                         -- Use a buffer-local variable to cache the result of the Treesitter check
-    --                         local bufnr = ctx.bufnr
-    --                         local cached_is_in_start_tag = vim.b[bufnr]._vue_ts_cached_is_in_start_tag
-    --                         if cached_is_in_start_tag == nil then
-    --                             vim.b[bufnr]._vue_ts_cached_is_in_start_tag = is_in_start_tag()
-    --                         end
-    --
-    --                         -- If not in start tag, return true
-    --                         if vim.b[bufnr]._vue_ts_cached_is_in_start_tag == false then
-    --                             return true
-    --                         end
-    --
-    --                         -- rest of the code
-    --                         if ctx.filetype ~= "vue" then
-    --                             return true
-    --                         end
-    --
-    --                         local cursor_before_line = ctx.cursor_before_line
-    --                         -- For events
-    --                         if cursor_before_line:sub(-1) == "@" then
-    --                             return entry.completion_item.label:match("^@")
-    --                         -- For props also exclude events with `:on-` prefix
-    --                         elseif cursor_before_line:sub(-1) == ":" then
-    --                             return entry.completion_item.label:match("^:")
-    --                                 and not entry.completion_item.label:match("^:on%-")
-    --                         else
-    --                             return true
-    --                         end
-    --                     end,
-    --                 },
-    --                 { name = "luasnip" },
-    --             }, { { name = "buffer" }, { name = "path" } }),
-    --         })
-    --
-    --         -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-    --         cmp.setup.cmdline({ "/", "?" }, {
-    --             mapping = cmp.mapping.preset.cmdline(),
-    --             sources = {
-    --                 { name = "buffer" },
-    --             },
-    --         })
-    --
-    --         -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-    --         cmp.setup.cmdline(":", {
-    --             mapping = cmp.mapping.preset.cmdline(),
-    --             sources = cmp.config.sources({
-    --                 { name = "path" },
-    --             }, {
-    --                 { name = "cmdline" },
-    --             }),
-    --             matching = { disallow_symbol_nonprefix_matching = false },
-    --         })
-    --     end,
-    --     dependencies = {
-    --         "hrsh7th/cmp-nvim-lsp",
-    --         "hrsh7th/cmp-buffer",
-    --         "hrsh7th/cmp-path",
-    --         "hrsh7th/cmp-cmdline",
-    --         "hrsh7th/cmp-nvim-lua",
-    --         "saadparwaiz1/cmp_luasnip",
-    --         "onsails/lspkind-nvim",
-    --     },
-    -- },
-
-    -- {
-    --     "L3MON4D3/LuaSnip",
-    --     build = "make install_jsregexp",
-    --     opts = {
-    --         history = true,
-    --         delete_check_events = "TextChanged",
-    --     },
-    --     dependencies = {
-    --         "rafamadriz/friendly-snippets",
-    --         config = function()
-    --             local luasnip = require("luasnip")
-    --
-    --             luasnip.filetype_extend("javascriptreact", { "html" })
-    --             luasnip.filetype_extend("typescriptreact", { "html" })
-    --
-    --             require("luasnip.loaders.from_vscode").lazy_load()
-    --         end,
-    --     },
-    -- },
-
-    -- { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" } },
 
     {
         "echasnovski/mini.surround",
