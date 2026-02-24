@@ -1,12 +1,3 @@
-local function is_in_start_tag()
-    local node = vim.treesitter.get_node()
-    if not node then
-        return false
-    end
-    local node_to_check = { "start_tag", "self_closing_tag", "directive_attribute" }
-    return vim.tbl_contains(node_to_check, node:type())
-end
-
 return {
     {
         "JoosepAlviste/nvim-ts-context-commentstring",
