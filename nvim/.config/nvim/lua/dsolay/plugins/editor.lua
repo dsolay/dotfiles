@@ -4,7 +4,7 @@ return {
         event = "VimEnter",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
-            require("dsolay.plugins.extras.alpha")
+            require("dsolay.config.alpha")
         end,
     },
 
@@ -51,7 +51,7 @@ return {
         "kristijanhusak/vim-dadbod-ui",
         cmd = { "DBUI", "DBUIToggle" },
         config = function()
-            local helpers = require("dsolay.plugins.extras.dadbod-ui")
+            local helpers = require("dsolay.config.dadbod-ui")
             vim.g.db_ui_table_helpers = helpers
 
             vim.g.db_ui_auto_execute_table_helpers = 1
