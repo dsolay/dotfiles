@@ -1,34 +1,4 @@
-local allowed_lsp_servers = {
-    { name = "null-ls", priority = 2, filetypes = {} },
-    {
-        name = "eslint",
-        priority = 1,
-        filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact", "vue" },
-    },
-    { name = "prismals", priority = 1, filetypes = { "prisma" } },
-    { name = "dockerls", priority = 1, filetypes = { "dockerfile" } },
-    { name = "jsonls", priority = 1, filetypes = { "json", "jsonc" } },
-    { name = "terraformls", priority = 1, filetypes = { "tf", "terraform", "hcl" } },
-}
-
--- Highlight line only in current window
-vim.api.nvim_create_augroup("CursorLine", {})
-
-vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter" }, {
-    group = "CursorLine",
-    pattern = "*",
-    callback = function()
-        vim.opt_local.cursorline = true
-    end,
-})
-
-vim.api.nvim_create_autocmd("WinLeave", {
-    group = "CursorLine",
-    pattern = "*",
-    callback = function()
-        vim.opt_local.cursorline = false
-    end,
-})
+local formatters_config = require("dsolay.config.formatters")
 
 -- Return to last edit position when opening files (You want this!)
 vim.api.nvim_create_augroup("preserve_last_position", {})
@@ -43,6 +13,27 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end,
 })
 
+-- Fix conceallevel for json files
+vim.api.nvim_create_augroup("json_conceal", { clear = true })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  group = "json_conceal",
+  pattern = { "json", "jsonc", "json5" },
+  callback = function()
+    vim.opt_local.conceallevel = 0
+  end,
+})
+
+-- wrap and check for spell in text filetypes
+vim.api.nvim_create_augroup("wrap_spell", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = "wrap_spell",
+  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
+  end,
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
@@ -55,6 +46,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- end
 
         local opts = { noremap = true, silent = true, buffer = bufnr }
+
+        -- Pre-calculate best formatter for this buffer's filetype
+        -- This avoids recalculating on every format keystroke
+        local best_formatter = formatters_config.get_best_formatter(vim.bo.filetype)
+        vim.b.best_formatter = best_formatter  -- Cache in buffer-local variable
 
         if client:supports_method("textDocument/implementation") then
             vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "Go to Implementation" }))
@@ -105,25 +101,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
             vim.keymap.set("n", "<space>f", function()
                 vim.lsp.buf.format({
                     filter = function(_client)
-                        local filetype = vim.bo.filetype
-
-                        local best_server = nil
-                        local highest_priority = math.huge
-
-                        for _, server in ipairs(allowed_lsp_servers) do
-                            if vim.tbl_contains(server.filetypes, filetype) or #server.filetypes == 0 then
-                                if server.priority < highest_priority then
-                                    highest_priority = server.priority
-                                    best_server = server
-                                end
-                            end
-                        end
-
-                        if best_server then
-                            return _client.name == best_server.name
-                        end
-
-                        return false
+                        return vim.b.best_formatter and _client.name == vim.b.best_formatter.name or false
                     end,
                     bufnr = bufnr,
                     timeout_ms = 60000,
