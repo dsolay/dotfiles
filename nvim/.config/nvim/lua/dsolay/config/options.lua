@@ -2,7 +2,10 @@ vim.g.mapleader = [[,]]
 
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
-vim.g.python3_host_prog = "/usr/bin/python"
+
+local home = os.getenv('HOME')
+vim.env.PYENV_VERSION = vim.fn.system('pyenv version'):match('(%S+)%s+%(.-%)')
+vim.g.python3_host_prog = home .. "/.anyenv/envs/pyenv/shims/python3"
 
 vim.scriptencoding = "utf-8"
 vim.opt.encoding = "utf-8"
@@ -61,7 +64,6 @@ vim.opt.completeopt:append({ "menu", "menuone", "noselect" })
 vim.opt.joinspaces = false
 vim.opt.guicursor = { "n-v-c:block", "i-ci-ve:ver25", "r-cr:hor20", "o:hor50" }
 vim.opt.updatetime = 300
-vim.opt.previewheight = 5
 vim.opt.display = "msgsep"
 vim.opt.mouse = "nivh"
 vim.opt.writebackup = false
@@ -71,7 +73,7 @@ vim.opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
 vim.opt.foldtext = "v:lua.vim.lsp.foldtext()"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
-vim.opt.clipboard:append({ "unnamedplus" })
+vim.opt.clipboard:append({ "unnamed", "unnamedplus" })
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.shiftround = true
@@ -79,7 +81,6 @@ vim.opt.termguicolors = true
 vim.opt.background = "dark"
 vim.opt.lazyredraw = true
 vim.opt.previewheight = 10
-vim.opt.laststatus = 3
 
 -- Use rigrep if installed
 if vim.fn.executable("rg") == 1 then
@@ -88,4 +89,4 @@ if vim.fn.executable("rg") == 1 then
 end
 
 vim.opt.exrc = true
-vim.o.secure = true
+vim.opt.secure = true

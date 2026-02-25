@@ -1,3 +1,5 @@
+local lsp_config = require("dsolay.config.lsp")
+
 return {
     {
         "neovim/nvim-lspconfig",
@@ -6,12 +8,7 @@ return {
             vim.diagnostic.config({
                 virtual_text = false,
                 signs = {
-                    text = {
-                        [vim.diagnostic.severity.ERROR] = "✘ ",
-                        [vim.diagnostic.severity.WARN] = " ",
-                        [vim.diagnostic.severity.INFO] = " ",
-                        [vim.diagnostic.severity.HINT] = "󰌵 ",
-                    },
+                    text = lsp_config.DIAGNOSTIC_ICONS,
                     linehl = {},
                     numhl = {},
                 },

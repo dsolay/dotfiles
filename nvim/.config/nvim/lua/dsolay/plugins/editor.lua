@@ -4,7 +4,7 @@ return {
         event = "VimEnter",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         config = function()
-            require("dsolay.plugins.extras.alpha")
+            require("dsolay.config.alpha")
         end,
     },
 
@@ -49,9 +49,22 @@ return {
 
     {
         "kristijanhusak/vim-dadbod-ui",
-        cmd = { "DBUI", "DBUIToggle" },
+        dependencies = {
+            { "tpope/vim-dadbod", lazy = true },
+            { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+        },
+        cmd = {
+            "DBUI",
+            "DBUIToggle",
+            "DBUIAddConnection",
+            "DBUIFindBuffer",
+        },
+        init = function()
+            -- Your DBUI configuration
+            vim.g.db_ui_use_nerd_fonts = 1
+        end,
         config = function()
-            local helpers = require("dsolay.plugins.extras.dadbod-ui")
+            local helpers = require("dsolay.config.dadbod-ui")
             vim.g.db_ui_table_helpers = helpers
 
             vim.g.db_ui_auto_execute_table_helpers = 1
@@ -62,7 +75,6 @@ return {
             vim.g.db_ui_show_database_icon = 1
         end,
         keys = { { "<leader>db", "<cmd>DBUIToggle<cr>", desc = "Toggle Database UI" } },
-        dependencies = { { "tpope/vim-dadbod", cmd = "DB" } },
     },
 
     {
@@ -662,5 +674,26 @@ return {
             },
         },
         cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+    },
+
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+        opts = {
+            preset = "modern",
+        },
+        keys = {
+            {
+                "<leader>?",
+                function()
+                    require("which-key").show({ global = false })
+                end,
+                desc = "Buffer Local Keymaps (which-key)",
+            },
+        },
     },
 }

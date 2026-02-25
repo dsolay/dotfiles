@@ -1,2 +1,0 @@
--- Keybindings are now managed by which-key.nvim
--- See lua/dsolay/plugins/which-key.lua for all keybindings
