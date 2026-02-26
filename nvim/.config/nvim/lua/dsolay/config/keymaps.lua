@@ -12,7 +12,6 @@
 
 vim.keymap.set("n", "<leader><C-e>", "ggVG", { desc = "Select All" })
 vim.keymap.set("n", "<leader><Esc>", [[:let @/=""<CR>]], { desc = "Clear Match" })
-vim.keymap.set("n", "<leader>pwd", "<cmd>echo expand('%')<CR>", { desc = "Show Path" })
 vim.keymap.set("n", "<leader>rw", [[:%s/<C-R>=expand('<cword>')<CR>/]], { desc = "Rewrite Word" })
 vim.keymap.set("n", "<leader>ss",
     [[<cmd>execute "grep " . "\"". expand("<cword>") . "\" " . finddir('.git/..', expand('%:p:h').';') <Bar> TroubleToggle quickfix<cr>]],
@@ -65,8 +64,8 @@ vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increa
 -- ============================================================================
 -- Common operations with Ctrl combinations
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll Down Centered" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll Up Centered" })
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll Down Centered" })
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll Up Centered" })
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 vim.keymap.set("n", "<A-q>", "<cmd>bd<CR>", { desc = "Close Buffer" })
 
@@ -99,3 +98,41 @@ vim.keymap.set("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" 
 vim.keymap.set("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 vim.keymap.set("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 vim.keymap.set("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
+-- lazygit
+if vim.fn.executable("lazygit") == 1 then
+  vim.keymap.set("n", "<leader>lg", function() Snacks.lazygit() end, { desc = "Lazygit (cwd)" })
+end
+
+-- windows
+vim.keymap.set("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
+vim.keymap.set("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
+vim.keymap.set("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
+Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
+Snacks.toggle.zen():map("<leader>uz")
+
+-- floating terminal
+vim.keymap.set("n", "<leader>fT", function() Snacks.terminal() end, { desc = "Terminal (cwd)" })
+vim.keymap.set({"n","t"}, "<c-/>",function() Snacks.terminal() end, { desc = "Terminal (Root Dir)" })
+vim.keymap.set({"n","t"}, "<c-_>",function() Snacks.terminal() end, { desc = "which_key_ignore" })
+
+-- toggle options
+Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+Snacks.toggle.diagnostics():map("<leader>ud")
+Snacks.toggle.line_number():map("<leader>ul")
+Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2, name = "Conceal Level" }):map("<leader>uc")
+Snacks.toggle.option("showtabline", { off = 0, on = vim.o.showtabline > 0 and vim.o.showtabline or 2, name = "Tabline" }):map("<leader>uA")
+Snacks.toggle.treesitter():map("<leader>uT")
+Snacks.toggle.option("background", { off = "light", on = "dark" , name = "Dark Background" }):map("<leader>ub")
+Snacks.toggle.dim():map("<leader>uD")
+Snacks.toggle.animate():map("<leader>ua")
+Snacks.toggle.indent():map("<leader>ug")
+Snacks.toggle.scroll():map("<leader>uS")
+Snacks.toggle.profiler():map("<leader>dpp")
+Snacks.toggle.profiler_highlights():map("<leader>dph")
+
+if vim.lsp.inlay_hint then
+  Snacks.toggle.inlay_hints():map("<leader>uh")
+end
