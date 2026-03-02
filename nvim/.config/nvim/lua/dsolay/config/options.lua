@@ -34,9 +34,8 @@ vim.opt.modeline = false
 vim.opt.autoindent = true
 
 -- vim.opt.syntax = 'off'
-vim.opt.scroll = 10
-vim.opt.scrolloff = 1
-vim.opt.sidescroll = 5
+vim.opt.scrolloff = 4
+vim.opt.sidescroll = 8
 vim.opt.listchars = { tab = [[→\ ]], eol = "¬", nbsp = "␣", trail = "•", precedes = "«", extends = "»" }
 vim.opt.wildignore:append({
     "**/node_modules/**",

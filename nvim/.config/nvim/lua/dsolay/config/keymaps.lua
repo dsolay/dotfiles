@@ -65,8 +65,6 @@ vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increa
 -- ============================================================================
 -- Common operations with Ctrl combinations
 
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Scroll Down Centered" })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Scroll Up Centered" })
 vim.keymap.set({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 vim.keymap.set("n", "<A-q>", "<cmd>bd<CR>", { desc = "Close Buffer" })
 
