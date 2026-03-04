@@ -18,9 +18,6 @@ vim.keymap.set("n", "<leader>ss",
     [[<cmd>execute "grep " . "\"". expand("<cword>") . "\" " . finddir('.git/..', expand('%:p:h').';') <Bar> TroubleToggle quickfix<cr>]],
     { desc = "Search Grep" }
 )
-vim.keymap.set("n", "<leader>tw", function()
-    vim.opt.wrap = not vim.opt.wrap:get()
-end, { desc = "Toggle Wrap" })
 
 -- ============================================================================
 -- Function Keys
