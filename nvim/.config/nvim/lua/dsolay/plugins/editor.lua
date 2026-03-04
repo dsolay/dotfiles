@@ -15,10 +15,7 @@ return {
         branch = "master",
     },
 
-    { "tpope/vim-unimpaired" },
-
     { "tpope/vim-dotenv" },
-    -- { "ellisonleao/dotenv.nvim", config = true },
 
     {
         "lukas-reineke/indent-blankline.nvim",
@@ -116,20 +113,6 @@ return {
     },
 
     {
-        "numtostr/FTerm.nvim",
-        keys = {
-            {
-                "<A-d>",
-                function()
-                    require("FTerm").toggle()
-                end,
-                desc = "Toggle Terminal",
-                mode = { "n", "t" },
-            },
-        },
-    },
-
-    {
         "norcalli/nvim-colorizer.lua",
         ft = { "css", "scss", "javascript", "vue", "vim", "html", "pug", "lua" },
         opts = {
@@ -208,42 +191,6 @@ return {
                 desc = "Quickfix List",
             },
         },
-    },
-
-    {
-        "kdav5758/TrueZen.nvim",
-        opts = {
-            integrations = {
-                tmux = true,
-                twilight = true,
-            },
-        },
-        keys = {
-            { "<leader>zn", "<cmd>TZNarrow<cr>", desc = "Narrow Focus", mode = { "n", "v" } },
-            { "<leader>zf", "<cmd>TZFocus<cr>", desc = "Focus Mode" },
-            { "<leader>zm", "<cmd>TZMinimalist<cr>", desc = "Minimalist View" },
-            { "<leader>za", "<cmd>TZAtaraxis<cr>", desc = "Ataraxis Mode" },
-        },
-        cmd = {
-            "TZMinimalist",
-            "TZFocus",
-            "TZAtaraxis",
-            "TZBottom",
-            "TZTop",
-            "TZLeft",
-        },
-    },
-
-    {
-        "kdheepak/lazygit.nvim",
-        config = function()
-            vim.g.lazygit_floating_window_winblend = 1
-            vim.g.lazygit_floating_window_use_plenary = 1
-        end,
-        keys = {
-            { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-        },
-        cmd = "LazyGit",
     },
 
     {
@@ -341,6 +288,7 @@ return {
             end
 
             telescope.load_extension("fzf")
+            telescope.load_extension("yank_history")
 
             return {
                 defaults = {
@@ -420,122 +368,6 @@ return {
     },
 
     {
-        "harrisoncramer/gitlab.nvim",
-        dependencies = {
-            "MunifTanjim/nui.nvim",
-            "nvim-lua/plenary.nvim",
-            "stevearc/dressing.nvim", -- Recommended but not required. Better UI for pickers.
-            enabled = true,
-        },
-        event = "BufWinEnter",
-        keys = {
-            {
-                "<leader>glr",
-                function()
-                    require("gitlab").review()
-                end,
-                desc = "GitLab Review",
-            },
-            {
-                "<leader>gls",
-                function()
-                    require("gitlab").summary()
-                end,
-                desc = "GitLab Summary",
-            },
-            {
-                "<leader>glA",
-                function()
-                    require("gitlab").approve()
-                end,
-                desc = "GitLab Approve",
-            },
-            {
-                "<leader>glR",
-                function()
-                    require("gitlab").revoke()
-                end,
-                desc = "GitLab Revoke",
-            },
-            {
-                "<leader>glc",
-                function()
-                    require("gitlab").create_comment()
-                end,
-                desc = "GitLab Comment",
-            },
-            {
-                "<leader>gln",
-                function()
-                    require("gitlab").create_note()
-                end,
-                desc = "GitLab Note",
-            },
-            {
-                "<leader>gld",
-                function()
-                    require("gitlab").toggle_discussions()
-                end,
-                desc = "GitLab Discussions",
-            },
-            {
-                "<leader>glaa",
-                function()
-                    require("gitlab").add_assignee()
-                end,
-                desc = "Add Assignee",
-            },
-            {
-                "<leader>glad",
-                function()
-                    require("gitlab").delete_assignee()
-                end,
-                desc = "Delete Assignee",
-            },
-            {
-                "<leader>glra",
-                function()
-                    require("gitlab").add_reviewer()
-                end,
-                desc = "Add Reviewer",
-            },
-            {
-                "<leader>glrd",
-                function()
-                    require("gitlab").delete_reviewer()
-                end,
-                desc = "Delete Reviewer",
-            },
-            {
-                "<leader>glp",
-                function()
-                    require("gitlab").pipeline()
-                end,
-                desc = "GitLab Pipeline",
-            },
-            {
-                "<leader>glo",
-                function()
-                    require("gitlab").open_in_browser()
-                end,
-                desc = "Open in Browser",
-            },
-        },
-        build = function()
-            require("gitlab.server").build(true)
-        end, -- Builds the Go binary
-        opts = {
-            reviewer = "diffview",
-        },
-    },
-
-    {
-        "ray-x/web-tools.nvim",
-        cmd = { "BrowserSync", "BrowserOpen", "BrowserPreview", "HurlRun" },
-        config = true,
-    },
-
-    {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {
@@ -606,19 +438,6 @@ return {
         "m4xshen/hardtime.nvim",
         dependencies = { "MunifTanjim/nui.nvim" },
         opts = {},
-    },
-
-    {
-        "echasnovski/mini.animate",
-        version = "*",
-        opts = {
-            open = {
-                enable = false,
-            },
-            close = {
-                enable = false,
-            },
-        },
     },
 
     {
@@ -694,6 +513,22 @@ return {
                 end,
                 desc = "Buffer Local Keymaps (which-key)",
             },
+        },
+    },
+
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+            bigfile = { enabled = true },
+            dim = { enabled = true },
+            lazygit = { enabled = true },
+            terminal = { enabled = true },
+            scope = { enabled = true },
+            scroll = { enabled = true },
+            zen = { enabled = true },
         },
     },
 }

@@ -27,7 +27,7 @@ lazy.setup({
         { import = "dsolay.plugins" },
     },
     install = {
-        colorscheme = { "tokyonight" },
+        colorscheme = { "gruvbox" },
     },
     ui = {
         border = "rounded",

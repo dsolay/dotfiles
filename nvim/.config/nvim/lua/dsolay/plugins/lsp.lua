@@ -18,6 +18,20 @@ return {
             { "<space>e", vim.diagnostic.open_float, desc = "Open Diagnostic" },
             { "<space>q", vim.diagnostic.setloclist, desc = "Set Loclist" },
             {
+                "]d",
+                function()
+                    vim.diagnostic.jump({ count = 1, severity = nil, float = false })
+                end,
+                desc = "Next Diagnostic",
+            },
+            {
+                "[d",
+                function()
+                    vim.diagnostic.jump({ count = -1, severity = nil, float = false })
+                end,
+                desc = "Prev Diagnostic",
+            },
+            {
                 "]e",
                 function()
                     vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR, float = false })
@@ -44,34 +58,6 @@ return {
                     vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.WARN, float = false })
                 end,
                 desc = "Prev Warning",
-            },
-            {
-                "]i",
-                function()
-                    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.INFO, float = false })
-                end,
-                desc = "Next Info",
-            },
-            {
-                "[i",
-                function()
-                    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.INFO, float = false })
-                end,
-                desc = "Prev Info",
-            },
-            {
-                "]h",
-                function()
-                    vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.HINT, float = false })
-                end,
-                desc = "Next Hint",
-            },
-            {
-                "[h",
-                function()
-                    vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.HINT, float = false })
-                end,
-                desc = "Prev Hint",
             },
         },
     },

@@ -72,7 +72,7 @@ vim.opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
 vim.opt.foldtext = "v:lua.vim.lsp.foldtext()"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
-vim.opt.clipboard:append({ "unnamed", "unnamedplus" })
+vim.opt.clipboard = "unnamedplus"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.shiftround = true
