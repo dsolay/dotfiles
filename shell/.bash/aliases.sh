@@ -312,6 +312,13 @@ alias idk='echo "¯\_(ツ)_/¯"'
 alias wtf='echo "❨╯°□°❩╯ ︵ ┻━┻"'
 alias wat='echo "⚆_⚆"'
 
+## SQL
+if _checkexec fnox; then
+  alias dbui='fnox exec -- nvim -c "DBUI"'
+else
+  alias dbui='nvim -c "DBUI"'
+fi
+
 ## SSH Servers
 alias ga='ssh ec2-user@20.0.0.73'
 alias pets-bastion='ssh ec2-user@52.203.108.78'
