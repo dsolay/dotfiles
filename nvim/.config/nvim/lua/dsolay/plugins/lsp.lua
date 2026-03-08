@@ -123,6 +123,13 @@ return {
                             timeout = 15000,
                         }))
                     end,
+                    dotenv_linter = function()
+                        null_ls.register(null_ls.builtins.diagnostics.dotenv_linter.with({
+                            filetypes = { "env" },
+                            extra_args = { "check" },
+                            prepend_extra_args = true,
+                        }))
+                    end,
                 },
             })
 
