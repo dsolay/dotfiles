@@ -60,3 +60,6 @@ export DOCKER_BUILDKIT=1
 export ROFI_THEME="gruvbox-dark-soft"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+FNOX_AGE_KEY=$(cat ~/.config/fnox/age.txt | grep "AGE-SECRET-KEY")
+export FNOX_AGE_KEY
