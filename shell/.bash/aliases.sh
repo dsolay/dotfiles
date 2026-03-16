@@ -310,6 +310,13 @@ alias disconnect='nmcli con down'
 
 alias chivo_vpn='fortivpn connect chivo_wallet --user=roman.gonzalez --password'
 
+## SQL
+if _checkexec fnox; then
+  alias dbui='fnox exec -- nvim -c "DBUI"'
+else
+  alias dbui='nvim -c "DBUI"'
+fi
+
 # Emoji
 alias lod='echo "ಠ_ಠ"'
 alias idk='echo "¯\_(ツ)_/¯"'
