@@ -38,6 +38,8 @@ return {
                 "kotlin",
                 "latex",
                 "lua",
+                "markdown",
+                "markdown_inline",
                 "php",
                 "python",
                 "prisma",
