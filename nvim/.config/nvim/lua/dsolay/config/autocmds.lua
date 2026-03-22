@@ -23,17 +23,6 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
--- wrap and check for spell in text filetypes
-vim.api.nvim_create_augroup("wrap_spell", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-  group = "wrap_spell",
-  pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
-  callback = function()
-    vim.opt_local.wrap = true
-    vim.opt_local.spell = true
-  end,
-})
-
 vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
         local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
