@@ -27,14 +27,27 @@ dashboard.section.header.val = {
 -- Set menu
 dashboard.section.buttons.val = {
     button("n", "  New file", "<cmd>enew<cr>"),
-    button("r", "  Recently opened files", "<cmd>Telescope oldfiles<cr>"),
-    button("f", "󰱼  Find file", "<cmd>Telescope find_files hidden=true<cr>"),
-    button("w", "  Find word", "<cmd>Telescope live_grep<CR>"),
-    button("p", "  Find project", "<cmd>Telescope project<cr>"),
+    button("r", "  Recently opened files", function()
+        Snacks.picker.recent()
+    end),
+    button("f", "󰱼  Find file", function()
+        Snacks.picker.files()
+    end),
+    button("w", "  Find word", function()
+        Snacks.picker.grep()
+    end),
+    button("p", "  Find project", function()
+        Snacks.picker.projects({
+            dev = { "~/workspace", "~/workspace/aplin/projects", "~/workspace/chivo", "~/workspace/chivo/hub" },
+        })
+    end),
     button("o", "  Open session"),
-    button("t", "  TODO", "<cmd>TodoTelescope<cr>"),
-    button("c", "  Peoples Calendar", "<cmd>APeoplesCalendar<cr>"),
-    button("s", "  Settings", "<cmd>e ~/.nvim-profiles/ide/lua/settings.lua<cr>"),
+    button("t", "  TODO", function()
+        Snacks.picker.todo_comments()
+    end),
+    button("s", "  Settings", function()
+        Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+    end),
     button("q", "󰗼  Quit", "<cmd>qa<cr>"),
 }
 

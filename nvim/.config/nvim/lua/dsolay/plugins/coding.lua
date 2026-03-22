@@ -143,74 +143,95 @@ return {
         opts = {},
     },
 
+    -- {
+    --     "yetone/avante.nvim",
+    --     event = "VeryLazy",
+    --     lazy = false,
+    --     version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
+    --     opts = {
+    --         provider = "deepseek",
+    --         providers = {
+    --             deepseek = {
+    --                 __inherited_from = "openai",
+    --                 endpoint = "https://api.deepseek.com",
+    --                 model = "deepseek-chat",
+    --                 timeout = 30000,
+    --                 extra_request_body = {
+    --                     temperature = 0,
+    --                     max_tokens = 8192,
+    --                 },
+    --             },
+    --         },
+    --         behaviour = {
+    --             auto_suggestions = false,
+    --             auto_set_highlight_group = true,
+    --             auto_set_keymaps = true,
+    --             auto_apply_diff_after_generation = false,
+    --             support_paste_from_clipboard = false,
+    --             minimize_diff = true,
+    --             auto_approve_tool_permissions = { "bash", "replace_in_file" },
+    --         },
+    --     },
+    --     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    --     build = "make",
+    --     dependencies = {
+    --         "stevearc/dressing.nvim",
+    --         "nvim-lua/plenary.nvim",
+    --         "MunifTanjim/nui.nvim",
+    --         --- The below dependencies are optional,
+    --         "echasnovski/mini.pick", -- for file_selector provider mini.pick
+    --         "ibhagwan/fzf-lua", -- for file_selector provider fzf
+    --         {
+    --             -- support for image pasting
+    --             "HakonHarnes/img-clip.nvim",
+    --             event = "VeryLazy",
+    --             opts = {
+    --                 -- recommended settings
+    --                 default = {
+    --                     embed_image_as_base64 = false,
+    --                     prompt_for_file_name = false,
+    --                     drag_and_drop = {
+    --                         insert_mode = true,
+    --                     },
+    --                     -- required for Windows users
+    --                     use_absolute_path = true,
+    --                 },
+    --             },
+    --         },
+    --         {
+    --             -- Make sure to set this up properly if you have lazy=true
+    --             "MeanderingProgrammer/render-markdown.nvim",
+    --             opts = {
+    --                 file_types = { "markdown", "Avante" },
+    --                 bullet = {
+    --                     left_pad = 0,
+    --                     right_pad = 1,
+    --                 },
+    --             },
+    --             ft = { "markdown", "Avante" },
+    --         },
+    --     },
+    -- },
+
+    -- {
+    --     -- Make sure to set this up properly if you have lazy=true
+    --     "MeanderingProgrammer/render-markdown.nvim",
+    --     opts = {
+    --         file_types = { "markdown", "Avante" },
+    --         bullet = {
+    --             left_pad = 0,
+    --             right_pad = 1,
+    --         },
+    --     },
+    --     ft = { "markdown", "Avante" },
+    -- },
+
     {
-        "yetone/avante.nvim",
-        event = "VeryLazy",
+        "OXY2DEV/markview.nvim",
         lazy = false,
-        version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-        opts = {
-            provider = "deepseek",
-            providers = {
-                deepseek = {
-                    __inherited_from = "openai",
-                    endpoint = "https://api.deepseek.com",
-                    model = "deepseek-chat",
-                    timeout = 30000,
-                    extra_request_body = {
-                        temperature = 0,
-                        max_tokens = 8192,
-                    },
-                },
-            },
-            behaviour = {
-                auto_suggestions = false,
-                auto_set_highlight_group = true,
-                auto_set_keymaps = true,
-                auto_apply_diff_after_generation = false,
-                support_paste_from_clipboard = false,
-                minimize_diff = true,
-                auto_approve_tool_permissions = { "bash", "replace_in_file" },
-            },
-        },
-        -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-        build = "make",
-        dependencies = {
-            "stevearc/dressing.nvim",
-            "nvim-lua/plenary.nvim",
-            "MunifTanjim/nui.nvim",
-            --- The below dependencies are optional,
-            "echasnovski/mini.pick", -- for file_selector provider mini.pick
-            "ibhagwan/fzf-lua", -- for file_selector provider fzf
-            {
-                -- support for image pasting
-                "HakonHarnes/img-clip.nvim",
-                event = "VeryLazy",
-                opts = {
-                    -- recommended settings
-                    default = {
-                        embed_image_as_base64 = false,
-                        prompt_for_file_name = false,
-                        drag_and_drop = {
-                            insert_mode = true,
-                        },
-                        -- required for Windows users
-                        use_absolute_path = true,
-                    },
-                },
-            },
-            {
-                -- Make sure to set this up properly if you have lazy=true
-                "MeanderingProgrammer/render-markdown.nvim",
-                opts = {
-                    file_types = { "markdown", "Avante" },
-                    bullet = {
-                        left_pad = 0,
-                        right_pad = 1,
-                    },
-                },
-                ft = { "markdown", "Avante" },
-            },
-        },
+
+        -- Completion for `blink.cmp`
+        -- dependencies = { "saghen/blink.cmp" },
     },
 
     {

@@ -146,8 +146,20 @@ return {
             },
             { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo (Trouble)" },
             { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-            { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-            { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+            {
+                "<leader>st",
+                function()
+                    Snacks.picker.todo_comments()
+                end,
+                desc = "Todo",
+            },
+            {
+                "<leader>sT",
+                function()
+                    Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
+                end,
+                desc = "Todo/Fix/Fixme",
+            },
         },
     },
 
@@ -272,68 +284,68 @@ return {
         },
     },
 
-    {
-        "nvim-telescope/telescope.nvim",
-        version = false,
-        branch = "0.1.x",
-        cmd = "Telescope",
-        opts = function()
-            local status, telescope = pcall(require, "telescope")
-            local troubleStatus, trouble = pcall(require, "trouble.sources.telescope")
-
-            if not status or not troubleStatus then
-                return
-            end
-
-            telescope.load_extension("fzf")
-            telescope.load_extension("yank_history")
-
-            return {
-                defaults = {
-                    layout_strategy = "flex",
-                    mappings = {
-                        i = { ["<c-j>"] = trouble.open },
-                        n = { ["<c-j>"] = trouble.open },
-                    },
-                },
-                extensions = {
-                    fzf = {
-                        fuzzy = true,
-                        override_generic_sorter = true,
-                        override_file_sorter = true,
-                        case_mode = "smart_case",
-                    },
-                },
-            }
-        end,
-        keys = {
-            { "<leader>fb", [[<cmd>Telescope buffers<cr>]], desc = "List Buffers" },
-            { "<leader>fp", [[<cmd>Telescope git_files<cr>]], desc = "Find Git Files" },
-            { "<leader>ff", [[<cmd>Telescope find_files hidden=true<cr>]], desc = "Find Files" },
-            { "<leader>fg", [[<cmd>Telescope live_grep<cr>]], desc = "Live Grep" },
-            { "<leader>fq", [[<cmd>Telescope quickfix<cr>]], desc = "Quickfix List" },
-            { "<leader>fl", [[<cmd>Telescope localist<cr>]], desc = "Location List" },
-            { "<leader>fo", [[<cmd>Telescope vim_options<cr>]], desc = "Vim Options" },
-            { "<leader>fr", [[<cmd>Telescope registers<cr>]], desc = "Registers" },
-            { "<leader>fc", [[<cmd>Telescope commands<cr>]], desc = "Commands" },
-            { "<leader>fm", [[<cmd>Telescope man_pages<cr>]], desc = "Man Pages" },
-            { "<leader>fs", [[<cmd>Telescope spell_suggest<cr>]], desc = "Spell Suggestions" },
-            { "<leader>fk", [[<cmd>Telescope keymaps<cr>]], desc = "Keymaps" },
-            { "<leader>lr", [[<cmd>Telescope lsp_references<cr>]], desc = "LSP References" },
-            { "<leader>lds", [[<cmd>Telescope lsp_document_symbols<cr>]], desc = "LSP Document Symbols" },
-            { "<leader>lws", [[<cmd>Telescope lsp_workspace_symbols<cr>]], desc = "LSP Workspace Symbols" },
-            {
-                "<leader>ldws",
-                [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]],
-                desc = "LSP Dynamic Workspace Symbols",
-            },
-            { "<leader>lca", [[<cmd>Telescope lsp_code_actions<cr>]], desc = "LSP Code Actions" },
-            { "<leader>lrca", [[<cmd>Telescope lsp_range_code_actions<cr>]], desc = "LSP Range Code Actions" },
-            { "<leader>li", [[<cmd>Telescope lsp_implementations<cr>]], desc = "LSP Implementations" },
-            { "<leader>ld", [[<cmd>Telescope lsp_definitions<cr>]], desc = "LSP Definitions" },
-        },
-        dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
-    },
+    -- {
+    --     "nvim-telescope/telescope.nvim",
+    --     version = false,
+    --     branch = "0.1.x",
+    --     cmd = "Telescope",
+    --     opts = function()
+    --         local status, telescope = pcall(require, "telescope")
+    --         local troubleStatus, trouble = pcall(require, "trouble.sources.telescope")
+    --
+    --         if not status or not troubleStatus then
+    --             return
+    --         end
+    --
+    --         telescope.load_extension("fzf")
+    --         telescope.load_extension("yank_history")
+    --
+    --         return {
+    --             defaults = {
+    --                 layout_strategy = "flex",
+    --                 mappings = {
+    --                     i = { ["<c-j>"] = trouble.open },
+    --                     n = { ["<c-j>"] = trouble.open },
+    --                 },
+    --             },
+    --             extensions = {
+    --                 fzf = {
+    --                     fuzzy = true,
+    --                     override_generic_sorter = true,
+    --                     override_file_sorter = true,
+    --                     case_mode = "smart_case",
+    --                 },
+    --             },
+    --         }
+    --     end,
+    --     keys = {
+    --         { "<leader>fb", [[<cmd>Telescope buffers<cr>]], desc = "List Buffers" },
+    --         { "<leader>fp", [[<cmd>Telescope git_files<cr>]], desc = "Find Git Files" },
+    --         { "<leader>ff", [[<cmd>Telescope find_files hidden=true<cr>]], desc = "Find Files" },
+    --         { "<leader>fg", [[<cmd>Telescope live_grep<cr>]], desc = "Live Grep" },
+    --         { "<leader>fq", [[<cmd>Telescope quickfix<cr>]], desc = "Quickfix List" },
+    --         { "<leader>fl", [[<cmd>Telescope localist<cr>]], desc = "Location List" },
+    --         { "<leader>fo", [[<cmd>Telescope vim_options<cr>]], desc = "Vim Options" },
+    --         { "<leader>fr", [[<cmd>Telescope registers<cr>]], desc = "Registers" },
+    --         { "<leader>fc", [[<cmd>Telescope commands<cr>]], desc = "Commands" },
+    --         { "<leader>fm", [[<cmd>Telescope man_pages<cr>]], desc = "Man Pages" },
+    --         { "<leader>fs", [[<cmd>Telescope spell_suggest<cr>]], desc = "Spell Suggestions" },
+    --         { "<leader>fk", [[<cmd>Telescope keymaps<cr>]], desc = "Keymaps" },
+    --         { "<leader>lr", [[<cmd>Telescope lsp_references<cr>]], desc = "LSP References" },
+    --         { "<leader>lds", [[<cmd>Telescope lsp_document_symbols<cr>]], desc = "LSP Document Symbols" },
+    --         { "<leader>lws", [[<cmd>Telescope lsp_workspace_symbols<cr>]], desc = "LSP Workspace Symbols" },
+    --         {
+    --             "<leader>ldws",
+    --             [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]],
+    --             desc = "LSP Dynamic Workspace Symbols",
+    --         },
+    --         { "<leader>lca", [[<cmd>Telescope lsp_code_actions<cr>]], desc = "LSP Code Actions" },
+    --         { "<leader>lrca", [[<cmd>Telescope lsp_range_code_actions<cr>]], desc = "LSP Range Code Actions" },
+    --         { "<leader>li", [[<cmd>Telescope lsp_implementations<cr>]], desc = "LSP Implementations" },
+    --         { "<leader>ld", [[<cmd>Telescope lsp_definitions<cr>]], desc = "LSP Definitions" },
+    --     },
+    --     dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-fzf-native.nvim", build = "make" } },
+    -- },
 
     {
         "iamcco/markdown-preview.nvim",
@@ -535,11 +547,14 @@ return {
         opts = {
             bigfile = { enabled = true },
             dim = { enabled = true },
-            lazygit = { enabled = true },
+            lazygit = {},
             terminal = { enabled = true },
             scope = { enabled = true },
             scroll = { enabled = true },
-            zen = { enabled = true },
+            zen = {},
+            picker = {},
+            explorer = { replace_netrw = true, trash = true },
+            gitbrowse = {},
         },
     },
 }
