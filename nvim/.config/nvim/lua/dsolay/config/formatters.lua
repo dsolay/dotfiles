@@ -67,6 +67,13 @@ FORMATTERS.PRIORITIES = {
         description = "JSON schema validation and formatting",
         filetypes = { "json", "jsonc" },
     },
+
+    {
+        name = "rumdl",
+        priority = 1,
+        description = "MarkDown validation and formatting",
+        filetypes = { "markdown" },
+    },
 }
 
 -- ============================================================================

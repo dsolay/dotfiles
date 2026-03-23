@@ -127,9 +127,6 @@ return {
                             prepend_extra_args = true,
                         }))
                     end,
-                    rumdl = function()
-                        require("dsolay.plugins.lsp.sources.rumdl").setup(null_ls)
-                    end,
                 },
             })
 
