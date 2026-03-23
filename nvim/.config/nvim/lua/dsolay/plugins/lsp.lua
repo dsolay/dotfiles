@@ -93,7 +93,7 @@ return {
                 ensure_installed = {
                     "stylua",
                     "hadolint",
-                    "markdownlint",
+                    "rumdl",
                     "phpstan",
                     "phpcsfixer",
                     "shellcheck",
@@ -108,6 +108,7 @@ return {
                     prettier = function()
                         null_ls.register(null_ls.builtins.formatting.prettier.with({
                             prefer_local = "node_modules/.bin",
+                            disabled_filetypes = { "markdown" },
                         }))
                     end,
                     phpcsfixer = function()
@@ -129,6 +130,9 @@ return {
                             extra_args = { "check" },
                             prepend_extra_args = true,
                         }))
+                    end,
+                    rumdl = function()
+                        require("dsolay.plugins.lsp.sources.rumdl").setup(null_ls)
                     end,
                 },
             })
