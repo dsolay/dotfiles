@@ -148,8 +148,6 @@ return {
             },
             { "<leader>xt", "<cmd>TodoTrouble<cr>", desc = "Todo Trouble" },
             { "<leader>xT", "<cmd>TodoTrouble keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme Trouble" },
-            { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo Telescope" },
-            { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme Telescope" },
         },
     },
 
@@ -275,71 +273,6 @@ return {
     },
 
     {
-        "nvim-telescope/telescope.nvim",
-        version = false,
-        branch = "0.1.x",
-        cmd = "Telescope",
-        opts = function()
-            local status, telescope = pcall(require, "telescope")
-            local troubleStatus, trouble = pcall(require, "trouble.sources.telescope")
-
-            if not status or not troubleStatus then
-                return
-            end
-
-            telescope.load_extension("fzf")
-            telescope.load_extension("yank_history")
-
-            return {
-                defaults = {
-                    layout_strategy = "flex",
-                    mappings = {
-                        i = { ["<c-j>"] = trouble.open },
-                        n = { ["<c-j>"] = trouble.open },
-                    },
-                },
-                extensions = {
-                    fzf = {
-                        fuzzy = true,
-                        override_generic_sorter = true,
-                        override_file_sorter = true,
-                        case_mode = "smart_case",
-                    },
-                },
-            }
-        end,
-        keys = {
-            { "<leader>fb", [[<cmd>Telescope buffers<cr>]], desc = "Buffers" },
-            { "<leader>fp", [[<cmd>Telescope git_files<cr>]], desc = "Git Files" },
-            { "<leader>ff", [[<cmd>Telescope find_files hidden=true<cr>]], desc = "Find Files" },
-            { "<leader>fg", [[<cmd>Telescope live_grep<cr>]], desc = "Live Grep" },
-            { "<leader>fq", [[<cmd>Telescope quickfix<cr>]], desc = "Quickfix" },
-            { "<leader>fl", [[<cmd>Telescope localist<cr>]], desc = "Loclist" },
-            { "<leader>fo", [[<cmd>Telescope vim_options<cr>]], desc = "Vim Options" },
-            { "<leader>fr", [[<cmd>Telescope registers<cr>]], desc = "Registers" },
-            { "<leader>fc", [[<cmd>Telescope commands<cr>]], desc = "Commands" },
-            { "<leader>fm", [[<cmd>Telescope man_pages<cr>]], desc = "Man Pages" },
-            { "<leader>fs", [[<cmd>Telescope spell_suggest<cr>]], desc = "Spell Suggest" },
-            { "<leader>fk", [[<cmd>Telescope keymaps<cr>]], desc = "Keymaps" },
-            { "<leader>lr", [[<cmd>Telescope lsp_references<cr>]], desc = "References" },
-            { "<leader>lds", [[<cmd>Telescope lsp_document_symbols<cr>]], desc = "Document Symbols" },
-            { "<leader>lws", [[<cmd>Telescope lsp_workspace_symbols<cr>]], desc = "Workspace Symbols" },
-            { "<leader>ldws", [[<cmd>Telescope lsp_dynamic_workspace_symbols<cr>]], desc = "Dynamic Workspace" },
-            { "<leader>lca", [[<cmd>Telescope lsp_code_actions<cr>]], desc = "Code Actions" },
-            { "<leader>lrca", [[<cmd>Telescope lsp_range_code_actions<cr>]], desc = "Range Code Actions" },
-            { "<leader>li", [[<cmd>Telescope lsp_implementations<cr>]], desc = "Implementations" },
-            { "<leader>ld", [[<cmd>Telescope lsp_definitions<cr>]], desc = "Definitions" },
-        },
-        dependencies = {
-            { "nvim-lua/plenary.nvim" },
-            {
-                "nvim-telescope/telescope-fzf-native.nvim",
-                build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
-            },
-        },
-    },
-
-    {
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
         build = "cd app && npm install",
@@ -421,16 +354,6 @@ return {
                 reindent_linewise = true,
             },
         },
-    },
-
-    {
-        "pwntester/octo.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
-            "nvim-tree/nvim-web-devicons",
-        },
-        config = true,
     },
 
     -- lazy.nvim
@@ -524,11 +447,14 @@ return {
         opts = {
             bigfile = { enabled = true },
             dim = { enabled = true },
-            lazygit = { enabled = true },
+            lazygit = {},
             terminal = { enabled = true },
             scope = { enabled = true },
             scroll = { enabled = true },
-            zen = { enabled = true },
+            zen = {},
+            picker = {},
+            explorer = { replace_netrw = true, trash = true },
+            gitbrowse = {},
         },
     },
 }
