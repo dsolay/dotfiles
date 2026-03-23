@@ -331,6 +331,7 @@ alias aplin-db='cloud-sql-proxy staging-472916:us-central1:db-staging --port 543
 alias pets-dev-db='ssh -N -L 3306:pets-portal-dev-instance-1.cq4oc32vghjg.us-east-1.rds.amazonaws.com:3306 ec2-user@52.203.108.78'
 alias pets-prod-db='ssh -N -L 3306:pets-portal-instance-1.cq4oc32vghjg.us-east-1.rds.amazonaws.com:3306 ec2-user@54.91.35.233'
 alias atlas-db='gcloud compute ssh atlas-bastion-dev --tunnel-through-iap --zone=us-central1-c --ssh-flag="-L 5432:localhost:5432"'
+alias recoup-db='ssh -N -L 5434:recoup-production-writer.cveayooksjda.us-east-2.rds.amazonaws.com:5432 ec2-user@18.226.222.96 -i ~/.ssh/recoup-production-bastion'
 
 # aplin
 alias aplin-db='cloud-sql-proxy  staging-472916:us-central1:db-staging --port 5433'
