@@ -4,7 +4,7 @@ Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/). E
 
 ## Repository Structure
 
-```
+```text
 dotfiles/
 ├── nvim/.config/nvim/          # Neovim config (Lua, lazy.nvim)
 │   ├── init.lua                # Entry: autocmds -> options -> lazy -> keymaps
@@ -66,10 +66,12 @@ source ~/.bashrc                      # Reload shell config
 
 - **First-party modules:** bare `require` — `local cfg = require("dsolay.config.lsp")`
 - **Third-party/plugin modules:** always `pcall`:
+
   ```lua
   local status_ok, module = pcall(require, "module-name")
   if not status_ok then return end
   ```
+
 - Guard variable naming: `status_ok` or `<module>_status`
 - Use early `return` on failure, never nest the happy path
 
@@ -129,7 +131,7 @@ if _checkexec docker; then alias dps='docker ps'; fi
 
 ### Commit Messages — Conventional Commits
 
-```
+```text
 <type>(<scope>): <description>
 ```
 
