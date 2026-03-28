@@ -72,43 +72,43 @@ return {
         keys = { { "<leader>db", "<cmd>DBUIToggle<cr>", desc = "Toggle Database UI" } },
     },
 
-    {
-        "nvim-tree/nvim-tree.lua",
-        opts = {
-            disable_netrw = true,
-            hijack_netrw = true,
-            diagnostics = { enable = true },
-            auto_reload_on_write = false,
-            trash = {
-                cmd = "trash-put",
-                require_confirm = true,
-            },
-            git = { enable = true, ignore = false, timeout = 500 },
-        },
-        keys = {
-            {
-                "<C-b>",
-                function()
-                    require("nvim-tree.api").tree.toggle()
-                end,
-                desc = "Toggle File Explorer",
-            },
-            {
-                "<leader>tr",
-                function()
-                    require("nvim-tree.api").tree.reload()
-                end,
-                desc = "Refresh File Explorer",
-            },
-            {
-                "<leader>tf",
-                function()
-                    require("nvim-tree.api").tree.find_file({ open = true, focus = true })
-                end,
-                desc = "Find File in Explorer",
-            },
-        },
-    },
+    -- {
+    --     "nvim-tree/nvim-tree.lua",
+    --     opts = {
+    --         disable_netrw = true,
+    --         hijack_netrw = true,
+    --         diagnostics = { enable = true },
+    --         auto_reload_on_write = false,
+    --         trash = {
+    --             cmd = "trash-put",
+    --             require_confirm = true,
+    --         },
+    --         git = { enable = true, ignore = false, timeout = 500 },
+    --     },
+    --     keys = {
+    --         {
+    --             "<C-b>",
+    --             function()
+    --                 require("nvim-tree.api").tree.toggle()
+    --             end,
+    --             desc = "Toggle File Explorer",
+    --         },
+    --         {
+    --             "<leader>tr",
+    --             function()
+    --                 require("nvim-tree.api").tree.reload()
+    --             end,
+    --             desc = "Refresh File Explorer",
+    --         },
+    --         {
+    --             "<leader>tf",
+    --             function()
+    --                 require("nvim-tree.api").tree.find_file({ open = true, focus = true })
+    --             end,
+    --             desc = "Find File in Explorer",
+    --         },
+    --     },
+    -- },
 
     {
         "norcalli/nvim-colorizer.lua",
@@ -552,9 +552,37 @@ return {
             scope = { enabled = true },
             scroll = { enabled = true },
             zen = {},
-            picker = {},
+            picker = {
+                enabled = true,
+                actions = {
+                    new_tab = { action = "jump", cmd = "tab" },
+                },
+                -- confirm = function(picker, item, action)
+                --     picker:action("tab")
+                -- end,
+                sources = {
+                    explorer = {
+                        enabled = true,
+                        win = {
+                            list = {
+                                keys = {
+                                    ["O"] = { { "pick_win", "jump" }, mode = { "n", "i" } },
+                                    ['<c-t>'] = 'new_tab',
+                                },
+                            },
+                        },
+                    },
+                },
+            },
             explorer = { replace_netrw = true, trash = true },
             gitbrowse = {},
         },
+    },
+
+    {
+        "chomosuke/typst-preview.nvim",
+        ft = "typst",
+        version = "1.*",
+        opts = {}, -- lazy.nvim will implicitly calls `setup {}`
     },
 }

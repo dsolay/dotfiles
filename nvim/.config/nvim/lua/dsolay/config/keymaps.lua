@@ -161,21 +161,30 @@ end
 vim.keymap.set({ "n" }, "<leader><space>", function()
     Snacks.picker.smart()
 end, { desc = "Smart Find Files" })
+
 vim.keymap.set({ "n" }, "<leader>,", function()
     Snacks.picker.buffers()
 end, { desc = "Buffers" })
+
 vim.keymap.set({ "n" }, "<leader>/", function()
     Snacks.picker.grep()
 end, { desc = "Grep" })
+
 vim.keymap.set({ "n" }, "<leader>:", function()
     Snacks.picker.command_history()
 end, { desc = "Command History" })
+
 vim.keymap.set({ "n" }, "<leader>n", function()
     Snacks.picker.notifications()
 end, { desc = "Notification History" })
-vim.keymap.set({ "n" }, "<leader>e", function()
+
+vim.keymap.set({ "n" }, "<C-b>", function()
     Snacks.explorer()
 end, { desc = "File Explorer" })
+
+vim.keymap.set({ "n" }, "<leader>tf", function()
+    Snacks.explorer.reveal()
+end, { desc = "Reveals the current buffer in the explorer" })
 
 -- find
 vim.keymap.set({ "n" }, "<leader>fb", function()
@@ -191,7 +200,9 @@ vim.keymap.set({ "n" }, "<leader>fg", function()
     Snacks.picker.git_files()
 end, { desc = "Find Git Files" })
 vim.keymap.set({ "n" }, "<leader>fp", function()
-    Snacks.picker.projects({ dev = { "~/workspace", "~/workspace/aplin/projects", "~/workspace/chivo" , "~/workspace/chivo/hub"} })
+    Snacks.picker.projects({
+        dev = { "~/workspace", "~/workspace/aplin/projects", "~/workspace/chivo", "~/workspace/chivo/hub" },
+    })
 end, { desc = "Projects" })
 vim.keymap.set({ "n" }, "<leader>fr", function()
     Snacks.picker.recent()
