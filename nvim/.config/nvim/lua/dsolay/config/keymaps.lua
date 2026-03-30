@@ -172,9 +172,13 @@ end, { desc = "Command History" })
 vim.keymap.set({ "n" }, "<leader>n", function()
     Snacks.picker.notifications()
 end, { desc = "Notification History" })
-vim.keymap.set({ "n" }, "<leader>e", function()
+vim.keymap.set({ "n" }, "<C-b>", function()
     Snacks.explorer()
 end, { desc = "File Explorer" })
+
+vim.keymap.set({ "n" }, "<leader>tf", function()
+    Snacks.explorer.reveal()
+end, { desc = "Reveals the current buffer in the explorer" })
 
 -- find
 vim.keymap.set({ "n" }, "<leader>fb", function()
