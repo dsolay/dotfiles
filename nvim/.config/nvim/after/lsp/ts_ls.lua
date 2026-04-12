@@ -9,7 +9,7 @@ local vue_plugin = {
 }
 
 local tsserver_filetypes =
-    { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" }
+    { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" }
 
 return {
     init_options = {

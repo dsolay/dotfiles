@@ -21,6 +21,7 @@ M.fs = require("dsolay.utils.fs")
 M.table = require("dsolay.utils.table")
 M.env = require("dsolay.utils.env")
 M.hi = require("dsolay.utils.hi")
+M.lsp = require("dsolay.utils.lsp")
 
 M.root_git = M.root.get_git
 M.root = M.root.get
@@ -32,5 +33,6 @@ M.merge_tables = M.table.merge_tables
 M.get_absolute_path = M.fs.get_absolute_path
 M.get_basename = M.fs.get_basename
 M.get_env_values = M.env.get_values
+M.enable_lsp_servers = M.lsp.enable_lsp_servers
 
 return M

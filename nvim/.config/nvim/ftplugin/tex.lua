@@ -1,3 +1,5 @@
+vim.treesitter.start()
+
 -- IMPORTANT: win32 users will need to have 'shellslash' set so that latex
 -- can be called correctly.
 vim.opt_local.shellslash = true

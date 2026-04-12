@@ -62,15 +62,21 @@ return {
         },
     },
 
+    -- {
+    --     "williamboman/mason-lspconfig.nvim",
+    --     dependencies = {
+    --         "williamboman/mason.nvim",
+    --         opts = {},
+    --         cmd = "Mason",
+    --         keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Open Mason" } },
+    --         build = ":MasonUpdate",
+    --     },
+    --     opts = {},
+    -- },
+    --
+
     {
-        "williamboman/mason-lspconfig.nvim",
-        dependencies = {
-            "williamboman/mason.nvim",
-            opts = {},
-            cmd = "Mason",
-            keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Open Mason" } },
-            build = ":MasonUpdate",
-        },
+        "mason-org/mason.nvim",
         opts = {},
     },
 
