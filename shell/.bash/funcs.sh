@@ -859,3 +859,22 @@ iamlive-exec() {
     fi
   fi
 }
+
+theme() {
+THEME_STATE="$HOME/.theme_mode"
+THEME_DIR="$HOME/.config/alacritty/themes/themes"
+TARGET="$HOME/.config/alacritty/themes/theme.toml"
+
+if [ "$1" = "dark" ]; then
+  ln -sf "$THEME_DIR/gruvbox_dark.toml" "$TARGET"
+  echo "dark" > "$THEME_STATE"
+  export THEME_MODE="dark"
+elif [ "$1" = "light" ]; then
+  ln -sf "$THEME_DIR/gruvbox_light.toml" "$TARGET"
+  echo "light" > "$THEME_STATE"
+  export THEME_MODE="light"
+else
+  echo "Uso: theme {dark|light}"
+  return 1
+fi
+}

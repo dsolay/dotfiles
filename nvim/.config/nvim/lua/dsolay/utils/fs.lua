@@ -35,4 +35,21 @@ function M.get_absolute_path(file_path)
     return result:gsub("\n", "")
 end
 
+function M.read_theme_mode()
+    local theme_file = os.getenv("HOME") .. "/.theme_mode"
+    local file = io.open(theme_file, "r")
+
+    if file then
+        local theme = file:read("*line")
+        file:close()
+        if theme then
+            theme = theme:match("^%s*(.-)%s*$")
+            if theme == "dark" or theme == "light" then
+                return theme
+            end
+        end
+    end
+    return "dark"
+end
+
 return M
