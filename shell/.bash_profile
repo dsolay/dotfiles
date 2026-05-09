@@ -1,4 +1,8 @@
 #! /bin/bash
+
+# Kiro CLI pre block. Keep at the top of this file.
+[[ -f "${HOME}/.local/share/kiro-cli/shell/bash_profile.pre.bash" ]] && builtin source "${HOME}/.local/share/kiro-cli/shell/bash_profile.pre.bash"
+
 #
 
 [[ -f "$HOME"/.bashrc ]] && source "$HOME"/.bashrc
@@ -24,3 +28,7 @@ export SSH_AUTH_SOCK=~/.1password/agent.sock
 # fi
 
 # _checkexec nmcli && nmcli con up static-home &
+
+
+# Kiro CLI post block. Keep at the bottom of this file.
+[[ -f "${HOME}/.local/share/kiro-cli/shell/bash_profile.post.bash" ]] && builtin source "${HOME}/.local/share/kiro-cli/shell/bash_profile.post.bash"
