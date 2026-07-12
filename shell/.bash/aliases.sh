@@ -329,5 +329,5 @@ alias pets-prod-db='ssh -N -L 3306:pets-portal-instance-1.cq4oc32vghjg.us-east-1
 alias atlas-db='gcloud compute ssh atlas-bastion-dev --tunnel-through-iap --zone=us-central1-c --plain --ssh-flag="-N -L 5432:localhost:5432"'
 
 # themes
-alias dark='ln -s -f /home/ernest/.config/alacritty/themes/themes/gruvbox_dark.toml /home/ernest/.config/alacritty/themes/theme.toml'
-alias light='ln -s -f /home/ernest/.config/alacritty/themes/themes/gruvbox_light.toml /home/ernest/.config/alacritty/themes/theme.toml'
+alias dark='theme dark'
+alias light='theme light'
