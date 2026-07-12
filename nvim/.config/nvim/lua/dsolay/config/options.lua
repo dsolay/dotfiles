@@ -3,8 +3,8 @@ vim.g.mapleader = [[,]]
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 
-local home = os.getenv('HOME')
-vim.env.PYENV_VERSION = vim.fn.system('pyenv version'):match('(%S+)%s+%(.-%)')
+local home = os.getenv("HOME")
+vim.env.PYENV_VERSION = vim.fn.system("pyenv version"):match("(%S+)%s+%(.-%)")
 vim.g.python3_host_prog = home .. "/.anyenv/envs/pyenv/shims/python3"
 
 vim.scriptencoding = "utf-8"
@@ -72,7 +72,7 @@ vim.opt.foldexpr = "v:lua.vim.lsp.foldexpr()"
 vim.opt.foldtext = "v:lua.vim.lsp.foldtext()"
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
-vim.opt.clipboard:append({ "unnamed", "unnamedplus" })
+vim.o.clipboard = "unnamedplus"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.shiftround = true
@@ -89,3 +89,19 @@ end
 
 vim.opt.exrc = true
 vim.opt.secure = true
+
+-- Detectar si estamos en una conexión remota (SSH o herdr)
+local is_remote = vim.env.SSH_TTY ~= nil
+    or vim.env.SSH_CONNECTION ~= nil
+    or vim.env.TERM_PROGRAM == "herdr"
+    or vim.env.HERDR_SESSION ~= nil
+    or vim.env.HERDR_ENV == "1"
+
+if is_remote then
+    vim.api.nvim_create_autocmd("TextYankPost", {
+        callback = function()
+            local copy_to_system = require("vim.ui.clipboard.osc52").copy("+")
+            copy_to_system(vim.v.event.regcontents)
+        end,
+    })
+end
