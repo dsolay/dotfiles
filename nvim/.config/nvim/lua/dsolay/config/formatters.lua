@@ -26,7 +26,7 @@ FORMATTERS.PRIORITIES = {
         name = "null-ls",
         priority = 2,
         description = "Default formatter and linter (Prettier, stylua, hadolint, markdownlint, shellcheck, fixjson, etc.)",
-        filetypes = {},  -- Empty array = applies to all filetypes as fallback
+        filetypes = {}, -- Empty array = applies to all filetypes as fallback
     },
 
     -- JavaScript/TypeScript ecosystem
@@ -66,6 +66,13 @@ FORMATTERS.PRIORITIES = {
         priority = 1,
         description = "JSON schema validation and formatting",
         filetypes = { "json", "jsonc" },
+    },
+
+    {
+        name = "rumdl",
+        priority = 1,
+        description = "JSON schema validation and formatting",
+        filetypes = { "markdown" },
     },
 }
 
