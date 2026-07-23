@@ -102,3 +102,14 @@ if [ -f '/opt/google-cloud-sdk/completion.bash.inc' ]; then . '/opt/google-cloud
 
 # Added by codebase-memory-mcp install
 export PATH="/home/ernest/.local/bin:$PATH"
+# >>> llmtrim >>>
+if command -v llmtrim >/dev/null 2>&1 && llmtrim _alive 2>/dev/null; then
+    export HTTPS_PROXY='http://127.0.0.1:43117'
+    export HTTP_PROXY='http://127.0.0.1:43117'
+    export NO_PROXY='localhost,127.0.0.1,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,169.254.0.0/16,fd00::/8,*.local'
+    export no_proxy='localhost,127.0.0.1,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,169.254.0.0/16,fd00::/8,*.local'
+    export NODE_EXTRA_CA_CERTS='/home/ernest/.llmtrim/ca.pem'
+    export SSL_CERT_FILE='/home/ernest/.llmtrim/ca-bundle.pem'
+    export CURL_CA_BUNDLE='/home/ernest/.llmtrim/ca-bundle.pem'
+fi
+# <<< llmtrim <<<
