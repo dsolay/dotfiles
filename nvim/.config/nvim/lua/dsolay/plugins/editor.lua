@@ -552,6 +552,7 @@ return {
             scope = { enabled = true },
             scroll = { enabled = true },
             zen = {},
+            gh = {},
             picker = {
                 enabled = true,
                 actions = {
@@ -567,9 +568,17 @@ return {
                             list = {
                                 keys = {
                                     ["O"] = { { "pick_win", "jump" }, mode = { "n", "i" } },
-                                    ['<c-t>'] = 'new_tab',
+                                    ["<c-t>"] = "new_tab",
                                 },
                             },
+                        },
+                        gh_issue = {
+                            -- your gh_issue picker configuration comes here
+                            -- or leave it empty to use the default settings
+                        },
+                        gh_pr = {
+                            -- your gh_pr picker configuration comes here
+                            -- or leave it empty to use the default settings
                         },
                     },
                 },
